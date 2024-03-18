@@ -20,12 +20,15 @@ def query_merriam_webster(word):
     """
     response = requests.get(endpoint.format(word=word, api_key=api_key))
     if response.status_code == 200:
-        data = response.json()
-        # taking only first definition
-        if data and type(data[0]) != str:
-            res = data[0].get("shortdef", [[]])
-            if res:
-                return res[0]
+        try:
+            data = response.json()
+            # taking only first definition
+            if data and type(data[0]) != str:
+                res = data[0].get("shortdef", [[]])
+                if res:
+                    return res[0]
+        except:
+            print(f"Error processing {word}")
     return []
 
 
@@ -56,6 +59,7 @@ def process_documents():
                 reaction_phrase = reaction.get("reactionmeddrapt", "")
                 words = reaction_phrase.split()
                 for word in words:
+                    word = word.lower()
                     if word not in json_def:
                         if (
                             word not in definitions
@@ -66,7 +70,6 @@ def process_documents():
                                 add_entry_to_json(
                                     definitions, "../resources/definitions.json"
                                 )
-                                print(f"Word: {word}, Definition: {defin}")
                             time.sleep(0.5)
 
     return definitions
