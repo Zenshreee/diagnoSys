@@ -6,7 +6,7 @@ import os
 
 def delete_files():
     # List all files in the data directory
-    files = os.listdir("../data")
+    files = os.listdir("../resources")
     # Filter only the json files
     json_files = [f for f in files if f.endswith(".json")]
     # Delete each file
