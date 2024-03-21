@@ -30,10 +30,15 @@ import json
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+import math
 
-json_file_path = '../resources/drug_documents.json'
-with open(json_file_path, 'r') as file:
+json_doc_file_path = '../resources/drug_documents.json'
+with open(json_doc_file_path, 'r') as file:
     documents = json.load(file)
+
+json_age_file_path = '../resources/drug_median_var_ages.json'
+with open(json_age_file_path, 'r') as file:
+    ages = json.load(file)
 
 docs = list(documents.values())
 vectorizer = TfidfVectorizer()
@@ -48,7 +53,7 @@ def query(tfidf_matrix, query):
 
     for i, score in enumerate(cosine_similarities):
         document_name = list(documents.keys())[i]
-        print(f"Cosine similarity with '{document_name}': {score}")
+        # print(f"Cosine similarity with '{document_name}': {score}")
 
     top_10_indices = np.argsort(cosine_similarities)[::-1][:10]
     print("Top 10 most similar documents:")
@@ -56,4 +61,51 @@ def query(tfidf_matrix, query):
         document_name = list(documents.keys())[index] 
         print(f"{document_name}: {cosine_similarities[index]}")
 
-query(tfidf_matrix, "I took tracleer and now I have a lot of rashes on my shoulders")
+query(tfidf_matrix, "I am a 20 year old and took albendazole, advil and xanax and now I have headache")
+
+
+def query_with_age(tfidf_matrix, query, user_age):
+    input_vector = vectorizer.transform([query])
+    cosine_similarities = cosine_similarity(input_vector, tfidf_matrix)
+    cosine_similarities = cosine_similarities.flatten()
+
+    # for i, score in enumerate(cosine_similarities):
+    #     document_name = list(documents.keys())[i]
+    #     print(f"Cosine similarity with '{document_name}': {score}")
+
+    age_scores = cosine_similarities.copy()
+    for i, score in enumerate(cosine_similarities):
+        document_name = list(documents.keys())[i]
+        if document_name in ages:
+            median_age = ages[document_name][0]
+            std_dev = ages[document_name][1]
+            multiplier = 1+((1/((abs(median_age - user_age)+1)**2)))
+            age_scores[i] = multiplier * score
+
+    top_10_scores = np.argsort(cosine_similarities)[::-1][:10]
+
+    accumualtor = []
+    for i, doc_pos in enumerate(top_10_scores):
+        document_name = list(documents.keys())[doc_pos]
+        if document_name in ages:
+            median_age = ages[document_name][0]
+            std_dev = ages[document_name][1]
+            multiplier = 1+((1/((abs(median_age - user_age)+1)**2))) # 1+((1/(abs(median_age - user_age)+1)) * (1/(std_dev + 1)))
+            accumualtor.append(multiplier)
+        
+    mean_multiplier = np.mean(accumualtor)
+    
+    for i, doc_pos in enumerate(top_10_scores):
+        document_name = list(documents.keys())[doc_pos]
+        if document_name not in ages:
+            age_scores[doc_pos] = age_scores[doc_pos] * mean_multiplier
+
+    top_10_og_age_scores = [(age_scores[index], index) for index in top_10_scores]
+    top_10_age_scores = np.argsort(age_scores)[::-1][:10]
+    print("Top 10 most similar documents:")
+    for score, index in top_10_og_age_scores:
+        document_name = list(documents.keys())[index] 
+        print(f"{document_name}: {score}")
+
+print()
+query_with_age(tfidf_matrix, "I am a 12 year old and took albendazole, advil and xanax and now I have headache", 12)
