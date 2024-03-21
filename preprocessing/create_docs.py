@@ -32,18 +32,22 @@ def process_documents():
             count += 1
             for drugs in result.get("patient", {}).get("drug", []):
                 brandname = ""
-                brandnames = drugs.get("openfda", {}).get("brand_name", [])
+                brandnames = sorted(drugs.get("openfda", {}).get("brand_name", []))
+
                 if brandnames:
                     brandname = brandnames[0]
                 if brandname == "":
                     continue
                 if brandname not in json_doc:
-                    drug_documents[brandname] = ""
+                    drug_documents[brandname] = brandname.lower() + " "
+                else:
+                    drug_documents[brandname] = brandname.lower() + " "
                 if "generic_name" in drugs.get("openfda", {}):
                     genericname = drugs.get("openfda", {}).get("generic_name")
                     if genericname:
-                        if genericname != brandname:
-                            drug_documents[brandname] += genericname[0].lower() + " "
+                        for name in genericname:
+                            if genericname != brandname:
+                                drug_documents[brandname] += name.lower() + " "
                 for reaction in result.get("patient", {}).get("reaction", []):
                     reaction_phrase = reaction.get("reactionmeddrapt", "")
                     drug_documents[brandname] += reaction_phrase + " "
