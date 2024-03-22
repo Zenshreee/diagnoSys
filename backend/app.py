@@ -1,6 +1,6 @@
 import json
 import os
-from diagnoSys.preprocessing import tfidf
+from preprocessing.tfidf import tfidf_matrix, query_with_age
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
@@ -48,7 +48,7 @@ def drugs_search():
     text_query = request.args.get("query")
     age = request.args.get("age")
     def combine_name(query, age):
-        top_10 = tfidf.query_with_age(tfidf.tfidf_matrix,text_query,age)
+        top_10 = query_with_age(tfidf_matrix,text_query,age)
         rtrn_lst = []
         for tup in top_10:
             rtrn_lst.append({
