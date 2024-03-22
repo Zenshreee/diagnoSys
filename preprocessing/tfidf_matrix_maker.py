@@ -12,4 +12,8 @@ vectorizer = TfidfVectorizer()
 tfidf_matrix = vectorizer.fit_transform(docs)
 print(tfidf_matrix.shape)
 
-np.save('../resources/tfidf_matrix',tfidf_matrix)
+np.save('../resources/tfidf_matrix.npy',tfidf_matrix)
+
+
+tfidf_matrix_loaded = np.load('../resources/tfidf_matrix.npy', allow_pickle=True)
+print(tfidf_matrix_loaded.shape)
