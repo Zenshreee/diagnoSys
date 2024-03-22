@@ -63,18 +63,18 @@ filename = "tfidf_matrix.npy"
 matrix_filepath = os.path.join(os.path.dirname(abspath), filename)
 vectorizer_path = os.path.join(os.path.dirname(abspath), "vectorizer.sav")
 index_to_json_path = os.path.join(os.path.dirname(abspath), "index_to_doc.json")
-docspath = os.path.join(os.path.dirname(abspath), "drug_documents.json")
+# docspath = os.path.join(os.path.dirname(abspath), "drug_documents.json")
 
 drug_median_var_ages_path = os.path.join(
     os.path.dirname(abspath), "drug_median_var_ages.json"
 )
-with open(docspath, "r") as file:
-    documents = json.load(file)
-# # with open(vectorizer_path, "rb") as file:
-# #     vectorizer = pickle.load(file)
-vectorizer = TfidfVectorizer()
-tfidf_matrix = vectorizer.fit_transform(list(documents.values()))
-pickle.dump(vectorizer, open(vectorizer_path, "wb"))
+# with open(docspath, "r") as file:
+#     documents = json.load(file)
+# # # with open(vectorizer_path, "rb") as file:
+# # #     vectorizer = pickle.load(file)
+# vectorizer = TfidfVectorizer()
+# tfidf_matrix = vectorizer.fit_transform(list(documents.values()))
+# pickle.dump(vectorizer, open(vectorizer_path, "wb"))
 # tfidf_matrix = np.array(tfidf_matrix.toarray())
 # np.save("tfidf_matrix.npy", tfidf_matrix)
 # sp.sparse.save_npz("tfidf_matrix.npz", tfidf_matrix)
