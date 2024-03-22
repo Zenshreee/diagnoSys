@@ -147,8 +147,8 @@ def query_with_age(tfidf_matrix, query, user_age):
 
 
 # print()
-query_with_age(
-    tfidf_matrix,
-    "I am a 20 year old and took albendazole, advil and xanax and now I have headache",
-    20,
-)
+# query_with_age(
+#     tfidf_matrix,
+#     "I am a 20 year old and took albendazole, advil and xanax and now I have headache",
+#     20,
+# )
