@@ -68,8 +68,8 @@ docspath = os.path.join(os.path.dirname(abspath), "drug_documents.json")
 drug_median_var_ages_path = os.path.join(
     os.path.dirname(abspath), "drug_median_var_ages.json"
 )
-with open(docspath, "r") as file:
-    documents = json.load(file)
+# with open(docspath, "r") as file:
+#     documents = json.load(file)
 # # # with open(vectorizer_path, "rb") as file:
 # # #     vectorizer = pickle.load(file)
 # vectorizer = TfidfVectorizer()
