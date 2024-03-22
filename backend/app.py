@@ -1,8 +1,6 @@
 import json
 import os
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'preprocessing')))
-from tfidf import tfidf_matrix, query_with_age
+from preprocessing.tfidf import tfidf_matrix, query_with_age
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
