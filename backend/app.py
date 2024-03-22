@@ -1,5 +1,6 @@
 import json
 import os
+from preprocessing import tfidf
 from flask import Flask, render_template, request
 from flask_cors import CORS
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
@@ -37,10 +38,27 @@ def sql_search(episode):
 def home():
     return render_template('base.html',title="sample html")
 
-@app.route("/episodes")
-def episodes_search():
-    text = request.args.get("title")
-    return sql_search(text)
+def get_def(term):
+    with open("../resources/definitions.json", "r") as file:
+        json_def = json.load(file)
+    return json_def[term]
+
+@app.route("/drugs")
+def drugs_search():
+    text_query = request.args.get("query")
+    age = request.args.get("age")
+    def combine_name(query, age):
+        top_10 = tfidf.query_with_age(tfidf.tfidf_matrix,text_query,age)
+        rtrn_lst = []
+        for tupe in top_10:
+            rtrn_lst.append(tupe[0],get_def[tupe[0]],tupe[1])
+        return rtrn_lst
+    return combine_name(text_query,age)
+    
+
+
+
+
 
 if 'DB_NAME' not in os.environ:
     app.run(debug=True,host="0.0.0.0",port=5000)
