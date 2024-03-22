@@ -30,6 +30,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import math
+import time
 
 json_doc_file_path = "../resources/drug_documents.json"
 with open(json_doc_file_path, "r") as file:
@@ -38,10 +39,12 @@ with open(json_doc_file_path, "r") as file:
 json_age_file_path = "../resources/drug_median_var_ages.json"
 with open(json_age_file_path, "r") as file:
     ages = json.load(file)
-
+start = time.time()
 docs = list(documents.values())
 vectorizer = TfidfVectorizer()
 tfidf_matrix = vectorizer.fit_transform(docs)
+end = time.time()
+print(f"Time taken to vectorize: {end - start}")
 cosine_sim = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[3:4])
 print(f"Cosine Similarity between the first and fourth documents: {cosine_sim[0][0]}")
 
@@ -61,11 +64,13 @@ def query(tfidf_matrix, query):
         document_name = list(documents.keys())[index]
         print(f"{document_name}: {cosine_similarities[index]}")
 
-
+start = time.time()
 query(
     tfidf_matrix,
     "I am a 20 year old and took albendazole, advil and xanax and now I have headache",
 )
+end = time.time()
+print(f"Time taken to query: {end - start}")
 
 
 def query_with_age(tfidf_matrix, query, user_age):
@@ -117,6 +122,6 @@ def query_with_age(tfidf_matrix, query, user_age):
 print()
 query_with_age(
     tfidf_matrix,
-    "Xanax depression fever",
-    12,
+    "I am a 20 year old and took albendazole, advil and xanax and now I have headache",
+    20,
 )
