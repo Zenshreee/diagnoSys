@@ -7,25 +7,29 @@ def process_documents():
     """
     Fetch definitions for each word in `reactionmeddrapt` entries.
     """
-    THRESHOLD = 100
+    MAX = 1000
+    MIN = 100
     drug_documents = {}
 
     files = os.listdir("../data")
-
+    counter = 0
     json_files = [f for f in files if f.endswith(".json")]
 
     # get documents.json (../resorces/)
-    with open("../resources/drug_documents.json", "r") as file:
+    with open("drug_documents.json", "r") as file:
         json_doc = json.load(file)
 
     # get definitions.json (../resorces/)
-    with open("../resources/definitions.json", "r") as file:
+    with open("definitions.json", "r") as file:
         json_def = json.load(file)
 
-    with open("../resources/ad_counts.json", "r") as file:
+    with open("ad_counts.json", "r") as file:
         ad_counts = json.load(file)
 
     for documents in json_files:
+        counter += 1
+        if counter >= 18:
+            continue
         print(f"Processing {documents}")
         with open(f"../data/{documents}", "r") as file:
             try:
@@ -45,7 +49,7 @@ def process_documents():
                 if brandnames:
                     brandname = brandnames[0]
                 if brandname in ad_counts:
-                    if ad_counts[brandname] < THRESHOLD:
+                    if ad_counts[brandname] < MIN or ad_counts[brandname] > MAX:
                         continue
                 if brandname == "":
                     continue
@@ -84,7 +88,7 @@ def process_documents():
                 else:
                     json_doc[brandname] = drug_documents[brandname]
             if count % 1000 == 0:
-                with open("../resources/drug_documents.json", "w") as file:
+                with open("drug_documents.json", "w") as file:
                     json.dump(json_doc, file, indent=4)
     return drug_documents
 

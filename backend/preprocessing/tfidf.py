@@ -33,7 +33,7 @@ import math
 import time
 import pickle
 import os
-
+import sys
 import scipy as sp
 
 # json_doc_file_path = "../resources/drug_documents.json"
@@ -68,12 +68,21 @@ docspath = os.path.join(os.path.dirname(abspath), "drug_documents.json")
 drug_median_var_ages_path = os.path.join(
     os.path.dirname(abspath), "drug_median_var_ages.json"
 )
-# with open(docspath, "r") as file:
-#     documents = json.load(file)
+# print python version
+# print(sys.version)
+# with open(docspath1, "r") as file:
+#     documents_pt1 = json.load(file)
+# with open(docspath2, "r") as file:
+#     documents_pt2 = json.load(file)
+
+# documents = {**documents_pt1, **documents_pt2}
+with open(docspath, "r") as file:
+    documents = json.load(file)
+
 # # # with open(vectorizer_path, "rb") as file:
 # # #     vectorizer = pickle.load(file)
-# vectorizer = TfidfVectorizer()
-# tfidf_matrix = vectorizer.fit_transform(list(documents.values()))
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform(list(documents.values()))
 # pickle.dump(vectorizer, open(vectorizer_path, "wb"))
 # tfidf_matrix = np.array(tfidf_matrix.toarray())
 # np.save("tfidf_matrix.npy", tfidf_matrix)
@@ -85,11 +94,11 @@ drug_median_var_ages_path = os.path.join(
 # print(np.array_equal(tfidf_matrix, laoded))
 # cosine_sim = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[3:4])
 # print(f"Cosine Similarity between the first and fourth documents: {cosine_sim[0][0]}")
-tfidf_matrix = np.load(matrix_filepath)
+# tfidf_matrix = np.load(matrix_filepath)
 
 
 def query(tfidf_matrix, query):
-    vectorizer = pickle.load(open(vectorizer_path, "rb"))
+    # vectorizer = pickle.load(open(vectorizer_path, "rb"))
     with open(index_to_json_path, "r") as file:
         index_to_doc = json.load(file)
     input_vector = vectorizer.transform([query])
@@ -121,7 +130,7 @@ def query_with_age(tfidf_matrix, query, user_age):
         ages = json.load(file)
     with open(index_to_json_path, "r") as file:
         index_to_doc = json.load(file)
-    vectorizer = pickle.load(open(vectorizer_path, "rb"))
+    # vectorizer = pickle.load(open(vectorizer_path, "rb"))
     input_vector = vectorizer.transform([query])
     cosine_similarities = cosine_similarity(input_vector, tfidf_matrix)
     cosine_similarities = cosine_similarities.flatten()
@@ -173,8 +182,8 @@ def query_with_age(tfidf_matrix, query, user_age):
 
 # print()
 
-query_with_age(
-    tfidf_matrix,
-    "I am a 20 year old and took albendazole, advil and xanax and now I have headache",
-    20,
-)
+# query_with_age(
+#     tfidf_matrix,
+#     "advil",
+#     20,
+# )
