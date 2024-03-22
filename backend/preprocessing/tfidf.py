@@ -68,13 +68,13 @@ docspath = os.path.join(os.path.dirname(abspath), "drug_documents.json")
 drug_median_var_ages_path = os.path.join(
     os.path.dirname(abspath), "drug_median_var_ages.json"
 )
-# with open(docspath, "r") as file:
-#     documents = json.load(file)
+with open(docspath, "r") as file:
+    documents = json.load(file)
 # # with open(vectorizer_path, "rb") as file:
 # #     vectorizer = pickle.load(file)
-# vectorizer = TfidfVectorizer()
-# tfidf_matrix = vectorizer.fit_transform(list(documents.values()))
-# pickle.dump(vectorizer, open(vectorizer_path, "wb"))
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform(list(documents.values()))
+pickle.dump(vectorizer, open(vectorizer_path, "wb"))
 # tfidf_matrix = np.array(tfidf_matrix.toarray())
 # np.save("tfidf_matrix.npy", tfidf_matrix)
 # sp.sparse.save_npz("tfidf_matrix.npz", tfidf_matrix)
@@ -173,8 +173,8 @@ def query_with_age(tfidf_matrix, query, user_age):
 
 # print()
 
-# query_with_age(
-#     tfidf_matrix,
-#     "I am a 20 year old and took albendazole, advil and xanax and now I have headache",
-#     20,
-# )
+query_with_age(
+    tfidf_matrix,
+    "I am a 20 year old and took albendazole, advil and xanax and now I have headache",
+    20,
+)
