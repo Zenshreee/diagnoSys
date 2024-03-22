@@ -51,7 +51,7 @@ def drugs_search():
         top_10 = tfidf.query_with_age(tfidf.tfidf_matrix,text_query,age)
         rtrn_lst = []
         for tupe in top_10:
-            rtrn_lst.append(tupe[0],get_def[tupe[0]],tupe[1])
+            rtrn_lst.append(tupe[0],get_def(tupe[0]),tupe[1])
         return rtrn_lst
     return combine_name(text_query,age)
     
