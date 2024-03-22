@@ -20,4 +20,4 @@ SQLAlchemy==1.4.46
 typing_extensions==4.5.0
 Werkzeug==2.2.2
 scikit-learn
-pickle
+scipy

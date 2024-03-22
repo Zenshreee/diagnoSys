@@ -34,7 +34,7 @@ import time
 import pickle
 import os
 
-# import scipy as sp
+import scipy as sp
 
 # json_doc_file_path = "../resources/drug_documents.json"
 # with open(json_doc_file_path, "r") as file:
@@ -63,13 +63,13 @@ filename = "tfidf_matrix.npy"
 matrix_filepath = os.path.join(os.path.dirname(abspath), filename)
 vectorizer_path = os.path.join(os.path.dirname(abspath), "vectorizer.sav")
 index_to_json_path = os.path.join(os.path.dirname(abspath), "index_to_doc.json")
-# docspath = os.path.join(os.path.dirname(abspath), "drug_documents.json")
+docspath = os.path.join(os.path.dirname(abspath), "drug_documents.json")
 
 drug_median_var_ages_path = os.path.join(
     os.path.dirname(abspath), "drug_median_var_ages.json"
 )
-# with open(docspath, "r") as file:
-#     documents = json.load(file)
+with open(docspath, "r") as file:
+    documents = json.load(file)
 # # # with open(vectorizer_path, "rb") as file:
 # # #     vectorizer = pickle.load(file)
 # vectorizer = TfidfVectorizer()
