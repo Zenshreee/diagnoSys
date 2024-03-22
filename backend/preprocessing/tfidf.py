@@ -59,7 +59,7 @@ import os
 # np.save("../preprocessing/tfidf_matrix.npy", tfidf_matrix)
 
 abspath = os.path.abspath(__file__)
-filename = "tfidf_matrix.npz"
+filename = "tfidf_matrix.npy"
 matrix_filepath = os.path.join(os.path.dirname(abspath), filename)
 vectorizer_path = os.path.join(os.path.dirname(abspath), "vectorizer.sav")
 index_to_json_path = os.path.join(os.path.dirname(abspath), "index_to_doc.json")
@@ -85,7 +85,7 @@ drug_median_var_ages_path = os.path.join(
 # print(np.array_equal(tfidf_matrix, laoded))
 # cosine_sim = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[3:4])
 # print(f"Cosine Similarity between the first and fourth documents: {cosine_sim[0][0]}")
-tfidf_matrix = np.load("tfidf_matrix.npy")
+tfidf_matrix = np.load(matrix_filepath)
 
 
 def query(tfidf_matrix, query):
@@ -173,8 +173,8 @@ def query_with_age(tfidf_matrix, query, user_age):
 
 # print()
 
-query_with_age(
-    tfidf_matrix,
-    "I am a 20 year old and took albendazole, advil and xanax and now I have headache",
-    20,
-)
+# query_with_age(
+#     tfidf_matrix,
+#     "I am a 20 year old and took albendazole, advil and xanax and now I have headache",
+#     20,
+# )
