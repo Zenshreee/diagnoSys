@@ -1,6 +1,6 @@
 import json
 import os
-from preprocessing import tfidf
+from from diagnoSys.preprocessing import tfidf
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
