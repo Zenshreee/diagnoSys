@@ -15,7 +15,7 @@
             </div>
             <div class="input-box" onclick="sendFocus()">
                 <img src="{{ url_for('static', filename='images/mag.png') }}" />
-                <input placeholder="Search for a Keeping up with the Kardashians episode" id="filter-text-val" onkeyup="filterText()">
+                <input placeholder="Search for a Keeping up with the Kardashians episode" id="filter-text-val" onkeyup="filterTextDrug()">
             </div>
         </div>
         <div id="answer-box">
@@ -25,10 +25,10 @@
 
     <script>
 
-        function answerBoxTemplate(title,titleDesc){
+        function answerBoxTemplate(drug,description,score){
             return `<div class=''>
-                <h3 class='episode-title'>${title}</h3>
-                <p class='episode-desc'>${titleDesc}</p>
+                <h3 class='episode-title'>${drug}</h3>
+                <p class='episode-desc'>${description}</p>
             </div>`
         }
 
@@ -49,6 +49,23 @@
             }));
 
         }
+
+        function filterTextDrug() {
+            document.getElementById("answer-box").innerHTML = "";
+            const searchText = document.getElementById("filter-text-val").value;
+            const age = 20
+
+            fetch("/drugs?" + new URLSearchParams({ query: searchText, age: age }).toString())
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    data.forEach(row => {
+                        let tempDiv = document.createElement("div");
+                        tempDiv.innerHTML = answerBoxTemplate(row.drug, row.definition, row.score);
+                        document.getElementById("answer-box").appendChild(tempDiv);
+                    });
+                });
+            }
             
     </script>
 </body>

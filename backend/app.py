@@ -1,7 +1,7 @@
 import json
 import os
 from preprocessing import tfidf
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
 
@@ -50,10 +50,15 @@ def drugs_search():
     def combine_name(query, age):
         top_10 = tfidf.query_with_age(tfidf.tfidf_matrix,text_query,age)
         rtrn_lst = []
-        for tupe in top_10:
-            rtrn_lst.append(tupe[0],get_def(tupe[0]),tupe[1])
+        for tup in top_10:
+            rtrn_lst.append({
+                "drug": tup[0],
+                "definition": get_def(tup[0]),
+                "score": tup[1]
+            })
         return rtrn_lst
-    return combine_name(text_query,age)
+
+    return jsonify(combine_name(text_query, age))
     
 
 
