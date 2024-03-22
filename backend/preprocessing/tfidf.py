@@ -33,7 +33,8 @@ import math
 import time
 import pickle
 import os
-import scipy as sp
+
+# import scipy as sp
 
 # json_doc_file_path = "../resources/drug_documents.json"
 # with open(json_doc_file_path, "r") as file:
@@ -69,17 +70,22 @@ drug_median_var_ages_path = os.path.join(
 )
 # with open(docspath, "r") as file:
 #     documents = json.load(file)
-# with open(vectorizer_path, "rb") as file:
-#     vectorizer = pickle.load(file)
+# # with open(vectorizer_path, "rb") as file:
+# #     vectorizer = pickle.load(file)
+# vectorizer = TfidfVectorizer()
 # tfidf_matrix = vectorizer.fit_transform(list(documents.values()))
+# pickle.dump(vectorizer, open(vectorizer_path, "wb"))
+# tfidf_matrix = np.array(tfidf_matrix.toarray())
+# np.save("tfidf_matrix.npy", tfidf_matrix)
 # sp.sparse.save_npz("tfidf_matrix.npz", tfidf_matrix)
 # # tfidf_matrix = np.load(
 # #     os.path.join(os.path.dirname(abspath), filename), allow_pickle=True
 # # )
-tfidf_matrix = sp.sparse.load_npz(matrix_filepath)
+# tfidf_matrix = sp.sparse.load_npz(matrix_filepath)
 # print(np.array_equal(tfidf_matrix, laoded))
 # cosine_sim = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[3:4])
 # print(f"Cosine Similarity between the first and fourth documents: {cosine_sim[0][0]}")
+tfidf_matrix = np.load("tfidf_matrix.npy")
 
 
 def query(tfidf_matrix, query):
@@ -166,8 +172,9 @@ def query_with_age(tfidf_matrix, query, user_age):
 
 
 # print()
-# query_with_age(
-#     tfidf_matrix,
-#     "I am a 20 year old and took albendazole, advil and xanax and now I have headache",
-#     20,
-# )
+
+query_with_age(
+    tfidf_matrix,
+    "I am a 20 year old and took albendazole, advil and xanax and now I have headache",
+    20,
+)
