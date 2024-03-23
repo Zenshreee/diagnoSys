@@ -3,8 +3,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap"
-    rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap" rel="stylesheet">
 
 <body>
     <div class="full-body-container">
@@ -18,8 +17,7 @@
             <img src="{{ url_for('static', filename='images/diagnosys.png') }}" />
             <div class="search">
                 <div class="form__group field">
-                    <input type="input" class="form__field" id="filter-text-val" placeholder="Name" name="name"
-                        id='name' required autocomplete="off" />
+                    <input type="input" class="form__field" id="filter-text-val" placeholder="Name" name="name" id='name' required autocomplete="off" />
                     <label for="name" class="form__label">Enter your symptoms and
                         medications</label>
                 </div>
@@ -51,7 +49,7 @@
 
     <script>
 
-        function answerBoxTemplate(drug, description, score) {
+
         function answerBoxTemplate(drug, description, score) {
             return `<div class=''>
                 <h3 class='episode-title'>${drug}</h3>
@@ -59,12 +57,11 @@
             </div>`
         }
 
-        function sendFocus() {
+
         function sendFocus() {
             document.getElementById('filter-text-val').focus()
         }
 
-        function filterText() {
         function filterText() {
             document.getElementById("answer-box").innerHTML = ""
             console.log(document.getElementById("filter-text-val").value)
@@ -76,13 +73,7 @@
                     tempDiv.innerHTML = answerBoxTemplate(row.title, row.descr)
                     document.getElementById("answer-box").appendChild(tempDiv)
                 }));
-                .then((response) => response.json())
-                .then((data) => data.forEach(row => {
 
-                    let tempDiv = document.createElement("div")
-                    tempDiv.innerHTML = answerBoxTemplate(row.title, row.descr)
-                    document.getElementById("answer-box").appendChild(tempDiv)
-                }));
 
         }
 
@@ -103,7 +94,6 @@
                 });
         }
 
-        }
 
     </script>
 </body>
