@@ -79,6 +79,14 @@ drug_median_var_ages_path = os.path.join(
 with open(docspath, "r") as file:
     documents = json.load(file)
 
+index_to_doc = {}
+
+for idx, doc in enumerate(list(documents.keys())):
+    index_to_doc[idx] = doc
+
+with open(index_to_json_path, "w") as file:
+    json.dump(index_to_doc, file, indent=4)
+
 # # # with open(vectorizer_path, "rb") as file:
 # # #     vectorizer = pickle.load(file)
 vectorizer = TfidfVectorizer()

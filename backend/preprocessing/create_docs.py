@@ -10,7 +10,7 @@ def process_documents():
     MAX = 1000
     MIN = 100
     drug_documents = {}
-
+    num_added = {}
     files = os.listdir("../data")
     counter = 0
     json_files = [f for f in files if f.endswith(".json")]
@@ -25,6 +25,9 @@ def process_documents():
 
     with open("ad_counts.json", "r") as file:
         ad_counts = json.load(file)
+
+    for key in ad_counts:
+        num_added[key] = 0
 
     for documents in json_files:
         counter += 1
@@ -49,7 +52,7 @@ def process_documents():
                 if brandnames:
                     brandname = brandnames[0]
                 if brandname in ad_counts:
-                    if ad_counts[brandname] < MIN or ad_counts[brandname] > MAX:
+                    if ad_counts[brandname] < MIN or num_added[brandname] > MAX:
                         continue
                 if brandname == "":
                     continue
@@ -85,8 +88,10 @@ def process_documents():
                             drug_documents[brandname] += " " + "female" + " "
                 if brandname in json_doc:
                     json_doc[brandname] += drug_documents[brandname]
+                    num_added[brandname] += 1
                 else:
                     json_doc[brandname] = drug_documents[brandname]
+                    num_added[brandname] = 1
             if count % 1000 == 0:
                 with open("drug_documents.json", "w") as file:
                     json.dump(json_doc, file, indent=4)
