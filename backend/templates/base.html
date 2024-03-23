@@ -3,21 +3,45 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap"
+    rel="stylesheet">
 
 <body>
     <div class="full-body-container">
         <div class="top-text">
-            <div class="google-colors">
+            <!-- <div class="google-colors">
                 <h1 id="google-4">4</h1>
                 <h1 id="google-3">3</h1>
                 <h1 id="google-0-1">0</h1>
                 <h1 id="google-0-2">0</h1>
-            </div>
-            <div class="input-box" onclick="sendFocus()">
-                <img src="{{ url_for('static', filename='images/mag.png') }}" />
-                <button onclick="filterTextDrug()" src="{{ url_for('static', filename='images/mag.png') }}">Search</button>
-                <input placeholder="Search for a Keeping up with the Kardashians episode" id="filter-text-val">
+            </div> -->
+            <img src="{{ url_for('static', filename='images/diagnosys.png') }}" />
+            <div class="search">
+                <div class="form__group field">
+                    <input type="input" class="form__field" id="filter-text-val" placeholder="Name" name="name"
+                        id='name' required autocomplete="off" />
+                    <label for="name" class="form__label">Enter your symptoms and
+                        medications</label>
+                </div>
+                <select name="items" class="custom-select" id="itemSelector">
+                    <option value="50">Age</option>
+                    <option value="15">10-20</option>
+                    <option value="25">21-30</option>
+                    <option value="35">31-40</option>
+                    <option value="45">41-50</option>
+                    <option value="55">51-60</option>
+                    <option value="65">61-70</option>
+                    <option value="75">71-80</option>
+                    <option value="85">81-90</option>
+                    <option value="95">91-100</option>
+                    <option value="105">101-110</option>
+                </select>
+
+                <!-- <div class="input-box" onclick="sendFocus()">
+                    <img src="{{ url_for('static', filename='images/mag.png') }}" />
+                    <input placeholder="Enter your symptoms and medications" id="filter-text-val" class="">
+                </div> -->
+                <button class="search-button" onClick="filterTextDrug()">Search</button>
             </div>
         </div>
         <div id="answer-box">
@@ -28,6 +52,7 @@
     <script>
 
         function answerBoxTemplate(drug, description, score) {
+        function answerBoxTemplate(drug, description, score) {
             return `<div class=''>
                 <h3 class='episode-title'>${drug}</h3>
                 <p class='episode-desc'>${description}</p>
@@ -35,13 +60,22 @@
         }
 
         function sendFocus() {
+        function sendFocus() {
             document.getElementById('filter-text-val').focus()
         }
 
         function filterText() {
+        function filterText() {
             document.getElementById("answer-box").innerHTML = ""
             console.log(document.getElementById("filter-text-val").value)
             fetch("/episodes?" + new URLSearchParams({ title: document.getElementById("filter-text-val").value }).toString())
+                .then((response) => response.json())
+                .then((data) => data.forEach(row => {
+
+                    let tempDiv = document.createElement("div")
+                    tempDiv.innerHTML = answerBoxTemplate(row.title, row.descr)
+                    document.getElementById("answer-box").appendChild(tempDiv)
+                }));
                 .then((response) => response.json())
                 .then((data) => data.forEach(row => {
 
@@ -55,7 +89,7 @@
         function filterTextDrug() {
             document.getElementById("answer-box").innerHTML = "";
             const searchText = document.getElementById("filter-text-val").value;
-            const age = 20
+            const age = document.getElementById("itemSelector").value;
 
             fetch("/drugs?" + new URLSearchParams({ query: searchText, age: age }).toString())
                 .then((response) => response.json())
@@ -67,6 +101,8 @@
                         document.getElementById("answer-box").appendChild(tempDiv);
                     });
                 });
+        }
+
         }
 
     </script>

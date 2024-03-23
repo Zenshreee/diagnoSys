@@ -75,6 +75,51 @@ def process_documents():
     return definitions
 
 
+
+def process_drugs():
+    """
+    Fetch definitions for each word in `reactionmeddrapt` entries.
+    """
+    definitions = {}
+
+    # get definitions.json (../resorces/)
+    with open("definitions.json", "r") as file:
+        def_json = json.load(file)
+
+    with open("../resources/ad_counts.json", "r") as file:
+        drug_names = json.load(file)
+
+    for drug in drug_names.keys():
+        if drug not in def_json:
+            drug = drug.lower()
+            words = drug.split()
+            for word in words:
+                if (
+                    word not in definitions
+                ):  # Avoid repeating API calls for the same word
+                    defin = query_merriam_webster(word)
+                    if defin:
+                        definitions[word] = defin
+                        print(defin)
+                        add_entry_to_json(
+                            definitions, "definitions.json"
+                        )
+                    time.sleep(0.5)
+            if (
+                    drug not in definitions
+                ):
+                defin = query_merriam_webster(drug)
+                if defin:
+                    definitions[drug] = defin
+                    print(defin)
+                    add_entry_to_json(
+                        definitions, "definitions.json"
+                    )
+                time.sleep(0.5)
+
+    return definitions
+
+
 # save to json file
 def save_to_json(data, filename):
 
@@ -83,7 +128,7 @@ def save_to_json(data, filename):
 
 
 """
-Add entry to json
+Add entry to jso
 """
 
 
@@ -98,4 +143,4 @@ def add_entry_to_json(data: dict, filename: str) -> None:
 
 
 if __name__ == "__main__":
-    process_documents()
+    process_drugs()

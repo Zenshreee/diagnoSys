@@ -49,9 +49,9 @@ def get_def(term):
     )
     with open(definitions_path, "r") as file:
         json_def = json.load(file)
-    if term not in json_def:
+    if term.lower() not in json_def:
         return ""
-    return json_def[term]
+    return json_def[term.lower()]
 
 
 @app.route("/drugs")
@@ -66,6 +66,7 @@ def drugs_search():
             rtrn_lst.append(
                 {"drug": tup[0], "definition": get_def(tup[0]), "score": tup[1]}
             )
+            print(get_def(tup[0]))
         return rtrn_lst
 
     return jsonify(combine_name(text_query, age))
