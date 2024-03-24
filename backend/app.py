@@ -66,7 +66,6 @@ def drugs_search():
             rtrn_lst.append(
                 {"drug": tup[0], "definition": get_def(tup[0]), "score": tup[1]}
             )
-            print(get_def(tup[0]))
         return rtrn_lst
 
     return jsonify(combine_name(text_query, age))

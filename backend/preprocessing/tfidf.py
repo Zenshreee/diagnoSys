@@ -179,11 +179,11 @@ def query_with_age(tfidf_matrix, query, user_age):
     top_10_og_age_scores = [(age_scores[index], index) for index in top_10_scores]
     # top_10_age_scores = np.argsort(age_scores)[::-1][:10]
     rtrn_lst = []
-    print("Top 10 most similar documents:")
+    # print("Top 10 most similar documents:")
     for score, index in top_10_og_age_scores:
         document_name = index_to_doc[str(index)]
         rtrn_lst.append((document_name, score))
-        print(f"{document_name}: {score}")
+        # print(f"{document_name}: {score}")
 
     return rtrn_lst
 
