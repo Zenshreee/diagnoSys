@@ -43,19 +43,25 @@
             </div>
         </div>
         <div id="answer-box">
-
+            <!-- Cards will be dynamically inserted here -->
         </div>
     </div>
 
     <script>
 
 
-        function answerBoxTemplate(drug, description, score) {
-            return `<div class=''>
-                <h3 class='episode-title'>${drug}</h3>
-                <p class='episode-desc'>${description}</p>
-            </div>`
+        function answerBoxTemplate(drug, description, score, top_5_ad_events, rating) {
+            let adverseEventsHtml = top_5_ad_events.map(event => `<li>${event}</li>`).join('');
+            return `<div class='drug-card'>
+                        <h3 class='drug-title'>${drug}</h3>
+                        <p class='drug-description'>${description}</p>
+                        <div class='drug-score'>Score: ${score}</div>
+                        <ul class='drug-adverse-events'>Top 5 Adverse Events: ${adverseEventsHtml}</ul>
+                        <div class='drug-rating'>Rating: ${rating}</div>
+                    </div>`;
         }
+
+
 
 
         function sendFocus() {
@@ -73,12 +79,11 @@
                     tempDiv.innerHTML = answerBoxTemplate(row.title, row.descr)
                     document.getElementById("answer-box").appendChild(tempDiv)
                 }));
-
-
         }
 
         function filterTextDrug() {
-            document.getElementById("answer-box").innerHTML = "";
+            const answerBox = document.getElementById("answer-box");
+            answerBox.innerHTML = ""; // Clear existing cards
             const searchText = document.getElementById("filter-text-val").value;
             const age = document.getElementById("itemSelector").value;
 
@@ -87,9 +92,8 @@
                 .then((data) => {
                     console.log(data);
                     data.forEach(row => {
-                        let tempDiv = document.createElement("div");
-                        tempDiv.innerHTML = answerBoxTemplate(row.drug, row.definition, row.score);
-                        document.getElementById("answer-box").appendChild(tempDiv);
+                        let cardHTML = answerBoxTemplate(row.drug, row.definition, row.score, row.top_5_ad_events || [], row.rating);
+                        answerBox.insertAdjacentHTML('beforeend', cardHTML);
                     });
                 });
         }

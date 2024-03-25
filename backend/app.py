@@ -54,6 +54,26 @@ def get_def(term):
     return json_def[term.lower()]
 
 
+def get_top_5_ad_events(drug_name):
+    pathdir = os.path.dirname(__file__)
+    datadir = os.path.join(pathdir, "preprocessing", "most_common_ad_events.json")
+    with open(datadir, "r") as file:
+        top_5 = json.load(file)
+    if drug_name not in top_5:
+        return []
+    return top_5[drug_name][:5]
+
+
+def get_rating(drug_name):
+    pathdir = os.path.dirname(__file__)
+    datadir = os.path.join(pathdir, "preprocessing", "average_ratings.json")
+    with open(datadir, "r") as file:
+        ratings = json.load(file)
+    if drug_name not in ratings:
+        return -1
+    return ratings[drug_name]
+
+
 @app.route("/drugs")
 def drugs_search():
     text_query = request.args.get("query")
@@ -64,7 +84,13 @@ def drugs_search():
         rtrn_lst = []
         for tup in top_10:
             rtrn_lst.append(
-                {"drug": tup[0], "definition": get_def(tup[0]), "score": tup[1]}
+                {
+                    "drug": tup[0],
+                    "definition": get_def(tup[0]),
+                    "score": tup[1],
+                    "top_5_ad_events": get_top_5_ad_events(tup[0]),
+                    "rating": get_rating(tup[0]),
+                }
             )
         return rtrn_lst
 
