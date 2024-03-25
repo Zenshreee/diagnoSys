@@ -2,6 +2,7 @@ import json
 import os
 import time
 
+
 def process_documents():
 
     drug_uses = {}
@@ -20,43 +21,38 @@ def process_documents():
                 print(f"Processing result {count}")
             count += 1
             for drugs in result.get("patient", {}).get("drug", []):
-                    brandnames = drugs.get("openfda", {}).get("brand_name", [])
-                    drugindication = drugs.get("drugindication", "Drug use not found")
-                    if drugindication == "PRODUCT USED FOR UNKNOWN INDICATION":
-                        continue 
-                    if not brandnames:
-                        continue  
-                    brandname = brandnames[0]
-                    if brandname not in drug_uses:
-                        drug_uses[brandname] = {}
-                    if drugindication not in drug_uses[brandname]:
-                        drug_uses[brandname][drugindication] = 0
-                    drug_uses[brandname][drugindication] += 1
-    
+                brandnames = drugs.get("openfda", {}).get("brand_name", [])
+                drugindication = drugs.get("drugindication", "Drug use not found")
+                if (
+                    drugindication.lower()
+                    == "PRODUCT USED FOR UNKNOWN INDICATION".lower()
+                ) or drugindication.lower() == "PRODUCT USE IN UNAPPROVED INDICATION".lower():
+                    continue
+                if not brandnames:
+                    continue
+                brandname = brandnames[0]
+                if brandname == "XANAX":
+                    print("XANAX")
+                if brandname not in drug_uses:
+                    drug_uses[brandname] = {}
+                if drugindication.title() not in drug_uses[brandname]:
+                    drug_uses[brandname][drugindication.title()] = 0
+                drug_uses[brandname][drugindication.title()] += 1
+
     threshold = 5
     for brandname, indications in drug_uses.items():
-      if len(indications) > 1 and "Drug use not found" in indications:
-            del indications["Drug use not found"]
-      sorted_indications = sorted(indications.items(), key=lambda x: x[1], reverse=True)[:threshold]
-      drug_uses[brandname] = [indication for indication, count in sorted_indications]
+        if len(indications) > 1 and "Drug use not found".title() in indications:
+            del indications["Drug use not found".title()]
+        sorted_indications = sorted(
+            indications.items(), key=lambda x: x[1], reverse=True
+        )[:threshold]
+        drug_uses[brandname] = [indication for indication, count in sorted_indications]
 
     with open("../preprocessing/drug_use.json", "w") as outfile:
         json.dump(drug_uses, outfile)
-    
+
     return drug_uses
 
 
 if __name__ == "__main__":
     process_documents()
-
-
-                    
-          
-            
-
-
-
-        
-
-        
-

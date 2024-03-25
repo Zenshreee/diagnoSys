@@ -284,11 +284,50 @@ body {
 }
 
 .drug-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Allows for the rating to sit at the bottom */
+    width: calc(100% - 30px); /* Full width minus margin */
     border: 1px solid #11998e;
     border-radius: 8px;
-    padding: 15px;
-    margin: 10px 0;
+    padding: 20px; /* Inner spacing */
+    margin: 15px; /* Spacing around the card */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.drug-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Ensure the content uses the full width of the card */
+    padding: 20px; /* Adds padding inside the card */
+}
+
+.drug-info {
+    padding-bottom: 20px; /* Space above the rating */
+}
+
+.drug-meta {
+    flex: 0 0 200px; /* Sets the width of the right column and prevents it from growing */
+    padding-left: 20px; /* Adds padding to the left of the right column */
+    text-align: left; /* Aligns the text to the left */
+}
+
+.drug-usage {
+    font-size: 0.9em;
+    color: #c9c8c8;
+    list-style-type: disc;
+    padding: 0; /* Removes default padding */
+    margin: 0; /* Removes default margin */
+}
+
+.drug-usage li {
+    padding: 2px 0; /* Adds some spacing between usage items */
+}
+
+
+.drug-meta {
+    flex-basis: 200px; /* Adjust the width as needed */
+    text-align: right; /* Aligns the text to the right */
 }
 
 .drug-title {
@@ -309,4 +348,67 @@ body {
     margin-top: 10px;
     font-weight: bold;
     font-family: 'Kanit', sans-serif;
+}
+
+.drug-adverse-events {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.drug-adverse-events h4 {
+    margin: 0 0 5px 0;
+    font-size: 1em;
+    color: #c9c8c8;
+}
+
+.drug-adverse-events ul {
+    list-style-type: disc;
+    margin: 0;
+    padding-left: 20px;
+}
+
+.drug-adverse-events li {
+    font-size: 0.9em;
+    color: #bababa;
+}
+
+.drug-rating {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #8de0b6;
+}
+
+.drug-median-age {
+    font-size: 0.8em;
+    margin-top: 10px; 
+}
+
+.drug-usage, .drug-adverse-events, .drug-median-age {
+    margin: 10px 0;
+}
+
+.drug-usage li, .drug-adverse-events li {
+    list-style-type: disc;
+    margin-left: 20px; /* Indent list items */
+    font-size: 0.9em;
+}
+
+.drug-median-age {
+    font-size: 0.9em;
+}
+
+.drug-rating {
+    font-size: 0.9em;
+    text-align: center; /* Centers the rating text */
+    align-self: center; /* Centers the rating div in the card */
+    margin-top: auto; /* Pushes the rating to the bottom */
+}
+
+.drug-adverse-events-title {
+    font-size: 1.1em; /* Adjust the font size as needed */
+    color: #e0e2e1; /* This is a light grey color; change as needed */
+    font-weight: bold; /* Makes the title bold */
+    margin-top: 20px; /* Adds space above the title */
+    margin-bottom: 5px; /* Adds space below the title */
+    font-family: 'Open Sans', sans-serif; /* This is assuming you're using the Open Sans font */
 }

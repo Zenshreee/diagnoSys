@@ -50,18 +50,22 @@
     <script>
 
 
-        function answerBoxTemplate(drug, description, score, top_5_ad_events, rating) {
+        function answerBoxTemplate(drug, description, score, top_5_ad_events, rating, median_age, usage) {
             let adverseEventsHtml = top_5_ad_events.map(event => `<li>${event}</li>`).join('');
+            let usageHtml = usage.map(item => `<li>${item}</li>`).join('');
             return `<div class='drug-card'>
-                        <h3 class='drug-title'>${drug}</h3>
-                        <p class='drug-description'>${description}</p>
-                        <div class='drug-score'>Score: ${score}</div>
-                        <ul class='drug-adverse-events'>Top 5 Adverse Events: ${adverseEventsHtml}</ul>
+                        <div class='drug-info'>
+                            <h3 class='drug-title'>${drug}</h3>
+                            <p class='drug-description'>${description}</p>
+                            <p class='drug-adverse-events-title'>Top 5 Adverse Events:</p>
+                            <ul class='drug-adverse-events'>${adverseEventsHtml}</ul>
+                            <p class='drug-adverse-events-title'>Common Usage: </p>
+                            <ul class='drug-adverse-events'>${usageHtml}</ul>
+                            <p class='drug-median-age'>Median Age: ${median_age}</p>
+                        </div>
                         <div class='drug-rating'>Rating: ${rating}</div>
                     </div>`;
         }
-
-
 
 
         function sendFocus() {
@@ -92,7 +96,7 @@
                 .then((data) => {
                     console.log(data);
                     data.forEach(row => {
-                        let cardHTML = answerBoxTemplate(row.drug, row.definition, row.score, row.top_5_ad_events || [], row.rating);
+                        let cardHTML = answerBoxTemplate(row.drug, row.definition, row.score, row.top_5_ad_events || [], row.rating, row.median_age, row.usage);
                         answerBox.insertAdjacentHTML('beforeend', cardHTML);
                     });
                 });

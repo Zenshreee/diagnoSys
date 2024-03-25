@@ -61,7 +61,10 @@ def get_top_5_ad_events(drug_name):
         top_5 = json.load(file)
     if drug_name not in top_5:
         return []
-    return top_5[drug_name][:5]
+    res = []
+    for i in top_5[drug_name][:5]:
+        res.append([i[0]])
+    return res
 
 
 def get_rating(drug_name):
@@ -70,8 +73,31 @@ def get_rating(drug_name):
     with open(datadir, "r") as file:
         ratings = json.load(file)
     if drug_name not in ratings:
-        return -1
-    return ratings[drug_name]
+        return "Rating not found"
+    return str(ratings[drug_name]) + "/10"
+
+
+def get_median_age(drug_name):
+    pathdir = os.path.dirname(__file__)
+    datadir = os.path.join(pathdir, "preprocessing", "drug_median_var_ages.json")
+    with open(datadir, "r") as file:
+        median_ages = json.load(file)
+    if drug_name not in median_ages:
+        return "Not Found"
+    return str(round(median_ages[drug_name][0], 1))
+
+
+def get_usage(drug_name):
+    pathdir = os.path.dirname(__file__)
+    datadir = os.path.join(pathdir, "preprocessing", "drug_use.json")
+    with open(datadir, "r") as file:
+        usage = json.load(file)
+    if drug_name not in usage:
+        return []
+    res = []
+    for i in usage[drug_name]:
+        res.append([i])
+    return res
 
 
 @app.route("/drugs")
@@ -90,6 +116,8 @@ def drugs_search():
                     "score": tup[1],
                     "top_5_ad_events": get_top_5_ad_events(tup[0]),
                     "rating": get_rating(tup[0]),
+                    "median_age": get_median_age(tup[0]),
+                    "usage": get_usage(tup[0]),
                 }
             )
         return rtrn_lst
@@ -98,4 +126,4 @@ def drugs_search():
 
 
 if "DB_NAME" not in os.environ:
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5001)
