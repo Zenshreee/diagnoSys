@@ -21,7 +21,7 @@ def process_documents():
                 print(f"Processing result {count}")
             count += 1
             for drugs in result.get("patient", {}).get("drug", []):
-                brandnames = drugs.get("openfda", {}).get("brand_name", [])
+                brandnames = sorted(drugs.get("openfda", {}).get("brand_name", []))
                 drugindication = drugs.get("drugindication", "Drug use not found")
                 if (
                     drugindication.lower()

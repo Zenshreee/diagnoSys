@@ -95,8 +95,10 @@
                 .then((data) => {
                     console.log(data);
                     data.forEach(row => {
-                        let cardHTML = answerBoxTemplate(row.drug, row.definition, row.score, row.top_5_ad_events || [], row.rating, row.median_age, row.usage);
-                        answerBox.insertAdjacentHTML('beforeend', cardHTML);
+                        if (row.score > 0) {
+                            let cardHTML = answerBoxTemplate(row.drug, row.definition, row.score, row.top_5_ad_events || [], row.rating, row.median_age, row.usage);
+                            answerBox.insertAdjacentHTML('beforeend', cardHTML);
+                        }
                     });
                 });
         }
