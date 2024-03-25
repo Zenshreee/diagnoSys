@@ -98,9 +98,11 @@
 # )  # this contains the parent itself as the most similar entry, hence n+1 to get n children
 # print(n_largest)
 
-import json
+# import json
 
-with open("../resources/drug_documents.json", "r") as file:
-    data = json.load(file)
+# with open("../resources/drug_documents.json", "r") as file:
+#     data = json.load(file)
 
-print(len(data))
+# print(len(data))
+
+
