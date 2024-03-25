@@ -68,6 +68,7 @@
     flex-direction: column;
     align-items: center;
     width: 90%;
+    height: 100%;
 }
 
 .input-box input {
@@ -118,7 +119,7 @@
     margin: 0;
     outline: none;
     overflow: visible;
-    padding: 13px 16px;
+    padding: 9px 12px;
     text-align: center;
     text-transform: uppercase;
     touch-action: manipulation;
@@ -129,6 +130,7 @@
     vertical-align: middle;
     white-space: nowrap;
     width: 25%;
+    height: 60px;
 }
 
 .search-button:after {
@@ -183,6 +185,11 @@
     padding: 7px 0;
     background: transparent;
     transition: border-color 0.2s;
+    resize: none;
+    box-sizing: border-box;
+    height: 42px;
+    max-height: 150px;
+    line-height: 1.4;
 
     &::placeholder {
         color: transparent;
@@ -192,6 +199,7 @@
         font-size: 1.3rem;
         cursor: text;
         top: 20px;
+        padding-bottom: 10px;
     }
 }
 
@@ -200,26 +208,26 @@
     top: 0;
     display: block;
     transition: 0.2s;
-    font-size: 1rem;
+    font-size: 1.3rem;
     color: #9b9b9b;
 }
 
+.form__field.has-content,
 .form__field:focus {
-    ~.form__label {
-        position: absolute;
-        top: 0;
-        display: block;
-        transition: 0.2s;
-        font-size: 1rem;
-        color: #11998e;
-        font-weight: 700;
-    }
-
     padding-bottom: 6px;
-    font-weight: 700;
     border-width: 3px;
     border-image: linear-gradient(to right, #11998e, #38ef7d);
     border-image-slice: 1;
+}
+
+.form__field.has-content~.form__label,
+.form__field:focus~.form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #11998e;
 }
 
 /* reset input */
@@ -233,7 +241,7 @@
 
 
 .custom-select {
-    min-width: 100px;
+    min-width: 60px;
 }
 
 select {
@@ -247,6 +255,7 @@ select {
     border: 1px solid #caced1;
     color: #caced1;
     cursor: pointer;
+    height: 60px;
 }
 
 .custom-select::before,
@@ -283,51 +292,79 @@ body {
     background-color: #222324;
 }
 
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .drug-card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Allows for the rating to sit at the bottom */
-    width: calc(100% - 30px); /* Full width minus margin */
+    justify-content: space-between;
+    /* Allows for the rating to sit at the bottom */
+    width: calc(100% - 30px);
+    /* Full width minus margin */
     border: 1px solid #11998e;
     border-radius: 8px;
-    padding: 20px; /* Inner spacing */
-    margin: 15px; /* Spacing around the card */
+    padding: 20px;
+    margin: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    animation-fill-mode: forwards;
 }
 
 .drug-content {
     display: flex;
     justify-content: space-between;
-    width: 100%; /* Ensure the content uses the full width of the card */
-    padding: 20px; /* Adds padding inside the card */
+    width: 100%;
+    /* Ensure the content uses the full width of the card */
+    padding: 20px;
+    /* Adds padding inside the card */
 }
 
 .drug-info {
-    padding-bottom: 20px; /* Space above the rating */
+    padding-bottom: 20px;
+    /* Space above the rating */
 }
 
 .drug-meta {
-    flex: 0 0 200px; /* Sets the width of the right column and prevents it from growing */
-    padding-left: 20px; /* Adds padding to the left of the right column */
-    text-align: left; /* Aligns the text to the left */
+    flex: 0 0 200px;
+    /* Sets the width of the right column and prevents it from growing */
+    padding-left: 20px;
+    /* Adds padding to the left of the right column */
+    text-align: left;
+    /* Aligns the text to the left */
 }
 
 .drug-usage {
     font-size: 0.9em;
     color: #c9c8c8;
     list-style-type: disc;
-    padding: 0; /* Removes default padding */
-    margin: 0; /* Removes default margin */
+    padding: 0;
+    /* Removes default padding */
+    margin: 0;
+    /* Removes default margin */
 }
 
 .drug-usage li {
-    padding: 2px 0; /* Adds some spacing between usage items */
+    padding: 2px 0;
+    /* Adds some spacing between usage items */
 }
 
 
 .drug-meta {
-    flex-basis: 200px; /* Adjust the width as needed */
-    text-align: right; /* Aligns the text to the right */
+    flex-basis: 200px;
+    /* Adjust the width as needed */
+    text-align: right;
+    /* Aligns the text to the right */
 }
 
 .drug-title {
@@ -380,16 +417,20 @@ body {
 
 .drug-median-age {
     font-size: 0.8em;
-    margin-top: 10px; 
+    margin-top: 10px;
 }
 
-.drug-usage, .drug-adverse-events, .drug-median-age {
+.drug-usage,
+.drug-adverse-events,
+.drug-median-age {
     margin: 10px 0;
 }
 
-.drug-usage li, .drug-adverse-events li {
+.drug-usage li,
+.drug-adverse-events li {
     list-style-type: disc;
-    margin-left: 20px; /* Indent list items */
+    margin-left: 20px;
+    /* Indent list items */
     font-size: 0.9em;
 }
 
@@ -399,16 +440,25 @@ body {
 
 .drug-rating {
     font-size: 0.9em;
-    text-align: center; /* Centers the rating text */
-    align-self: center; /* Centers the rating div in the card */
-    margin-top: auto; /* Pushes the rating to the bottom */
+    text-align: center;
+    /* Centers the rating text */
+    align-self: center;
+    /* Centers the rating div in the card */
+    margin-top: auto;
+    /* Pushes the rating to the bottom */
 }
 
 .drug-adverse-events-title {
-    font-size: 1.1em; /* Adjust the font size as needed */
-    color: #e0e2e1; /* This is a light grey color; change as needed */
-    font-weight: bold; /* Makes the title bold */
-    margin-top: 20px; /* Adds space above the title */
-    margin-bottom: 5px; /* Adds space below the title */
-    font-family: 'Open Sans', sans-serif; /* This is assuming you're using the Open Sans font */
+    font-size: 1.1em;
+    /* Adjust the font size as needed */
+    color: #e0e2e1;
+    /* This is a light grey color; change as needed */
+    font-weight: bold;
+    /* Makes the title bold */
+    margin-top: 20px;
+    /* Adds space above the title */
+    margin-bottom: 5px;
+    /* Adds space below the title */
+    font-family: 'Open Sans', sans-serif;
+    /* This is assuming you're using the Open Sans font */
 }
