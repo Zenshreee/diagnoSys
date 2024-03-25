@@ -79,13 +79,13 @@ drug_median_var_ages_path = os.path.join(
 with open(docspath, "r") as file:
     documents = json.load(file)
 
-index_to_doc = {}
+# index_to_doc = {}
 
-for idx, doc in enumerate(list(documents.keys())):
-    index_to_doc[idx] = doc
+# for idx, doc in enumerate(list(documents.keys())):
+#     index_to_doc[idx] = doc
 
-with open(index_to_json_path, "w") as file:
-    json.dump(index_to_doc, file, indent=4)
+# with open(index_to_json_path, "w") as file:
+#     json.dump(index_to_doc, file, indent=4)
 
 # # # with open(vectorizer_path, "rb") as file:
 # # #     vectorizer = pickle.load(file)
@@ -188,6 +188,15 @@ def query_with_age(tfidf_matrix, query, user_age):
     return rtrn_lst
 
 
+# with open("average_ratings.json", "r") as file:
+#     average_ratings = json.load(file)
+
+# print(len(average_ratings))
+
+# with open("ad_counts.json", "r") as file:
+#     adcounts = json.load(file)
+
+# print(len(adcounts))
 # print()
 
 # query_with_age(
