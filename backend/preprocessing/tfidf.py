@@ -89,7 +89,7 @@ with open(docspath, "r") as file:
 
 # # # with open(vectorizer_path, "rb") as file:
 # # #     vectorizer = pickle.load(file)
-vectorizer = TfidfVectorizer()
+vectorizer = TfidfVectorizer(stop_words="english")
 tfidf_matrix = vectorizer.fit_transform(list(documents.values()))
 # pickle.dump(vectorizer, open(vectorizer_path, "wb"))
 # tfidf_matrix = np.array(tfidf_matrix.toarray())
