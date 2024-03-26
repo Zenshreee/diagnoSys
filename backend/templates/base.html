@@ -17,8 +17,7 @@
             <img src="{{ url_for('static', filename='images/diagnosys.png') }}" />
             <div class="search">
                 <div class="form__group field">
-                    <textarea class="form__field" id="filter-text-val" placeholder="Name" name="name" id='name' required
-                        autocomplete="off"></textarea>
+                    <textarea class="form__field" id="filter-text-val" placeholder="Name" name="name" id='name' required autocomplete="off"></textarea>
                     <label for="name" class="form__label">Enter your symptoms and medications</label>
                 </div>
                 <select name="items" class="custom-select" id="itemSelector">
@@ -50,27 +49,27 @@
     <script>
 
         document.addEventListener('DOMContentLoaded', () => {
-                const textarea = document.getElementById('filter-text-val');
-                const maxHeight = 150; 
-                const minHeight = 42; 
+            const textarea = document.getElementById('filter-text-val');
+            const maxHeight = 150;
+            const minHeight = 42;
 
-                const updateFieldState = () => {
-                    if (textarea.value !== "" || document.activeElement === textarea) {
-                        textarea.classList.add('has-content');
-                    } else {
-                        textarea.classList.remove('has-content');
-                    }
+            const updateFieldState = () => {
+                if (textarea.value !== "" || document.activeElement === textarea) {
+                    textarea.classList.add('has-content');
+                } else {
+                    textarea.classList.remove('has-content');
+                }
 
-                    const newHeight = Math.min(textarea.scrollHeight, maxHeight);
-                    textarea.style.height = textarea.value ? `${newHeight}px` : `${minHeight}px`;
-                };
+                const newHeight = Math.min(textarea.scrollHeight, maxHeight);
+                textarea.style.height = textarea.value ? `${newHeight}px` : `${minHeight}px`;
+            };
 
-                textarea.addEventListener('input', updateFieldState);
-                textarea.addEventListener('focus', updateFieldState);
-                textarea.addEventListener('blur', updateFieldState);
+            textarea.addEventListener('input', updateFieldState);
+            textarea.addEventListener('focus', updateFieldState);
+            textarea.addEventListener('blur', updateFieldState);
 
-                updateFieldState();
-            });
+            updateFieldState();
+        });
 
         function observeCards() {
             const observer = new IntersectionObserver((entries, observer) => {

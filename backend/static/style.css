@@ -418,6 +418,8 @@ body {
 .drug-median-age {
     font-size: 0.8em;
     margin-top: 10px;
+    font-weight: bold;
+    color: #8de0b6;
 }
 
 .drug-usage,
@@ -436,13 +438,16 @@ body {
 
 .drug-median-age {
     font-size: 0.9em;
+    text-align: left;
+    align-self: left;
+    margin-top: auto
 }
 
 .drug-rating {
     font-size: 0.9em;
-    text-align: center;
+    text-align: right;
     /* Centers the rating text */
-    align-self: center;
+    align-self: right;
     /* Centers the rating div in the card */
     margin-top: auto;
     /* Pushes the rating to the bottom */
