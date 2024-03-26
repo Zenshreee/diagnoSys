@@ -69,6 +69,14 @@
             textarea.addEventListener('blur', updateFieldState);
 
             updateFieldState();
+
+            const searchButton = document.querySelector('.search-button');
+            textarea.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    searchButton.click();
+                }
+            });
         });
 
         function observeCards() {
@@ -94,13 +102,22 @@
             return `<div class='drug-card'>
                         <div class='drug-info'>
                             <h3 class='drug-title'>${drug}</h3>
-                            <p class='drug-adverse-events-title'>Top 5 Adverse Events:</p>
-                            <ul class='drug-adverse-events'>${adverseEventsHtml}</ul>
-                            <p class='drug-adverse-events-title'>Common Usage: </p>
-                            <ul class='drug-adverse-events'>${usageHtml}</ul>
+                            <div class='row-flexing'>
+                                <div class='flexing'>
+                                    <p class='drug-adverse-events-title'>Top 5 Adverse Events:</p>
+                                    <ul class='drug-adverse-events'>${adverseEventsHtml}</ul>
+                                </div>
+                                <div class='flexing'>
+                                    <p class='drug-adverse-events-title'>Common Usage: </p>
+                                    <ul class='drug-adverse-events'>${usageHtml}</ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row-flexing-bottom'>
+                            <div class='drug-rating'>Rating: ${rating}</div>
                             <p class='drug-median-age'>Median Age: ${median_age}</p>
                         </div>
-                        <div class='drug-rating'>Rating: ${rating}</div>
+                        
                     </div>`;
         }
 
