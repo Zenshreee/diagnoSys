@@ -308,9 +308,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* Allows for the rating to sit at the bottom */
-    width: calc(100% - 30px);
-    /* Full width minus margin */
+    width: calc(100%);
     border: 1px solid #11998e;
     border-radius: 8px;
     padding: 20px;
@@ -332,6 +330,9 @@ body {
 
 .drug-info {
     padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%
     /* Space above the rating */
 }
 
@@ -340,7 +341,6 @@ body {
     /* Sets the width of the right column and prevents it from growing */
     padding-left: 20px;
     /* Adds padding to the left of the right column */
-    text-align: left;
     /* Aligns the text to the left */
 }
 
@@ -363,7 +363,6 @@ body {
 .drug-meta {
     flex-basis: 200px;
     /* Adjust the width as needed */
-    text-align: right;
     /* Aligns the text to the right */
 }
 
@@ -372,12 +371,17 @@ body {
     padding-bottom: 10px;
     color: rgb(190, 224, 197);
     font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-shrink: 1;
 }
 
 .drug-description {
     margin: 0;
     color: #e0e2e1;
     font-family: 'Open Sans', sans-serif;
+    width: 100%;
 }
 
 .drug-score {
@@ -438,18 +442,18 @@ body {
 
 .drug-median-age {
     font-size: 0.9em;
-    text-align: left;
+    /* text-align: left;
     align-self: left;
-    margin-top: auto
+    margin-top: auto */
 }
 
 .drug-rating {
     font-size: 0.9em;
-    text-align: right;
+    /* text-align: right; */
     /* Centers the rating text */
-    align-self: right;
+    /* align-self: right; */
     /* Centers the rating div in the card */
-    margin-top: auto;
+    /* margin-top: auto; */
     /* Pushes the rating to the bottom */
 }
 
@@ -466,4 +470,26 @@ body {
     /* Adds space below the title */
     font-family: 'Open Sans', sans-serif;
     /* This is assuming you're using the Open Sans font */
+    margin-right: 20px;
+}
+
+.flexing {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.row-flexing {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.row-flexing-bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    gap: 25px;
 }
