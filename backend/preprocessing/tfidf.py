@@ -89,15 +89,15 @@ with open(docspath, "r") as file:
 
 # # # with open(vectorizer_path, "rb") as file:
 # # #     vectorizer = pickle.load(file)
-vectorizer = TfidfVectorizer(stop_words="english")
-tfidf_matrix = vectorizer.fit_transform(list(documents.values()))
+# vectorizer = TfidfVectorizer(stop_words="english")
+# tfidf_matrix = vectorizer.fit_transform(list(documents.values()))
 # pickle.dump(vectorizer, open(vectorizer_path, "wb"))
 # tfidf_matrix = np.array(tfidf_matrix.toarray())
 # np.save("tfidf_matrix.npy", tfidf_matrix)
 # sp.sparse.save_npz("tfidf_matrix.npz", tfidf_matrix)
-# # tfidf_matrix = np.load(
-# #     os.path.join(os.path.dirname(abspath), filename), allow_pickle=True
-# # )
+tfidf_matrix = np.load(
+    os.path.join(os.path.dirname(abspath), filename), allow_pickle=True
+)
 # tfidf_matrix = sp.sparse.load_npz(matrix_filepath)
 # print(np.array_equal(tfidf_matrix, laoded))
 # cosine_sim = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[3:4])
@@ -106,7 +106,7 @@ tfidf_matrix = vectorizer.fit_transform(list(documents.values()))
 
 
 def query(tfidf_matrix, query):
-    # vectorizer = pickle.load(open(vectorizer_path, "rb"))
+    vectorizer = pickle.load(open(vectorizer_path, "rb"))
     with open(index_to_json_path, "r") as file:
         index_to_doc = json.load(file)
     input_vector = vectorizer.transform([query])
@@ -138,7 +138,7 @@ def query_with_age(tfidf_matrix, query, user_age):
         ages = json.load(file)
     with open(index_to_json_path, "r") as file:
         index_to_doc = json.load(file)
-    # vectorizer = pickle.load(open(vectorizer_path, "rb"))
+    vectorizer = pickle.load(open(vectorizer_path, "rb"))
     input_vector = vectorizer.transform([query])
     cosine_similarities = cosine_similarity(input_vector, tfidf_matrix)
     cosine_similarities = cosine_similarities.flatten()
