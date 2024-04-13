@@ -1,7 +1,8 @@
 import json
 
+
 def load_drugs():
-    with open('brand_to_generic.json', 'r') as file:
+    with open("brand_to_generic.json", "r") as file:
         return json.load(file)
 
 
@@ -42,6 +43,7 @@ def edit_matrix(query, message, ins_cost_func, del_cost_func, sub_cost_func):
             )
     return chart
 
+
 # def edit_distance(query, drug_name):
 #   query = query.lower()
 #   drug_name = drug_name.lower()
@@ -56,13 +58,13 @@ def edit_distance(query, drug_name, ins_cost=1, del_cost=1, sub_cost=2):
     drug_name = drug_name.lower()
 
     def ins_cost_func(s, pos):
-        return ins_cost
+        return 0.1
 
     def del_cost_func(s, pos):
         return del_cost
 
     def sub_cost_func(s1, s2, pos1, pos2):
-        return sub_cost if s1[pos1-1] != s2[pos2-1] else 0
+        return sub_cost if s1[pos1 - 1] != s2[pos2 - 1] else 0
 
     matrix = edit_matrix(query, drug_name, ins_cost_func, del_cost_func, sub_cost_func)
 
@@ -75,13 +77,28 @@ def edit_distance_search(query):
 
     for drug_name in drugs.keys():
         score = edit_distance(query, drug_name)
-        results.append((score, drug_name)) 
+        results.append((score, drug_name))
 
     results.sort(key=lambda x: x[0])
     return results[0]
 
+
 # testing
 closest_match = edit_distance_search("FIBERCOR")
-print("Closest match:", closest_match)
 
 
+def get_5_closest_drugs(query):
+    drugs = load_drugs()
+    results = []
+
+    for drug_name in drugs.keys():
+        score = edit_distance(query, drug_name)
+        results.append((score, drug_name))
+
+    results.sort(key=lambda x: x[0])
+    return results[:5]
+
+
+# testing
+closest_matches = get_5_closest_drugs("TYLENOL")
+print(closest_matches)
