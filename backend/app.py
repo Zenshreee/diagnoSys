@@ -74,7 +74,7 @@ def get_rating(drug_name):
         ratings = json.load(file)
     if drug_name not in ratings:
         return "Rating not found"
-    return str(ratings[drug_name]) + "/10"
+    return ratings[drug_name]
 
 
 def get_median_age(drug_name):
