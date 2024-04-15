@@ -104,6 +104,7 @@ def get_usage(drug_name):
 def drugs_search():
     text_query = request.args.get("query")
     age = float(request.args.get("age"))
+    gender = request.args.get("gender")
 
     def combine_name(query, age):
         top_10 = query_with_age(tfidf_matrix, query, age)

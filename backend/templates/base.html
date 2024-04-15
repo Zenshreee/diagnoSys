@@ -15,32 +15,60 @@
                 <h1 id="google-0-2">0</h1>
             </div> -->
             <img src="{{ url_for('static', filename='images/diagnosys.png') }}" />
-            <div class="search">
-                <div class="form__group field">
-                    <textarea class="form__field" id="filter-text-val" placeholder="Name" name="name" id='name' required autocomplete="off"></textarea>
-                    <label for="name" class="form__label">Enter your symptoms and medications</label>
+            <div class="main-content">
+                <div class="medications-sidebar">
+                    <div class="Card">
+                        <div class="CardInner">
+                            <label>Enter your medications</label>
+                            <div class="container">
+                                <div class="Icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                                        stroke="#657789" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-search">
+                                        <circle cx="11" cy="11" r="8" />
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                    </svg>
+                                </div>
+                                <div class="InputContainer">
+                                    <input type="text" placeholder="Ibuprofen" id="medInput" />
+                                    <div id="autocomplete-list" class="autocomplete-items"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <select name="items" class="custom-select" id="itemSelector">
-                    <option value="50">Age</option>
-                    <option value="15">10-20</option>
-                    <option value="25">21-30</option>
-                    <option value="35">31-40</option>
-                    <option value="45">41-50</option>
-                    <option value="55">51-60</option>
-                    <option value="65">61-70</option>
-                    <option value="75">71-80</option>
-                    <option value="85">81-90</option>
-                    <option value="95">91-100</option>
-                    <option value="105">101-110</option>
-                </select>
-
-                <!-- <div class="input-box" onclick="sendFocus()">
-                    <img src="{{ url_for('static', filename='images/mag.png') }}" />
-                    <input placeholder="Enter your symptoms and medications" id="filter-text-val" class="">
-                </div> -->
-                <button class="search-button" onClick="filterTextDrug()">Search</button>
+                <div class="search">
+                    <div class="form__group field">
+                        <textarea class="form__field" id="filter-text-val" placeholder="Name" name="name" id='name' required
+                            autocomplete="off"></textarea>
+                        <label for="name" class="form__label">Enter your symptoms</label>
+                    </div>
+                    <select name="items" class="custom-select" id="itemSelector">
+                        <option value="N">Sex</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                    <select name="items" class="custom-select" id="genderSelector">
+                        <option value="50">Age</option>
+                        <option value="15">10-20</option>
+                        <option value="25">21-30</option>
+                        <option value="35">31-40</option>
+                        <option value="45">41-50</option>
+                        <option value="55">51-60</option>
+                        <option value="65">61-70</option>
+                        <option value="75">71-80</option>
+                        <option value="85">81-90</option>
+                        <option value="95">91-100</option>
+                        <option value="105">101-110</option>
+                    </select>
+                
+                    <!-- <div class="input-box" onclick="sendFocus()">
+                                    <img src="{{ url_for('static', filename='images/mag.png') }}" />
+                                    <input placeholder="Enter your symptoms and medications" id="filter-text-val" class="">
+                                </div> -->
+                    <button class="search-button" onClick="filterTextDrug()">Search</button>
+                </div>
             </div>
-        </div>
         <div id="answer-box">
             <!-- Cards will be dynamically inserted here -->
         </div>
@@ -78,6 +106,40 @@
                 }
             });
         });
+
+        // FOR AUTOCOMPLETE LIST
+        document.getElementById('medInput').addEventListener('input', function () {
+                var input = this.value;
+
+                if (!input) {
+                    document.getElementById('autocomplete-list').innerHTML = '';
+                    return;
+                }
+
+                // Fetch autocomplete suggestions
+                fetch(`/autocomplete?query=${encodeURIComponent(input)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Assuming your backend returns an array of suggestions
+                        var suggestions = data.suggestions;
+
+                        // Clear previous suggestions
+                        var autocompleteList = document.getElementById('autocomplete-list');
+                        autocompleteList.innerHTML = '';
+
+                        // Add new suggestions
+                        suggestions.forEach(item => {
+                            var div = document.createElement('div');
+                            div.innerHTML = item;
+                            div.addEventListener('click', function () {
+                                document.getElementById('medInput').value = this.innerText;
+                                autocompleteList.innerHTML = '';
+                            });
+                            autocompleteList.appendChild(div);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching autocomplete suggestions:', error));
+            });
 
         function observeCards() {
             const observer = new IntersectionObserver((entries, observer) => {
@@ -166,8 +228,9 @@
             answerBox.innerHTML = ""; // Clear existing cards
             const searchText = document.getElementById("filter-text-val").value;
             const age = document.getElementById("itemSelector").value;
+            const gender = document.getElementById("genderSelector").value;
 
-            fetch("/drugs?" + new URLSearchParams({ query: searchText, age: age }).toString())
+            fetch("/drugs?" + new URLSearchParams({ query: searchText, gender:gender, age: age }).toString())
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data);
