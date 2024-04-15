@@ -1,6 +1,7 @@
 import json
 import os
 from preprocessing.tfidf import tfidf_matrix, query_with_age
+from preprocessing.closest_drug import get_5_closest_drugs
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
@@ -99,12 +100,22 @@ def get_usage(drug_name):
         res.append([i])
     return res
 
+@app.route("/autocomplete")
+def autocomplete():
+    query = request.args.get("query")
+    medications = get_5_closest_drugs(query)
+    return jsonify({"medications": medications})
 
 @app.route("/drugs")
 def drugs_search():
     text_query = request.args.get("query")
     age = float(request.args.get("age"))
     gender = request.args.get("gender")
+    medications_json = request.args.get('medications')
+    if medications_json:
+        medications = json.loads(medications_json)
+    else:
+        medications = []
 
     def combine_name(query, age):
         top_10 = query_with_age(tfidf_matrix, query, age)

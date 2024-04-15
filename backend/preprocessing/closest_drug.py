@@ -1,8 +1,12 @@
 import json
+import os
 
 
 def load_drugs():
-    with open("brand_to_generic.json", "r") as file:
+    base_dir = os.path.dirname(__file__)  # gets the directory where the current script is located
+    json_path = os.path.join(base_dir, 'brand_to_generic.json')
+    with open(json_path, 'r') as file:
+    # with open("brand_to_generic.json", "r") as file:
         return json.load(file)
 
 
@@ -84,7 +88,7 @@ def edit_distance_search(query):
 
 
 # testing
-closest_match = edit_distance_search("FIBERCOR")
+# closest_match = edit_distance_search("FIBERCOR")
 
 
 def get_5_closest_drugs(query):
@@ -96,9 +100,9 @@ def get_5_closest_drugs(query):
         results.append((score, drug_name))
 
     results.sort(key=lambda x: x[0])
-    return results[:5]
+    return [medication.capitalize() for (score, medication) in results[:5]]
 
 
 # testing
-closest_matches = get_5_closest_drugs("TYLENOL")
-print(closest_matches)
+# closest_matches = get_5_closest_drugs("TYLENOL")
+# print(closest_matches)
