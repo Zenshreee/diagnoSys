@@ -100,22 +100,26 @@ def get_usage(drug_name):
         res.append([i])
     return res
 
+
 @app.route("/autocomplete")
 def autocomplete():
     query = request.args.get("query")
     medications = get_5_closest_drugs(query)
     return jsonify({"medications": medications})
 
+
 @app.route("/drugs")
 def drugs_search():
     text_query = request.args.get("query")
     age = float(request.args.get("age"))
     gender = request.args.get("gender")
-    medications_json = request.args.get('medications')
+    medications_json = request.args.get("medications")
     if medications_json:
         medications = json.loads(medications_json)
     else:
         medications = []
+
+    text_query += " " + " ".join(medications)
 
     def combine_name(query, age):
         top_10 = query_with_age(tfidf_matrix, query, age)
