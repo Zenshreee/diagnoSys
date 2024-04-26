@@ -444,27 +444,27 @@
                     .then(response => response.json())
                     .then(data => {
                         console.log(data);
-                        data.forEach((row, index) => {
-                            // Check if data is empty or all scores are zero
-                            const hasRelevantResults = data.some(row => row.score > 0);
 
-                            if (data.length > 0 && hasRelevantResults) {
-                                data.forEach((row, index) => {
-                                    if (row.score > 0) {
-                                        let cardHTML = answerBoxTemplate(row.drug, row.definition, row.score, row.top_5_ad_events || [], row.rating, row.median_age, row.usage);
-                                        let tempDiv = document.createElement("div");
-                                        tempDiv.innerHTML = cardHTML;
-                                        tempDiv.firstChild.style.animationDelay = `${index * 100}ms`;
-                                        answerBox.appendChild(tempDiv.firstChild);
-                                    }
-                                });
-                                observeCards();
-                            } else {
-                                // Display no results message
-                                answerBox.innerHTML = "<p class='no-results'>No results found.</p>";
-                            }
+                        // Check if data is empty or all scores are zero
+                        const hasRelevantResults = data.some(row => row.score > 0);
+
+                        if (data.length > 0 && hasRelevantResults) {
+                            data.forEach((row, index) => {
+                                if (row.score > 0) {
+                                    let cardHTML = answerBoxTemplate(row.drug, row.definition, row.score, row.top_5_ad_events || [], row.rating, row.median_age, row.usage);
+                                    let tempDiv = document.createElement("div");
+                                    tempDiv.innerHTML = cardHTML;
+                                    tempDiv.firstChild.style.animationDelay = `${index * 100}ms`;
+                                    answerBox.appendChild(tempDiv.firstChild);
+                                }
+                            });
+                            observeCards();
+                        } else {
+                            // Display no results message
+                            answerBox.innerHTML = "<p class='no-results'>No results found.</p>";
                         }
-                        );
+
+
                         observeCards();
                     })
                     .catch((error) => {
