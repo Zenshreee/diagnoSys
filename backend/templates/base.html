@@ -427,7 +427,7 @@
                     query: queryText,
                     rel_docs: greenThumbsUpDrugs,
                     non_rel_docs: greenThumbsDownDrugs,
-                    user_age: document.getElementById("ageSelector").value,
+                    user_age: getSelectedAge(),
                 };
 
                 // Endpoint URL
@@ -454,7 +454,6 @@
                             }
                         }
                         );
-                        resizeCanvas();
                         observeCards();
                     })
                     .catch((error) => {
