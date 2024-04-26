@@ -3,8 +3,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap"
-    rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap" rel="stylesheet">
 
 <body>
     <canvas id="stars" width="300" height="300"></canvas>
@@ -142,8 +141,7 @@
                             <label>Enter your medications<span class="underline"></span></label>
                             <div class="container">
                                 <div class="Icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
-                                        fill="none" stroke="#657789" stroke-width="3" stroke-linecap="round"
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#657789" stroke-width="3" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-search">
                                         <circle cx="11" cy="11" r="8" />
                                         <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -163,8 +161,7 @@
                 <div class="search-and-answers">
                     <div class="search">
                         <div class="form__group field">
-                            <textarea class="form__field" id="filter-text-val" placeholder="Name" name="name" id='name'
-                                required autocomplete="off"></textarea>
+                            <textarea class="form__field" id="filter-text-val" placeholder="Name" name="name" id='name' required autocomplete="off"></textarea>
                             <label for="name" class="form__label">Enter your symptoms</label>
                         </div>
                         <!-- <div class="input-box" onclick="sendFocus()">
@@ -172,6 +169,7 @@
                                                             <input placeholder="Enter your symptoms and medications" id="filter-text-val" class="">
                                                         </div> -->
                         <button class="search-button" onClick="filterTextDrug()">Search</button>
+                        <button class="search-button" onClick="sendUpdateQuery()">Update Query</button>
                     </div>
                     <div id="answer-box">
                         <!-- Cards will be dynamically inserted here -->
@@ -284,8 +282,80 @@
                     observer.observe(card);
                 });
             }
+            function toggleThumb(clickedThumb) {
+                // Find parent card element
+                const card = clickedThumb.closest('.drug-card');
 
-            function answerBoxTemplate(drug, description, score, top_5_ad_events, rating, median_age, usage) {
+                // Determine whether the thumb is up or down
+                const isThumbsUp = clickedThumb.classList.contains('thumbs-up');
+
+                // Select thumbs within the same card
+                const thumbsUp = card.querySelector('.thumbs-up');
+                const thumbsDown = card.querySelector('.thumbs-down');
+
+                // Toggle clicked thumb
+                if (clickedThumb.src.includes('white')) {
+                    clickedThumb.src = clickedThumb.src.replace('white', 'green');
+                } else {
+                    clickedThumb.src = clickedThumb.src.replace('green', 'white');
+                }
+
+                // Reset the other thumb
+                const otherThumb = isThumbsUp ? thumbsDown : thumbsUp;
+                if (otherThumb.src.includes('green')) {
+                    otherThumb.src = otherThumb.src.replace('green', 'white');
+                }
+            }
+
+
+
+
+            function toggleSingleThumb(imgElement) {
+                // Check the current src of the image
+                if (imgElement.src.includes('white')) {
+                    // If it's the white one, switch to green
+                    imgElement.src = imgElement.src.replace('_white', '_green');
+                } else {
+                    // If it's green, switch back to white
+                    imgElement.src = imgElement.src.replace('_green', '_white');
+                }
+            }
+            function getDrugsWithGreenThumbsUp() {
+                const cards = document.querySelectorAll('.drug-card');
+                let drugsWithGreenThumbsUp = [];
+
+                cards.forEach(card => {
+                    const thumbsUp = card.querySelector('.thumbs-up');
+                    if (thumbsUp.src.includes('green')) {
+                        const drugTitle = card.querySelector('.drug-title').textContent;
+                        drugsWithGreenThumbsUp.push(drugTitle);
+                    }
+                });
+
+                console.log("Drugs with Thumbs Up Green:", drugsWithGreenThumbsUp);
+                return drugsWithGreenThumbsUp;
+            }
+
+            function getDrugsWithGreenThumbsDown() {
+                const cards = document.querySelectorAll('.drug-card');
+                let drugsWithGreenThumbsDown = [];
+
+                cards.forEach(card => {
+                    const thumbsDown = card.querySelector('.thumbs-down');
+                    if (thumbsDown.src.includes('green')) {
+                        const drugTitle = card.querySelector('.drug-title').textContent;
+                        drugsWithGreenThumbsDown.push(drugTitle);
+                    }
+                });
+
+                console.log("Drugs with Thumbs Down Green:", drugsWithGreenThumbsDown);
+                return drugsWithGreenThumbsDown;
+            }
+
+
+
+
+            function answerBoxTemplate(drug, description, score, top_5_ad_events, rating, median_age, usage, index) {
                 let adverseEventsHtml = top_5_ad_events.map(event => `<li>${event}</li>`).join('');
                 let usageHtml = usage.map(item => `<li>${item}</li>`).join('');
                 let starsHtml = '';
@@ -326,11 +396,72 @@
                         </div>
                         <div class='row-flexing-bottom'>
                             <div class='drug-rating'>Rating: <div class='stars'>${starsHtml}</div></div>
+                            <div class='thumbs'>
+                <img src="../static/images/thumbsup_white.svg" alt="Thumbs Up" class="thumb thumbs-up" onclick="toggleThumb(this)" width="50" height="60"/>
+                <img src="../static/images/thumbsdown_white.svg" alt="Thumbs Down" class="thumb thumbs-down" onclick="toggleThumb(this)" width="50" height="60"/>
+            
+
+
+
+
+                            </div>
                             <p class='drug-median-age'>Median Age: ${median_age}</p>
                         </div>
                         
                     </div>`;
             }
+
+
+            function sendUpdateQuery() {
+                // Collect all green thumbs up and thumbs down drugs
+                const greenThumbsUpDrugs = getDrugsWithGreenThumbsUp();
+                const greenThumbsDownDrugs = getDrugsWithGreenThumbsDown();
+                const answerBox = document.getElementById("answer-box");
+                answerBox.innerHTML = ""; // Clear existing cards
+
+                // Get the query from the input field
+                const queryText = document.getElementById("filter-text-val").value;
+
+                // Prepare the data to send
+                const dataToSend = {
+                    query: queryText,
+                    rel_docs: greenThumbsUpDrugs,
+                    non_rel_docs: greenThumbsDownDrugs,
+                    user_age: document.getElementById("ageSelector").value,
+                };
+
+                // Endpoint URL
+                const endpoint = '/update-query';  // Update with the actual endpoint URL
+
+                // Send the data using fetch
+                fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dataToSend)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        data.forEach((row, index) => {
+                            if (row.score > 0) {
+                                let cardHTML = answerBoxTemplate(row.drug, row.definition, row.score, row.top_5_ad_events || [], row.rating, row.median_age, row.usage);
+                                let tempDiv = document.createElement("div");
+                                tempDiv.innerHTML = cardHTML;
+                                tempDiv.firstChild.style.animationDelay = `${index * 100}ms`;
+                                answerBox.appendChild(tempDiv.firstChild);
+                            }
+                        }
+                        );
+                        resizeCanvas();
+                        observeCards();
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            }
+
 
 
             function sendFocus() {
@@ -342,11 +473,12 @@
                 console.log(document.getElementById("filter-text-val").value)
                 fetch("/episodes?" + new URLSearchParams({ title: document.getElementById("filter-text-val").value }).toString())
                     .then((response) => response.json())
-                    .then((data) => data.forEach(row => {
-
-                        let tempDiv = document.createElement("div")
-                        tempDiv.innerHTML = answerBoxTemplate(row.title, row.descr)
-                        document.getElementById("answer-box").appendChild(tempDiv)
+                    .then((data) => data.forEach((row, index) => {
+                        let cardHTML = answerBoxTemplate(row.drug, row.definition, row.score, row.top_5_ad_events || [], row.rating, row.median_age, row.usage, index);
+                        let tempDiv = document.createElement("div");
+                        tempDiv.innerHTML = cardHTML;
+                        tempDiv.firstChild.style.animationDelay = `${index * 100}ms`;
+                        answerBox.appendChild(tempDiv.firstChild);
                     }));
             }
 

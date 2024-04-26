@@ -243,6 +243,59 @@ def print_top_terms_for_components(vectorizer, svd_model, n_top_terms=10):
 # print_top_terms_for_components(vectorizer, svd, n_top_terms=10)
 
 
+def query_after_rocchio(tfidf_matrix, query_vec, user_age):
+    user_age = float(user_age)
+
+    with open(index_to_json_path, "r") as file:
+        index_to_doc = json.load(file)
+    with open(drug_median_var_ages_path, "r") as file:
+        ages = json.load(file)
+    with open(svd_path, "rb") as file:
+        svd = pickle.load(file)
+    input_vector = svd.transform(query_vec)
+    cosine_similarities = cosine_similarity(input_vector, tfidf_matrix)
+    cosine_similarities = cosine_similarities.flatten()
+    age_scores = cosine_similarities.copy()
+    for i, score in enumerate(cosine_similarities):
+        document_name = index_to_doc[str(i)]
+        if document_name in ages:
+            median_age = ages[document_name][0]
+            std_dev = ages[document_name][1]
+            multiplier = 1 + ((1 / ((abs(median_age - user_age) + 1) ** 2)))
+            age_scores[i] = multiplier * score
+
+    top_10_scores = np.argsort(cosine_similarities)[::-1][:10]
+
+    accumualtor = []
+    for i, doc_pos in enumerate(top_10_scores):
+        document_name = index_to_doc[str(doc_pos)]
+        if document_name in ages:
+            median_age = ages[document_name][0]
+            std_dev = ages[document_name][1]
+            multiplier = 1 + (
+                (1 / ((abs(median_age - user_age) + 1) ** 2))
+            )  # 1+((1/(abs(median_age - user_age)+1)) * (1/(std_dev + 1)))
+            accumualtor.append(multiplier)
+
+    mean_multiplier = np.mean(accumualtor)
+
+    for i, doc_pos in enumerate(top_10_scores):
+        document_name = index_to_doc[str(doc_pos)]
+        if document_name not in ages:
+            age_scores[doc_pos] = age_scores[doc_pos] * mean_multiplier
+
+    top_10_og_age_scores = [(age_scores[index], index) for index in top_10_scores]
+    # top_10_age_scores = np.argsort(age_scores)[::-1][:10]
+    rtrn_lst = []
+    # print("Top 10 most similar documents:")
+    for score, index in top_10_og_age_scores:
+        document_name = index_to_doc[str(index)]
+        rtrn_lst.append((document_name, score))
+        # print(f"{document_name}: {score}")
+
+    return rtrn_lst
+
+
 def query_with_explanation(query, tfidf_matrix, vectorizer, svd, top_k=10):
     with open(index_to_json_path, "r") as file:
         index_to_doc = json.load(file)

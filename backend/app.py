@@ -1,10 +1,11 @@
 import json
 import os
-from preprocessing.tfidf import tfidf_matrix, query_with_age
+from preprocessing.tfidf import tfidf_matrix, query_with_age, query_after_rocchio
 from preprocessing.closest_drug import get_5_closest_drugs
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
+from preprocessing.rocchio import rocchio
 
 # ROOT_PATH for linking with all your files.
 # Feel free to use a config.py or settings.py with a global export variable
@@ -108,6 +109,36 @@ def autocomplete():
     return jsonify({"medications": medications})
 
 
+@app.route("/update-query", methods=["POST"])
+def update_query():
+    query = request.json["query"]
+    rel_docs = request.json["rel_docs"]
+    non_rel_docs = request.json["non_rel_docs"]
+    age = request.json["user_age"]
+
+    new_query = rocchio(query, rel_docs, non_rel_docs)
+
+    def combine_name(query, age):
+        top_10 = query_after_rocchio(tfidf_matrix, query, age)
+        print(top_10)
+        rtrn_lst = []
+        for tup in top_10:
+            rtrn_lst.append(
+                {
+                    "drug": tup[0],
+                    "definition": get_def(tup[0]),
+                    "score": tup[1],
+                    "top_5_ad_events": get_top_5_ad_events(tup[0]),
+                    "rating": get_rating(tup[0]),
+                    "median_age": get_median_age(tup[0]),
+                    "usage": get_usage(tup[0]),
+                }
+            )
+        return rtrn_lst
+
+    return jsonify(combine_name(new_query, age))
+
+
 @app.route("/drugs")
 def drugs_search():
     text_query = request.args.get("query")
@@ -123,6 +154,7 @@ def drugs_search():
 
     def combine_name(query, age):
         top_10 = query_with_age(tfidf_matrix, query, age)
+        print("initial: ", top_10)
         rtrn_lst = []
         for tup in top_10:
             rtrn_lst.append(
