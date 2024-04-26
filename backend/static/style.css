@@ -5,7 +5,8 @@ body {
 }
 
 body {
-    background-color: rgb(34, 35, 36);;
+    background-color: rgb(34, 35, 36);
+    ;
     background: radial-gradient(ellipse at center, rgb(34, 35, 36) 0%, rgb(34, 35, 36) 100%);
 }
 
@@ -381,6 +382,25 @@ body {
     /* Adds some spacing between usage items */
 }
 
+.thumbs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.thumb {
+    cursor: pointer;
+    margin: 0 10px;
+    /* Adds space between thumbs */
+    transition: transform 0.3s ease;
+    /* Smooth transformation on click */
+}
+
+.thumb:hover {
+    transform: scale(1.1);
+    /* Slightly enlarge thumb on hover */
+}
+
 
 .drug-meta {
     flex-basis: 200px;
@@ -428,6 +448,12 @@ body {
     list-style-type: disc;
     margin: 0;
     padding-left: 20px;
+}
+
+.highlighted {
+    filter: brightness(1.5);
+    background-color: #00ff00;
+    /* Green background */
 }
 
 .drug-adverse-events li {
