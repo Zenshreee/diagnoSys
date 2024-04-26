@@ -13,6 +13,130 @@
             <div class="main-content">
                 <div class="medications-sidebar">
                     <div class="Card">
+                        <div class="filters">
+                            <label>Filters<span class="underline"></span></label>
+                            <div class="selectors">
+                                <form id="app-cover">
+                                    <div id="select-box">
+                                        <input type="checkbox" id="options-view-button">
+                                        <div id="select-button" class="brd">
+                                            <div id="selected-value">
+                                                <span>Sex</span>
+                                                <svg fill="#ffffff" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M7.293,7.707a1,1,0,0,1,0-1.414l4-4a1,1,0,0,1,1.414,0l4,4a1,1,0,1,1-1.414,1.414L12,4.414,8.707,7.707A1,1,0,0,1,7.293,7.707Zm0,10,4,4a1,1,0,0,0,1.414,0l4-4a1,1,0,0,0-1.414-1.414L12,19.586,8.707,16.293a1,1,0,1,0-1.414,1.414Z" />
+                                                </svg>
+                                            </div>
+                                            <div id="chevrons">
+                                                <i class="fas fa-chevron-up"></i>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                        <div id="options">
+                                            <div class="option">
+                                                <input class="s-c top" type="radio" name="gender" value="male">
+                                                <input class="s-c bottom" type="radio" name="gender" value="male">
+                                                <i class="fab extra1"></i>
+                                                <span class="label">Male</span>
+                                                <span class="opt-val">Male</span>
+                                            </div>
+                                            <div class="option">
+                                                <input class="s-c top" type="radio" name="gender" value="female">
+                                                <input class="s-c bottom" type="radio" name="gender" value="female">
+                                                <i class="fab extra2"></i>
+                                                <span class="label">Female</span>
+                                                <span class="opt-val">Female</span>
+                                            </div>
+                                            <div id="option-bg"></div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <form id="app-cover">
+                                    <div id="select-box">
+                                        <input type="checkbox" id="options-view-button">
+                                        <div id="select-button" class="brd">
+                                            <div id="selected-value">
+                                                <span>Age</span>
+                                                <svg fill="#ffffff" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M7.293,7.707a1,1,0,0,1,0-1.414l4-4a1,1,0,0,1,1.414,0l4,4a1,1,0,1,1-1.414,1.414L12,4.414,8.707,7.707A1,1,0,0,1,7.293,7.707Zm0,10,4,4a1,1,0,0,0,1.414,0l4-4a1,1,0,0,0-1.414-1.414L12,19.586,8.707,16.293a1,1,0,1,0-1.414,1.414Z" />
+                                                </svg>
+                                            </div>
+                                            <div id="chevrons">
+                                                <i class="fas fa-chevron-up"></i>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                        <div id="options">
+                                            <div class="optionAge">
+                                                <input class="s-c top" type="radio" name="Age" value="15">
+                                                <input class="s-c bottom" type="radio" name="Age" value="15">
+                                                <i class="fab extra1"></i>
+                                                <span class="label">10-20</span>
+                                                <span class="opt-val">10-20</span>
+                                            </div>
+                                            <div class="optionAge">
+                                                <input class="s-c top" type="radio" name="Age" value="25">
+                                                <input class="s-c bottom" type="radio" name="Age" value="25">
+                                                <i class="fab extra2"></i>
+                                                <span class="label">21-30</span>
+                                                <span class="opt-val">21-30</span>
+                                            </div>
+                                            <div class="optionAge">
+                                                <input class="s-c top" type="radio" name="Age" value="35">
+                                                <input class="s-c bottom" type="radio" name="Age" value="35">
+                                                <i class="fab extra3"></i>
+                                                <span class="label">31-40</span>
+                                                <span class="opt-val">31-40</span>
+                                            </div>
+                                            <div class="optionAge">
+                                                <input class="s-c top" type="radio" name="Age" value="45">
+                                                <input class="s-c bottom" type="radio" name="Age" value="45">
+                                                <i class="fab extra4"></i>
+                                                <span class="label">41-50</span>
+                                                <span class="opt-val">51-60</span>
+                                            </div>
+                                            <div class="optionAge">
+                                                <input class="s-c top" type="radio" name="Age" value="55">
+                                                <input class="s-c bottom" type="radio" name="Age" value="55">
+                                                <i class="fab extra5"></i>
+                                                <span class="label">51-60</span>
+                                                <span class="opt-val">51-60</span>
+                                            </div>
+                                            <div class="optionAge">
+                                                <input class="s-c top" type="radio" name="Age" value="65">
+                                                <input class="s-c bottom" type="radio" name="Age" value="65">
+                                                <i class="fab extra6"></i>
+                                                <span class="label">61-70</span>
+                                                <span class="opt-val">61-70</span>
+                                            </div>
+                                            <div class="optionAge">
+                                                <input class="s-c top" type="radio" name="Age" value="75">
+                                                <input class="s-c bottom" type="radio" name="Age" value="75">
+                                                <i class="fab extra7"></i>
+                                                <span class="label">71-80</span>
+                                                <span class="opt-val">71-80</span>
+                                            </div>
+                                            <div class="optionAge">
+                                                <input class="s-c top" type="radio" name="Age" value="85">
+                                                <input class="s-c bottom" type="radio" name="Age" value="85">
+                                                <i class="fab extra8"></i>
+                                                <span class="label">81-90</span>
+                                                <span class="opt-val">81-90</span>
+                                            </div>
+                                            <div class="optionAge">
+                                                <input class="s-c top" type="radio" name="Age" value="95">
+                                                <input class="s-c bottom" type="radio" name="Age" value="95">
+                                                <i class="fab extra9"></i>
+                                                <span class="label">91-100</span>
+                                                <span class="opt-val">91-100</span>
+                                            </div>
+                                            <div id="option-bg"></div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                         <div class="CardInner">
                             <label>Enter your medications<span class="underline"></span></label>
                             <div class="container">
@@ -40,26 +164,6 @@
                             <textarea class="form__field" id="filter-text-val" placeholder="Name" name="name" id='name' required autocomplete="off"></textarea>
                             <label for="name" class="form__label">Enter your symptoms</label>
                         </div>
-                        <div class="selectors">
-                            <select name="items" class="custom-select" id="genderSelector">
-                                <option value="N">Sex</option>
-                                <option value="M">M</option>
-                                <option value="F">F</option>
-                            </select>
-                            <select name="items" class="custom-select" id="ageSelector">
-                                <option value="50">Age</option>
-                                <option value="15">10-20</option>
-                                <option value="25">21-30</option>
-                                <option value="35">31-40</option>
-                                <option value="45">41-50</option>
-                                <option value="55">51-60</option>
-                                <option value="65">61-70</option>
-                                <option value="75">71-80</option>
-                                <option value="85">81-90</option>
-                                <option value="95">91-100</option>
-                                <option value="105">101-110</option>
-                            </select>
-                        </div>
                         <!-- <div class="input-box" onclick="sendFocus()">
                                                             <img src="{{ url_for('static', filename='images/mag.png') }}" />
                                                             <input placeholder="Enter your symptoms and medications" id="filter-text-val" class="">
@@ -76,8 +180,6 @@
 
 
         <script>
-
-            window.addEventListener('resize', resizeCanvas);
 
             document.addEventListener('DOMContentLoaded', () => {
                 const textarea = document.getElementById('filter-text-val');
@@ -100,7 +202,6 @@
                 textarea.addEventListener('blur', updateFieldState);
 
                 updateFieldState();
-                resizeCanvas();
 
                 const searchButton = document.querySelector('.search-button');
                 textarea.addEventListener('keydown', (event) => {
@@ -386,12 +487,22 @@
                 return Array.from(tags).map(tag => tag.textContent);
             }
 
+            function getSelectedGender() {
+                const genderRadios = document.querySelectorAll('input[name="gender"]:checked');
+                return genderRadios.length ? genderRadios[0].value : "";
+            }
+
+            function getSelectedAge() {
+                const ageRadios = document.querySelectorAll('input[name="Age"]:checked');
+                return ageRadios.length ? ageRadios[0].value : "";
+            }
+
             function filterTextDrug() {
                 const answerBox = document.getElementById("answer-box");
-                answerBox.innerHTML = ""; // Clear existing cards
+                answerBox.innerHTML = "";
                 const searchText = document.getElementById("filter-text-val").value;
-                const age = document.getElementById("ageSelector").value;
-                const gender = document.getElementById("genderSelector").value;
+                const age = getSelectedAge();
+                const gender = getSelectedGender();
                 const medications = getMedications();
 
                 fetch("/drugs?" + new URLSearchParams({ query: searchText, gender: gender, age: age, medications: JSON.stringify(medications) }).toString())
@@ -408,18 +519,8 @@
                             }
                         }
                         );
-                        resizeCanvas();
                         observeCards();
                     });
-            }
-
-            function resizeCanvas() {
-                const canvas = document.getElementById('stars');
-                if (canvas) {
-                    // Set the canvas dimensions to match the window or potentially larger if content is longer
-                    canvas.width = window.innerWidth;
-                    canvas.height = Math.max(window.innerHeight, document.documentElement.scrollHeight);
-                }
             }
 
 
