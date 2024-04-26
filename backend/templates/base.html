@@ -488,12 +488,12 @@
 
             function getSelectedGender() {
                 const genderRadios = document.querySelectorAll('input[name="gender"]:checked');
-                return genderRadios.length ? genderRadios[0].value : "";
+                return genderRadios.length ? genderRadios[0].value : "male";
             }
 
             function getSelectedAge() {
                 const ageRadios = document.querySelectorAll('input[name="Age"]:checked');
-                return ageRadios.length ? ageRadios[0].value : "";
+                return ageRadios.length ? ageRadios[0].value : "50";
             }
 
             function filterTextDrug() {
