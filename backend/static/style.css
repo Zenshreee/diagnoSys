@@ -61,7 +61,7 @@ body {
 .main-left {
     display: flex;
     flex-direction: column;
-    gap:20px;
+    gap: 20px;
     width: 25%;
     min-width: 250px;
     height: 100vh;
@@ -262,7 +262,7 @@ body {
 
 .search-button-update:after {
     background-clip: padding-box;
-    background-color:#38ef7d;
+    background-color: #38ef7d;
     border: solid transparent;
     border-radius: 16px;
     border-width: 0 0 4px;
@@ -1617,6 +1617,7 @@ section.active .modal-box {
 
 .modal-title {
     padding: 20px 40px;
+    padding-right: 0px;
     padding-bottom: 0px;
     font-size: 2.0em;
     font-weight: 500;
@@ -1706,7 +1707,7 @@ section.active .modal-box {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height:100%;
+    height: 100%;
 }
 
 .modal-bottom-container {
@@ -1757,7 +1758,7 @@ section.active .modal-box {
 
 .component1 {
     margin-top: 10px;
-    color:white;
+    color: white;
     font-size: 0.4em;
 }
 
@@ -1769,4 +1770,37 @@ section.active .modal-box {
 .component3 {
     color: white;
     font-size: 0.4em;
+}
+
+.component-box {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.component-percent1 {
+    color: #38ef7d;
+    font-size: 0.5em;
+}
+
+.component-percent2 {
+    color: #38ef7d;
+    font-size: 0.5em;
+}
+
+.component-percent3 {
+    color: #38ef7d;
+    font-size: 0.5em;
+}
+
+.modal-title-box {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.modal-medicine {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
 }
