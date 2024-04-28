@@ -303,8 +303,8 @@ def query_after_rocchio(tfidf_matrix, query_vec, user_age):
         rtrn_lst.append((document_name, score))
         # print(f"{document_name}: {score}")
 
-    # top 3 components
-    top_components = np.argsort(query_vec.flatten())[::-1][:3]
+    # top 3 svd components
+    top_components = np.argsort(input_vector.flatten())[::-1][:3]
     component_names = []
     for comp in top_components:
         component_names.append(components[str(comp)])
