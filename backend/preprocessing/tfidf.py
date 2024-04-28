@@ -212,6 +212,10 @@ def query_with_age(tfidf_matrix, query, user_age):
     for comp in top_components:
         component_names.append(components[str(comp)])
 
+    # calaculate percentage similarity so that all the scores add up to 100
+    total_score = sum([score for _, score in rtrn_lst])
+    rtrn_lst = [(doc, round((score / total_score) * 100), 2) for doc, score in rtrn_lst]
+
     return rtrn_lst, component_names
 
 
@@ -308,6 +312,10 @@ def query_after_rocchio(tfidf_matrix, query_vec, user_age):
     component_names = []
     for comp in top_components:
         component_names.append(components[str(comp)])
+
+    # calaculate percentage similarity so that all the scores add up to 100
+    total_score = sum([score for _, score in rtrn_lst])
+    rtrn_lst = [(doc, round((score / total_score) * 100), 2) for doc, score in rtrn_lst]
 
     return rtrn_lst, component_names
 
