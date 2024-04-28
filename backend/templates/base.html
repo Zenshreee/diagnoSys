@@ -252,7 +252,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="search-button-update" onClick="sendUpdateQuery()">Update Query</button>
+                    <button class="search-button-update" style="display: none;" onClick="sendUpdateQuery()">Update Query</button>
                 </div>
                 
                 <div class="search-and-answers">
@@ -507,6 +507,9 @@
                 if (otherThumb.src.includes('green')) {
                     otherThumb.src = otherThumb.src.replace('green', 'white');
                 }
+
+                document.querySelector('.search-button-update').style.display = 'inline-block';
+
             }
 
 
@@ -622,6 +625,7 @@
 
                 // Get the query from the input field
                 const queryText = document.getElementById("filter-text-val").value;
+                document.querySelector('.search-button-update').style.display = 'none';
 
                 // Prepare the data to send
                 const dataToSend = {
