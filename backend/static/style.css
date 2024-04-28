@@ -516,6 +516,7 @@ body {
     margin: 0 10px;
     /* Adds space between thumbs */
     transition: transform 0.3s ease;
+    z-index: 5;
     /* Smooth transformation on click */
 }
 
@@ -1752,4 +1753,20 @@ section.active .modal-box {
     font-size: 1.0em;
     color: #fff;
     height: 100%;
+}
+
+.component1 {
+    margin-top: 10px;
+    color:white;
+    font-size: 0.4em;
+}
+
+.component2 {
+    color: white;
+    font-size: 0.4em;
+}
+
+.component3 {
+    color: white;
+    font-size: 0.4em;
 }

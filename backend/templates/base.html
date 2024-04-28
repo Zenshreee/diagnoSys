@@ -18,6 +18,15 @@
                         </div>
                         <div class="stars-container" style="display: flex;">
                         </div>
+                        <div class="component1">
+
+                        </div>
+                        <div class="component2">
+                        
+                        </div>
+                        <div class="component3">
+                        
+                        </div>
                     </div>
                     <svg width="80px" height="80px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"
                         fill="#000000">
@@ -286,7 +295,7 @@
             //     console.log(drugDetails.drug);
             // }
 
-            function handleCardClick(drug, description, score, top_5_ad_events, rating, median_age, usage) {
+            function handleCardClick(drug, description, score, top_5_ad_events, rating, median_age, usage, component1, component2, component3) {
                 const section = document.querySelector("section"),
                     overlay = document.querySelector(".overlay"),
                     closeBtn = document.querySelector(".close-btn");
@@ -329,6 +338,9 @@
                 document.querySelector('.modal-header-negative').textContent = "Negative Reviews";
                 document.querySelector('.modal-header-adverse').textContent = "Adverse Reactions";
                 document.querySelector('.modal-adverseInfo').innerHTML = adverseEventsHtml;
+                document.querySelector('.component1').textContent = component1;
+                document.querySelector('.component2').textContent = component2;
+                document.querySelector('.component3').textContent = component3;
                 
 
 
@@ -471,7 +483,8 @@
                     observer.observe(card);
                 });
             }
-            function toggleThumb(clickedThumb) {
+            function toggleThumb(event, clickedThumb) {
+                event.stopPropagation();
                 // Find parent card element
                 const card = clickedThumb.closest('.drug-card');
 
@@ -585,8 +598,8 @@
                         <div class='row-flexing-bottom'>
                             <div class='drug-rating'>Rating: <div class='stars'>${starsHtml}</div></div>
                             <div class='thumbs'>
-                <img src="../static/images/thumbsup_white.svg" alt="Thumbs Up" class="thumb thumbs-up" onclick="toggleThumb(this)" width="50" height="60"/>
-                <img src="../static/images/thumbsdown_white.svg" alt="Thumbs Down" class="thumb thumbs-down" onclick="toggleThumb(this)" width="50" height="60"/>
+                <img src="../static/images/thumbsup_white.svg" alt="Thumbs Up" class="thumb thumbs-up" onclick="toggleThumb(event,this)" width="50" height="60"/>
+                <img src="../static/images/thumbsdown_white.svg" alt="Thumbs Down" class="thumb thumbs-down" onclick="toggleThumb(event,this)" width="50" height="60"/>
             
 
 
@@ -722,7 +735,7 @@
                                     let tempDiv = document.createElement("div");
                                     tempDiv.innerHTML = cardHTML;
                                     tempDiv.firstChild.style.animationDelay = `${index * 100}ms`;
-                                    tempDiv.firstChild.addEventListener('click', () => handleCardClick(row.drug, row.definition, row.score, row.top_5_ad_events, row.rating, row.median_age, row.usage));
+                                    tempDiv.firstChild.addEventListener('click', () => handleCardClick(row.drug, row.definition, row.score, row.top_5_ad_events, row.rating, row.median_age, row.usage, row.component1, row.component2, row.component3));
                                     answerBox.appendChild(tempDiv.firstChild);
                                 }
                             });
