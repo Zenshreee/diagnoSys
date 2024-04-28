@@ -101,6 +101,24 @@ def get_usage(drug_name):
         res.append([i])
     return res
 
+def get_reviews(drug_name):
+    pathdir = os.path.dirname(__file__)
+    datadir = os.path.join(pathdir, "reviews.json")
+    with open(datadir, "r") as file:
+        reviews = json.load(file)
+    if drug_name not in reviews:
+        return []  
+    res = []
+    
+    for sentiment in ['positive', 'negative']:
+        if sentiment in reviews[drug_name]:
+            for key, review in reviews[drug_name][sentiment].items():
+                if review is not None:
+                    res.append([key, review])
+    
+    return res
+
+
 
 @app.route("/autocomplete")
 def autocomplete():
@@ -171,6 +189,18 @@ def drugs_search():
         return rtrn_lst
 
     return jsonify(combine_name(text_query, age))
+
+@app.route("/reviews")
+def reviews():
+    drug_name = request.args.get("drug_name")
+    if not drug_name:
+        return jsonify({"error": "No drug name provided"}), 400
+
+    review_data = get_reviews(drug_name)
+    if not review_data:
+        return jsonify({"error": "No reviews found for the specified drug"}), 404
+
+    return jsonify({"reviews": review_data})
 
 
 if "DB_NAME" not in os.environ:
