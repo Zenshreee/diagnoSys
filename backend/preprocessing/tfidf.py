@@ -209,14 +209,20 @@ def query_with_age(tfidf_matrix, query, user_age):
     # top 3 components
     top_components = np.argsort(input_vector.flatten())[::-1][:3]
     component_names = []
+    component_scores = []
     for comp in top_components:
         component_names.append(components[str(comp)])
+        component_scores.append(input_vector.flatten()[comp])
+
+    component_scores_100 = [
+        round((score / sum(component_scores)) * 100, 2) for score in component_scores
+    ]
 
     # calaculate percentage similarity so that all the scores add up to 100
     total_score = sum([score for _, score in rtrn_lst])
     rtrn_lst = [(doc, round((score / total_score) * 100), 2) for doc, score in rtrn_lst]
 
-    return rtrn_lst, component_names
+    return rtrn_lst, component_names, component_scores_100
 
 
 # with open("average_ratings.json", "r") as file:
@@ -310,14 +316,20 @@ def query_after_rocchio(tfidf_matrix, query_vec, user_age):
     # top 3 svd components
     top_components = np.argsort(input_vector.flatten())[::-1][:3]
     component_names = []
+    component_scores = []
     for comp in top_components:
         component_names.append(components[str(comp)])
+        component_scores.append(input_vector.flatten()[comp])
 
-    # calaculate percentage similarity so that all the scores add up to 100
+    component_scores_100 = [
+        round((score / sum(component_scores)) * 100, 2) for score in component_scores
+    ]
+
+    # calculate percentage similarity so that all the scores add up to 100
     total_score = sum([score for _, score in rtrn_lst])
     rtrn_lst = [(doc, round((score / total_score) * 100), 2) for doc, score in rtrn_lst]
 
-    return rtrn_lst, component_names
+    return rtrn_lst, component_names, component_scores_100
 
 
 def query_with_explanation(query, tfidf_matrix, vectorizer, svd, top_k=10):
