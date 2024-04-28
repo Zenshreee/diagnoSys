@@ -3,146 +3,254 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap"
+    rel="stylesheet">
 
 <body>
+    <section>
+        <span class="overlay"></span>
+        <div class="modal-box">
+            <div class="modal-top">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        <div class="modal-title-words">
+                            Placeholder
+                        </div>
+                        <div class="stars-container" style="display: flex;">
+                        </div>
+                    </div>
+                    <svg width="80px" height="80px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"
+                        fill="#000000">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                        <g id="SVGRepo_iconCarrier">
+                            <defs>
+                                <style>
+                                    .cls-1 {
+                                        fill: #11998e;
+                                    }
+
+                                    .cls-2 {
+                                        fill: #38ef7d;
+                                        ;
+                                    }
+                                </style>
+                            </defs>
+                            <g data-name="24. Drug" id="_24._Drug">
+                                <path class="cls-1"
+                                    d="M23.12,8.71,20.41,6H21a2,2,0,0,0,2-2V2a2,2,0,0,0-2-2H5A2,2,0,0,0,3,2V4A2,2,0,0,0,5,6h.59L2.88,8.71A3,3,0,0,0,2,10.83V29a3,3,0,0,0,3,3H19a1,1,0,0,0,0-2H5a1,1,0,0,1-1-1V27H17a1,1,0,0,0,0-2H4V13H23a1,1,0,0,0,1-1V10.83A3,3,0,0,0,23.12,8.71ZM5,2H21V4H5Zm17,9H4v-.17a1,1,0,0,1,.29-.71L8.41,6h9.18l4.12,4.12a1,1,0,0,1,.29.71Z" />
+                                <path class="cls-2"
+                                    d="M16,18H14V16a1,1,0,0,0-2,0v2H10a1,1,0,0,0,0,2h2v2a1,1,0,0,0,2,0V20h2a1,1,0,0,0,0-2Z" />
+                                <path class="cls-2" d="M29,25H21a1,1,0,0,1,0-2h8a1,1,0,0,1,0,2Z" />
+                                <path class="cls-1"
+                                    d="M25,32a5,5,0,0,1-5-5V20a5,5,0,0,1,10,0v7A5,5,0,0,1,25,32Zm0-15a3,3,0,0,0-3,3v7a3,3,0,0,0,6,0V20A3,3,0,0,0,25,17Z" />
+                            </g>
+                        </g>
+                    </svg>
+                    <div class="modal-sym">
+                        <div class="modal-sym-words">
+
+                        </div>
+                        <div class="modal-symInfo">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button class="close-btn">
+                        <svg fill="#ffffff" width="50px" height="50px" viewBox="0 0 96 96"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <title />
+                            <g>
+                                <path d="M30,60H6A6,6,0,0,0,6,72H24V90a6,6,0,0,0,12,0V66A5.9966,5.9966,0,0,0,30,60Z" />
+                                <path d="M90,60H66a5.9966,5.9966,0,0,0-6,6V90a6,6,0,0,0,12,0V72H90a6,6,0,0,0,0-12Z" />
+                                <path d="M66,36H90a6,6,0,0,0,0-12H72V6A6,6,0,0,0,60,6V30A5.9966,5.9966,0,0,0,66,36Z" />
+                                <path
+                                    d="M30,0a5.9966,5.9966,0,0,0-6,6V24H6A6,6,0,0,0,6,36H30a5.9966,5.9966,0,0,0,6-6V6A5.9966,5.9966,0,0,0,30,0Z" />
+                            </g>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-bottom">
+                <div class="modal-bottom-container">
+                    <div class="modal-bottom-header">
+                        <div class="modal-header-positive">
+                            Placeholder
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-bottom-container-middle">
+                    <div class="modal-interp">
+
+                    </div>
+                    <div class="modal-middle-split">
+                        <div class="modal-bottom-header">
+                            <div class="modal-header-adverse">
+                                Placeholder
+                            </div>
+                        </div>
+                        <div class="modal-adverseInfo">
+                        
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-bottom-container-right">
+                    <div class="modal-bottom-header">
+                        <div class="modal-header-negative">
+                            Placeholder
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <canvas id="stars" width="300" height="300"></canvas>
     <div class="full-body-container">
         <div class="top-text">
             <img style="border-radius: 200px;" src="{{ url_for('static', filename='images/diagnosys.png') }}" />
             <div class="main-content">
-                <div class="medications-sidebar">
-                    <div class="Card">
-                        <div class="filters">
-                            <label>Filters<span class="underline"></span></label>
-                            <div class="selectors">
-                                <form id="app-cover">
-                                    <div id="select-box">
-                                        <input type="checkbox" id="options-view-button">
-                                        <div id="select-button" class="brd">
-                                            <div id="selected-value">
-                                                <span>Sex</span>
-                                                <svg fill="#ffffff" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M7.293,7.707a1,1,0,0,1,0-1.414l4-4a1,1,0,0,1,1.414,0l4,4a1,1,0,1,1-1.414,1.414L12,4.414,8.707,7.707A1,1,0,0,1,7.293,7.707Zm0,10,4,4a1,1,0,0,0,1.414,0l4-4a1,1,0,0,0-1.414-1.414L12,19.586,8.707,16.293a1,1,0,1,0-1.414,1.414Z" />
-                                                </svg>
+                <div class="main-left">
+                    <div class="medications-sidebar">
+                        <div class="Card">
+                            <div class="filters">
+                                <label>Filters<span class="underline"></span></label>
+                                <div class="selectors">
+                                    <form id="app-cover">
+                                        <div id="select-box">
+                                            <input type="checkbox" id="options-view-button">
+                                            <div id="select-button" class="brd">
+                                                <div id="selected-value">
+                                                    <span>Sex</span>
+                                                    <svg fill="#ffffff" width="24px" height="24px" viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M7.293,7.707a1,1,0,0,1,0-1.414l4-4a1,1,0,0,1,1.414,0l4,4a1,1,0,1,1-1.414,1.414L12,4.414,8.707,7.707A1,1,0,0,1,7.293,7.707Zm0,10,4,4a1,1,0,0,0,1.414,0l4-4a1,1,0,0,0-1.414-1.414L12,19.586,8.707,16.293a1,1,0,1,0-1.414,1.414Z" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div id="options">
+                                                <div class="option">
+                                                    <input class="s-c top" type="radio" name="gender" value="male">
+                                                    <input class="s-c bottom" type="radio" name="gender" value="male">
+                                                    <span class="label">Male</span>
+                                                    <span class="opt-val">Male</span>
+                                                </div>
+                                                <div class="option">
+                                                    <input class="s-c top" type="radio" name="gender" value="female">
+                                                    <input class="s-c bottom" type="radio" name="gender" value="female">
+                                                    <span class="label">Female</span>
+                                                    <span class="opt-val">Female</span>
+                                                </div>
+                                                <div id="option-bg"></div>
                                             </div>
                                         </div>
-                                        <div id="options">
-                                            <div class="option">
-                                                <input class="s-c top" type="radio" name="gender" value="male">
-                                                <input class="s-c bottom" type="radio" name="gender" value="male">
-                                                <span class="label">Male</span>
-                                                <span class="opt-val">Male</span>
+                                    </form>
+                                    <form id="app-cover">
+                                        <div id="select-box">
+                                            <input type="checkbox" id="optionsAge-view-button">
+                                            <div id="select-button" class="brd">
+                                                <div id="selectedAge-value">
+                                                    <span>Age</span>
+                                                    <svg fill="#ffffff" width="24px" height="24px" viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M7.293,7.707a1,1,0,0,1,0-1.414l4-4a1,1,0,0,1,1.414,0l4,4a1,1,0,1,1-1.414,1.414L12,4.414,8.707,7.707A1,1,0,0,1,7.293,7.707Zm0,10,4,4a1,1,0,0,0,1.414,0l4-4a1,1,0,0,0-1.414-1.414L12,19.586,8.707,16.293a1,1,0,1,0-1.414,1.414Z" />
+                                                    </svg>
+                                                </div>
                                             </div>
-                                            <div class="option">
-                                                <input class="s-c top" type="radio" name="gender" value="female">
-                                                <input class="s-c bottom" type="radio" name="gender" value="female">
-                                                <span class="label">Female</span>
-                                                <span class="opt-val">Female</span>
+                                            <div id="optionsAge">
+                                                <div class="optionAge">
+                                                    <input class="s-c top" type="radio" name="Age" value="15">
+                                                    <input class="s-c bottom" type="radio" name="Age" value="15">
+                                                    <span class="label">10-20</span>
+                                                    <span class="opt-val">10-20</span>
+                                                </div>
+                                                <div class="optionAge">
+                                                    <input class="s-c top" type="radio" name="Age" value="25">
+                                                    <input class="s-c bottom" type="radio" name="Age" value="25">
+                                                    <span class="label">21-30</span>
+                                                    <span class="opt-val">21-30</span>
+                                                </div>
+                                                <div class="optionAge">
+                                                    <input class="s-c top" type="radio" name="Age" value="35">
+                                                    <input class="s-c bottom" type="radio" name="Age" value="35">
+                                                    <span class="label">31-40</span>
+                                                    <span class="opt-val">31-40</span>
+                                                </div>
+                                                <div class="optionAge">
+                                                    <input class="s-c top" type="radio" name="Age" value="45">
+                                                    <input class="s-c bottom" type="radio" name="Age" value="45">
+                                                    <span class="label">41-50</span>
+                                                    <span class="opt-val">51-60</span>
+                                                </div>
+                                                <div class="optionAge">
+                                                    <input class="s-c top" type="radio" name="Age" value="55">
+                                                    <input class="s-c bottom" type="radio" name="Age" value="55">
+                                                    <span class="label">51-60</span>
+                                                    <span class="opt-val">51-60</span>
+                                                </div>
+                                                <div class="optionAge">
+                                                    <input class="s-c top" type="radio" name="Age" value="65">
+                                                    <input class="s-c bottom" type="radio" name="Age" value="65">
+                                                    <span class="label">61-70</span>
+                                                    <span class="opt-val">61-70</span>
+                                                </div>
+                                                <div class="optionAge">
+                                                    <input class="s-c top" type="radio" name="Age" value="75">
+                                                    <input class="s-c bottom" type="radio" name="Age" value="75">
+                                                    <span class="label">71-80</span>
+                                                    <span class="opt-val">71-80</span>
+                                                </div>
+                                                <div class="optionAge">
+                                                    <input class="s-c top" type="radio" name="Age" value="85">
+                                                    <input class="s-c bottom" type="radio" name="Age" value="85">
+                                                    <span class="label">81-90</span>
+                                                    <span class="opt-val">81-90</span>
+                                                </div>
+                                                <div class="optionAge">
+                                                    <input class="s-c top" type="radio" name="Age" value="95">
+                                                    <input class="s-c bottom" type="radio" name="Age" value="95">
+                                                    <span class="label">91-100</span>
+                                                    <span class="opt-val">91-100</span>
+                                                </div>
+                                                <div id="optionAge-bg"></div>
                                             </div>
-                                            <div id="option-bg"></div>
                                         </div>
-                                    </div>
-                                </form>
-                                <form id="app-cover">
-                                    <div id="select-box">
-                                        <input type="checkbox" id="optionsAge-view-button">
-                                        <div id="select-button" class="brd">
-                                            <div id="selectedAge-value">
-                                                <span>Age</span>
-                                                <svg fill="#ffffff" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M7.293,7.707a1,1,0,0,1,0-1.414l4-4a1,1,0,0,1,1.414,0l4,4a1,1,0,1,1-1.414,1.414L12,4.414,8.707,7.707A1,1,0,0,1,7.293,7.707Zm0,10,4,4a1,1,0,0,0,1.414,0l4-4a1,1,0,0,0-1.414-1.414L12,19.586,8.707,16.293a1,1,0,1,0-1.414,1.414Z" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div id="optionsAge">
-                                            <div class="optionAge">
-                                                <input class="s-c top" type="radio" name="Age" value="15">
-                                                <input class="s-c bottom" type="radio" name="Age" value="15">
-                                                <span class="label">10-20</span>
-                                                <span class="opt-val">10-20</span>
-                                            </div>
-                                            <div class="optionAge">
-                                                <input class="s-c top" type="radio" name="Age" value="25">
-                                                <input class="s-c bottom" type="radio" name="Age" value="25">
-                                                <span class="label">21-30</span>
-                                                <span class="opt-val">21-30</span>
-                                            </div>
-                                            <div class="optionAge">
-                                                <input class="s-c top" type="radio" name="Age" value="35">
-                                                <input class="s-c bottom" type="radio" name="Age" value="35">
-                                                <span class="label">31-40</span>
-                                                <span class="opt-val">31-40</span>
-                                            </div>
-                                            <div class="optionAge">
-                                                <input class="s-c top" type="radio" name="Age" value="45">
-                                                <input class="s-c bottom" type="radio" name="Age" value="45">
-                                                <span class="label">41-50</span>
-                                                <span class="opt-val">51-60</span>
-                                            </div>
-                                            <div class="optionAge">
-                                                <input class="s-c top" type="radio" name="Age" value="55">
-                                                <input class="s-c bottom" type="radio" name="Age" value="55">
-                                                <span class="label">51-60</span>
-                                                <span class="opt-val">51-60</span>
-                                            </div>
-                                            <div class="optionAge">
-                                                <input class="s-c top" type="radio" name="Age" value="65">
-                                                <input class="s-c bottom" type="radio" name="Age" value="65">
-                                                <span class="label">61-70</span>
-                                                <span class="opt-val">61-70</span>
-                                            </div>
-                                            <div class="optionAge">
-                                                <input class="s-c top" type="radio" name="Age" value="75">
-                                                <input class="s-c bottom" type="radio" name="Age" value="75">
-                                                <span class="label">71-80</span>
-                                                <span class="opt-val">71-80</span>
-                                            </div>
-                                            <div class="optionAge">
-                                                <input class="s-c top" type="radio" name="Age" value="85">
-                                                <input class="s-c bottom" type="radio" name="Age" value="85">
-                                                <span class="label">81-90</span>
-                                                <span class="opt-val">81-90</span>
-                                            </div>
-                                            <div class="optionAge">
-                                                <input class="s-c top" type="radio" name="Age" value="95">
-                                                <input class="s-c bottom" type="radio" name="Age" value="95">
-                                                <span class="label">91-100</span>
-                                                <span class="opt-val">91-100</span>
-                                            </div>
-                                            <div id="optionAge-bg"></div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="CardInner">
-                            <label>Enter your medications<span class="underline"></span></label>
-                            <div class="container">
-                                <div class="Icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#657789" stroke-width="3" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-search">
-                                        <circle cx="11" cy="11" r="8" />
-                                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                                    </svg>
-                                </div>
-                                <div class="InputContainer">
-                                    <input type="text" placeholder="ex: ibuprofen" id="medInput" />
-                                    <div id="autocomplete-list" class="autocomplete-items"></div>
+                                    </form>
                                 </div>
                             </div>
-                            <div id="tag-list" class="tag-list">
-                                <!-- Tags will be dynamically inserted here -->
+                            <div class="CardInner">
+                                <label>Enter your medications<span class="underline"></span></label>
+                                <div class="container">
+                                    <div class="Icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                                            stroke="#657789" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-search">
+                                            <circle cx="11" cy="11" r="8" />
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                        </svg>
+                                    </div>
+                                    <div class="InputContainer">
+                                        <input type="text" placeholder="ex: ibuprofen" id="medInput" />
+                                        <div id="autocomplete-list" class="autocomplete-items"></div>
+                                    </div>
+                                </div>
+                                <div id="tag-list" class="tag-list">
+                                    <!-- Tags will be dynamically inserted here -->
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <button class="search-button-update" onClick="sendUpdateQuery()">Update Query</button>
                 </div>
+                
                 <div class="search-and-answers">
                     <div class="search">
                         <div class="form__group field">
-                            <textarea class="form__field" id="filter-text-val" placeholder="Name" name="name" id='name' required autocomplete="off"></textarea>
+                            <textarea class="form__field" id="filter-text-val" placeholder="Name" name="name" id='name'
+                                required autocomplete="off"></textarea>
                             <label for="name" class="form__label">Enter your symptoms</label>
                         </div>
                         <!-- <div class="input-box" onclick="sendFocus()">
@@ -150,7 +258,6 @@
                                                             <input placeholder="Enter your symptoms and medications" id="filter-text-val" class="">
                                                         </div> -->
                         <button class="search-button" onClick="filterTextDrug()">Search</button>
-                        <button class="search-button" onClick="sendUpdateQuery()">Update Query</button>
                     </div>
                     <div id="answer-box">
                         <!-- Cards will be dynamically inserted here -->
@@ -161,6 +268,79 @@
 
 
         <script>
+
+            // const handleCardClick = (element) => {
+            //     const drugId = element.getAttribute('data-drug-id');
+            //     const drugDetails = drugsData.find(drug => drug.id === drugId);
+            //     const section = document.querySelector("section"),
+            //         overlay = document.querySelector(".overlay"),
+            //         closeBtn = document.querySelector(".close-btn");
+
+            //     section.classList.add("active");
+            //     overlay.addEventListener("click", () =>
+            //         section.classList.remove("active")
+            //     );
+            //     closeBtn.addEventListener("click", () =>
+            //         section.classList.remove("active")
+            //     );
+            //     console.log(drugDetails.drug);
+            // }
+
+            function handleCardClick(drug, description, score, top_5_ad_events, rating, median_age, usage) {
+                const section = document.querySelector("section"),
+                    overlay = document.querySelector(".overlay"),
+                    closeBtn = document.querySelector(".close-btn");
+
+                let starsHtml = '';
+                for (let i = 0; i < 5; i++) {
+                    // Calculate width percentage for the filled part
+                    let width = Math.max(0, Math.min(100, (rating - i * 2) * 50));
+                    starsHtml += `<div class="star">
+                        <svg class="star-empty" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.245 4.174C11.4765 3.50808 11.5922 3.17513 11.7634 3.08285C11.9115 3.00298 12.0898 3.00298 12.238 3.08285C12.4091 3.17513 12.5248 3.50808 12.7563 4.174L14.2866 8.57639C14.3525 8.76592 14.3854 8.86068 14.4448 8.93125C14.4972 8.99359 14.5641 9.04218 14.6396 9.07278C14.725 9.10743 14.8253 9.10947 15.0259 9.11356L19.6857 9.20852C20.3906 9.22288 20.743 9.23007 20.8837 9.36432C21.0054 9.48051 21.0605 9.65014 21.0303 9.81569C20.9955 10.007 20.7146 10.2199 20.1528 10.6459L16.4387 13.4616C16.2788 13.5829 16.1989 13.6435 16.1501 13.7217C16.107 13.7909 16.0815 13.8695 16.0757 13.9507C16.0692 14.0427 16.0982 14.1387 16.1563 14.3308L17.506 18.7919C17.7101 19.4667 17.8122 19.8041 17.728 19.9793C17.6551 20.131 17.5108 20.2358 17.344 20.2583C17.1513 20.2842 16.862 20.0829 16.2833 19.6802L12.4576 17.0181C12.2929 16.9035 12.2106 16.8462 12.1211 16.8239C12.042 16.8043 11.9593 16.8043 11.8803 16.8239C11.7908 16.8462 11.7084 16.9035 11.5437 17.0181L7.71805 19.6802C7.13937 20.0829 6.85003 20.2842 6.65733 20.2583C6.49056 20.2358 6.34626 20.131 6.27337 19.9793C6.18915 19.8041 6.29123 19.4667 6.49538 18.7919L7.84503 14.3308C7.90313 14.1387 7.93218 14.0427 7.92564 13.9507C7.91986 13.8695 7.89432 13.7909 7.85123 13.7217C7.80246 13.6435 7.72251 13.5829 7.56262 13.4616L3.84858 10.6459C3.28678 10.2199 3.00588 10.007 2.97101 9.81569C2.94082 9.65014 2.99594 9.48051 3.11767 9.36432C3.25831 9.23007 3.61074 9.22289 4.31559 9.20852L8.9754 9.11356C9.176 9.10947 9.27631 9.10743 9.36177 9.07278C9.43726 9.04218 9.50414 8.99359 9.55657 8.93125C9.61593 8.86068 9.64887 8.76592 9.71475 8.57639L11.245 4.174Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div class="star-filled" style="width:${width}%">
+                            <svg class="star-full" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="starGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="forestgreen" />
+                                        <stop offset="100%" stop-color="aqua" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M11.245 4.174C11.4765 3.50808 11.5922 3.17513 11.7634 3.08285C11.9115 3.00298 12.0898 3.00298 12.238 3.08285C12.4091 3.17513 12.5248 3.50808 12.7563 4.174L14.2866 8.57639C14.3525 8.76592 14.3854 8.86068 14.4448 8.93125C14.4972 8.99359 14.5641 9.04218 14.6396 9.07278C14.725 9.10743 14.8253 9.10947 15.0259 9.11356L19.6857 9.20852C20.3906 9.22288 20.743 9.23007 20.8837 9.36432C21.0054 9.48051 21.0605 9.65014 21.0303 9.81569C20.9955 10.007 20.7146 10.2199 20.1528 10.6459L16.4387 13.4616C16.2788 13.5829 16.1989 13.6435 16.1501 13.7217C16.107 13.7909 16.0815 13.8695 16.0757 13.9507C16.0692 14.0427 16.0982 14.1387 16.1563 14.3308L17.506 18.7919C17.7101 19.4667 17.8122 19.8041 17.728 19.9793C17.6551 20.131 17.5108 20.2358 17.344 20.2583C17.1513 20.2842 16.862 20.0829 16.2833 19.6802L12.4576 17.0181C12.2929 16.9035 12.2106 16.8462 12.1211 16.8239C12.042 16.8043 11.9593 16.8043 11.8803 16.8239C11.7908 16.8462 11.7084 16.9035 11.5437 17.0181L7.71805 19.6802C7.13937 20.0829 6.85003 20.2842 6.65733 20.2583C6.49056 20.2358 6.34626 20.131 6.27337 19.9793C6.18915 19.8041 6.29123 19.4667 6.49538 18.7919L7.84503 14.3308C7.90313 14.1387 7.93218 14.0427 7.92564 13.9507C7.91986 13.8695 7.89432 13.7909 7.85123 13.7217C7.80246 13.6435 7.72251 13.5829 7.56262 13.4616L3.84858 10.6459C3.28678 10.2199 3.00588 10.007 2.97101 9.81569C2.94082 9.65014 2.99594 9.48051 3.11767 9.36432C3.25831 9.23007 3.61074 9.22289 4.31559 9.20852L8.9754 9.11356C9.176 9.10947 9.27631 9.10743 9.36177 9.07278C9.43726 9.04218 9.50414 8.99359 9.55657 8.93125C9.61593 8.86068 9.64887 8.76592 9.71475 8.57639L11.245 4.174Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="url(#starGradient)" />
+                            </svg>
+                        </div>
+                      </div>`;
+                }
+                const usageHtml = usage.map(item => `<li>${item}</li>`).join('');
+                const adverseEventsHtml = top_5_ad_events.map(event => `<li>${event}</li>`).join('');
+
+
+
+                // Here you can modify the modal's contents based on the drug data received and show the modal
+                document.querySelector('.modal-title-words').textContent = drug; // example for drug name
+                // document.querySelector('.modal-description').textContent = description;
+                document.querySelector('.overlay').classList.add('active');
+                document.querySelector('.modal-box').classList.add('active');
+                document.querySelector('.modal-sym-words').textContent = "Indication";
+                document.querySelector('.stars-container').innerHTML = starsHtml;
+                document.querySelector('.modal-symInfo').innerHTML = usageHtml;
+                document.querySelector('.modal-header-positive').textContent = "Positive Reviews";
+                document.querySelector('.modal-header-negative').textContent = "Negative Reviews";
+                document.querySelector('.modal-header-adverse').textContent = "Adverse Reactions";
+                document.querySelector('.modal-adverseInfo').innerHTML = adverseEventsHtml;
+                
+
+
+                section.classList.add("active");
+                overlay.addEventListener("click", () =>
+                    section.classList.remove("active")
+                );
+                closeBtn.addEventListener("click", () =>
+                    section.classList.remove("active")
+                );
+
+            }
 
             document.addEventListener('DOMContentLoaded', () => {
                 const textarea = document.getElementById('filter-text-val');
@@ -388,7 +568,6 @@
                         </div>
                       </div>`;
                 }
-                console.log(starsHtml)
                 return `<div class='drug-card'>
                         <div class='drug-info'>
                             <h3 class='drug-title'>${drug}</h3>
@@ -543,6 +722,7 @@
                                     let tempDiv = document.createElement("div");
                                     tempDiv.innerHTML = cardHTML;
                                     tempDiv.firstChild.style.animationDelay = `${index * 100}ms`;
+                                    tempDiv.firstChild.addEventListener('click', () => handleCardClick(row.drug, row.definition, row.score, row.top_5_ad_events, row.rating, row.median_age, row.usage));
                                     answerBox.appendChild(tempDiv.firstChild);
                                 }
                             });
