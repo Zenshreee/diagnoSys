@@ -137,8 +137,7 @@ def update_query():
     new_query = rocchio(query, rel_docs, non_rel_docs)
 
     def combine_name(query, age):
-        top_10 = query_after_rocchio(tfidf_matrix, query, age)
-        print(top_10)
+        top_10, components = query_after_rocchio(tfidf_matrix, query, age)
         rtrn_lst = []
         for tup in top_10:
             rtrn_lst.append(
@@ -150,6 +149,9 @@ def update_query():
                     "rating": get_rating(tup[0]),
                     "median_age": get_median_age(tup[0]),
                     "usage": get_usage(tup[0]),
+                    "component1": components[0],
+                    "component2": components[1],
+                    "component3": components[2],
                 }
             )
         return rtrn_lst
@@ -171,8 +173,7 @@ def drugs_search():
     text_query += " " + " ".join(medications)
 
     def combine_name(query, age):
-        top_10 = query_with_age(tfidf_matrix, query, age)
-        print("initial: ", top_10)
+        top_10, components = query_with_age(tfidf_matrix, query, age)
         rtrn_lst = []
         for tup in top_10:
             rtrn_lst.append(
@@ -184,6 +185,9 @@ def drugs_search():
                     "rating": get_rating(tup[0]),
                     "median_age": get_median_age(tup[0]),
                     "usage": get_usage(tup[0]),
+                    "component1": components[0],
+                    "component2": components[1],
+                    "component3": components[2],
                 }
             )
         return rtrn_lst

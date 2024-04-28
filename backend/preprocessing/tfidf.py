@@ -66,6 +66,7 @@ vectorizer_path = os.path.join(os.path.dirname(abspath), "vectorizer.sav")
 index_to_json_path = os.path.join(os.path.dirname(abspath), "index_to_doc.json")
 docspath = os.path.join(os.path.dirname(abspath), "drug_documents.json")
 svd_path = os.path.join(os.path.dirname(abspath), "svd.sav")
+components_path = os.path.join(os.path.dirname(abspath), "components.json")
 
 drug_median_var_ages_path = os.path.join(
     os.path.dirname(abspath), "drug_median_var_ages.json"
@@ -151,6 +152,8 @@ def query(tfidf_matrix, query):
 
 
 def query_with_age(tfidf_matrix, query, user_age):
+    with open(components_path, "r") as file:
+        components = json.load(file)
     with open(drug_median_var_ages_path, "r") as file:
         ages = json.load(file)
     with open(index_to_json_path, "r") as file:
@@ -203,8 +206,13 @@ def query_with_age(tfidf_matrix, query, user_age):
         document_name = index_to_doc[str(index)]
         rtrn_lst.append((document_name, score))
         # print(f"{document_name}: {score}")
+    # top 3 components
+    top_components = np.argsort(input_vector.flatten())[::-1][:3]
+    component_names = []
+    for comp in top_components:
+        component_names.append(components[str(comp)])
 
-    return rtrn_lst
+    return rtrn_lst, component_names
 
 
 # with open("average_ratings.json", "r") as file:
@@ -245,13 +253,15 @@ def print_top_terms_for_components(vectorizer, svd_model, n_top_terms=10):
 
 def query_after_rocchio(tfidf_matrix, query_vec, user_age):
     user_age = float(user_age)
-
+    with open(components_path, "r") as file:
+        components = json.load(file)
     with open(index_to_json_path, "r") as file:
         index_to_doc = json.load(file)
     with open(drug_median_var_ages_path, "r") as file:
         ages = json.load(file)
     with open(svd_path, "rb") as file:
         svd = pickle.load(file)
+
     input_vector = svd.transform(query_vec)
     cosine_similarities = cosine_similarity(input_vector, tfidf_matrix)
     cosine_similarities = cosine_similarities.flatten()
@@ -293,7 +303,13 @@ def query_after_rocchio(tfidf_matrix, query_vec, user_age):
         rtrn_lst.append((document_name, score))
         # print(f"{document_name}: {score}")
 
-    return rtrn_lst
+    # top 3 components
+    top_components = np.argsort(query_vec.flatten())[::-1][:3]
+    component_names = []
+    for comp in top_components:
+        component_names.append(components[str(comp)])
+
+    return rtrn_lst, component_names
 
 
 def query_with_explanation(query, tfidf_matrix, vectorizer, svd, top_k=10):
@@ -352,3 +368,13 @@ def query_with_explanation(query, tfidf_matrix, vectorizer, svd, top_k=10):
 #     svd,
 #     top_k=10,
 # )
+
+# vectorizer = pickle.load(open(vectorizer_path, "rb"))
+# svd = pickle.load(open(svd_path, "rb"))
+# a = get_top_10_terms_in_each_component(vectorizer, svd, n_top_terms=10)
+
+# for i, comp in enumerate(a):
+#     print(f"Component {i}:")
+#     for t in comp:
+#         print(f"{t[0]} ({t[1]:.2f})", end=" ")
+#     print("\n")
