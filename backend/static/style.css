@@ -475,6 +475,26 @@ body {
         /* Space above the rating */
 }
 
+.space {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.drug-sim {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.drug-sim-score {
+    flex: 1;
+    color: #8de0b6;
+    font-size: 1.0em;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .drug-meta {
     flex: 0 0 200px;
     /* Sets the width of the right column and prevents it from growing */
@@ -1708,6 +1728,7 @@ section.active .modal-box {
     flex-direction: row;
     width: 100%;
     height: 100%;
+    gap: 30px;
 }
 
 .modal-bottom-container {
@@ -1715,6 +1736,7 @@ section.active .modal-box {
     flex-direction: column;
     width: 100%;
     height: 100%;
+    gap: 25px;
 }
 
 .modal-bottom-container-right {
@@ -1722,24 +1744,25 @@ section.active .modal-box {
     flex-direction: column;
     width: 100%;
     height: 100%;
+    gap: 25px;
 }
 
 .modal-bottom-container-middle {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 50%;
     height: 100%;
     align-items: center;
 }
 
 .modal-bottom-header {
-    font-size: 0.8em;
+    font-size: 0.7em;
     color: #bababa;
     font-weight: 500;
 }
 
 .modal-adverseInfo li {
-    font-size: 0.7em;
+    font-size: 0.6em;
     color: #bababa;
 }
 
@@ -1802,4 +1825,12 @@ section.active .modal-box {
     display: flex;
     justify-content: flex-end;
     flex: 1;
+}
+
+.modal-review {
+    color: #fff;
+    font-size: 0.5em;
+    display: flex;
+    flex-direction: column;
+
 }

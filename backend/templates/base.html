@@ -98,6 +98,19 @@
                 </div>
             </div>
             <div class="modal-bottom">
+                <div class="modal-bottom-container-middle">
+                    <div class="modal-middle-split">
+                        <div class="modal-bottom-header">
+                            <div class="modal-header-adverse">
+                                Placeholder
+                            </div>
+                        </div>
+                        <div class="modal-adverseInfo">
+                
+                        </div>
+                    </div>
+                
+                </div>
                 <div class="modal-bottom-container">
                     <div class="modal-bottom-header">
                         <div class="modal-header-positive">
@@ -108,41 +121,34 @@
                         <div class="positive-review1">
 
                         </div>
+                        <div class="stars-pos1" style="display: flex;">
+                        </div>
                     </div>
                     <div class="modal-review">
                         <div class="positive-review2">
 
                         </div>
-                    </div>
-                </div>
-                <div class="modal-bottom-container-middle">
-                    <div class="modal-interp">
-
-                    </div>
-                    <div class="modal-middle-split">
-                        <div class="modal-bottom-header">
-                            <div class="modal-header-adverse">
-                                Placeholder
-                            </div>
-                        </div>
-                        <div class="modal-adverseInfo">
-
+                        <div class="stars-pos2" style="display: flex;">
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-bottom-container-right">
                     <div class="modal-review">
                         <div class="negative-review1">
 
                         </div>
+                        <div class="stars-neg1" style="display: flex;">
+                        </div>
                     </div>
                     <div class="modal-review">
                         <div class="negative-review2">
 
                         </div>
+                        <div class="stars-neg2" style="display: flex;">
+                        </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </section>
@@ -322,11 +328,7 @@
             //     console.log(drugDetails.drug);
             // }
 
-            function handleCardClick(drug, description, score, top_5_ad_events, rating, median_age, usage, component1, component2, component3, component_score1, component_score2, component_score3, reviews) {
-                const section = document.querySelector("section"),
-                    overlay = document.querySelector(".overlay"),
-                    closeBtn = document.querySelector(".close-btn");
-
+            function createStars(rating) {
                 let starsHtml = '';
                 for (let i = 0; i < 5; i++) {
                     // Calculate width percentage for the filled part
@@ -348,6 +350,20 @@
                         </div>
                       </div>`;
                 }
+
+                return starsHtml;
+            }
+
+            function handleCardClick(drug, description, score, top_5_ad_events, rating, median_age, usage, component1, component2, component3, component_score1, component_score2, component_score3, posrev1, posrat1, posrev2, posrat2, negrev1, negrat1, negrev2, negrat2) {
+                const section = document.querySelector("section"),
+                    overlay = document.querySelector(".overlay"),
+                    closeBtn = document.querySelector(".close-btn");
+
+                let starsHtml = createStars(rating)
+                let starsPos1 = createStars(posrat1);
+                let starsPos2 = createStars(posrat2);
+                let starsNeg1 = createStars(negrat1);
+                let starsNeg2 = createStars(negrat2);
                 const usageHtml = usage.map(item => `<li>${item}</li>`).join('');
                 const adverseEventsHtml = top_5_ad_events.map(event => `<li>${event}</li>`).join('');
 
@@ -370,12 +386,25 @@
                 document.querySelector('.component-percent1').textContent = component_score1 + "%";
                 document.querySelector('.component-percent2').textContent = component_score2 + "%";
                 document.querySelector('.component-percent3').textContent = component_score3 + "%";
-                document.querySelector('.postive-review1').textContent = reviews.positive.review1;
-                document.querySelector('.postive-review1').textContent = reviews.positive.review2;
-                document.querySelector('.negative-review1').textContent = reviews.negative.review1;
-                document.querySelector('.negative-review1').textContent = reviews.negative.review2;
+                if(posrev1 != "") {
+                    document.querySelector('.positive-review1').textContent = posrev1;
+                    document.querySelector('.stars-pos1').innerHTML = starsPos1;
+                }
+                
+                if (posrev2 != "") {
+                    document.querySelector('.positive-review2').textContent = posrev2;
+                    document.querySelector('.stars-pos2').innerHTML = starsPos2;
+                }
 
-
+                if(negrev1 != "" && negrev1 != posrev1) {
+                    document.querySelector('.negative-review1').textContent = negrev1;
+                    document.querySelector('.stars-neg1').innerHTML = starsNeg1;
+                }
+                
+                if(negrev2 != "" && negrev2 != posrev2) {
+                    document.querySelector('.negative-review2').textContent = negrev2;
+                    document.querySelector('.stars-neg2').innerHTML = starsNeg2;
+                }
 
                 section.classList.add("active");
                 overlay.addEventListener("click", () =>
@@ -619,7 +648,17 @@
                 }
                 return `<div class='drug-card'>
                         <div class='drug-info'>
-                            <h3 class='drug-title'>${drug}</h3>
+                            <div class="space">
+
+                                <div class='space'></div>
+                                <h3 class='drug-title'>${drug}</h3>
+                                <div class='drug-sim'>
+                                    <div class='drug-sim-score'>
+                                        ${score + "%"}
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <div class='row-flexing'>
                                 <div class='flexing'>
                                     <p class='drug-adverse-events-title'>Top 5 Adverse Events:</p>
@@ -727,6 +766,7 @@
                         let tempDiv = document.createElement("div");
                         tempDiv.innerHTML = cardHTML;
                         tempDiv.firstChild.style.animationDelay = `${index * 100}ms`;
+                        tempDiv.firstChild.addEventListener('click', () => handleCardClick(row.drug, row.definition, row.score, row.top_5_ad_events, row.rating, row.median_age, row.usage, row.component1, row.component2, row.component3, row.component_score1, row.component_score2, row.component_score3, row.positive_review_1, row.positive_rating_1, row.positive_review_2, row.positive_rating_2, row.negative_review_1, row.negative_rating_1, row.negative_review_2, row.negative_rating_2));
                         answerBox.appendChild(tempDiv.firstChild);
                     }));
             }
@@ -769,12 +809,11 @@
                         if (data.length > 0 && hasRelevantResults) {
                             data.forEach((row, index) => {
                                 if (row.score > 0) {
-                                    console.log(reviews)
                                     let cardHTML = answerBoxTemplate(row.drug, row.definition, row.score, row.top_5_ad_events || [], row.rating, row.median_age, row.usage);
                                     let tempDiv = document.createElement("div");
                                     tempDiv.innerHTML = cardHTML;
                                     tempDiv.firstChild.style.animationDelay = `${index * 100}ms`;
-                                    tempDiv.firstChild.addEventListener('click', () => handleCardClick(row.drug, row.definition, row.score, row.top_5_ad_events, row.rating, row.median_age, row.usage, row.component1, row.component2, row.component3, row.component_score1, row.component_score2, row.component_score3, reviews));
+                                    tempDiv.firstChild.addEventListener('click', () => handleCardClick(row.drug, row.definition, row.score, row.top_5_ad_events, row.rating, row.median_age, row.usage, row.component1, row.component2, row.component3, row.component_score1, row.component_score2, row.component_score3, row.positive_review_1, row.positive_rating_1, row.positive_review_2, row.positive_rating_2, row.negative_review_1, row.negative_rating_1, row.negative_review_2, row.negative_rating_2));
                                     answerBox.appendChild(tempDiv.firstChild);
                                     
                                 }

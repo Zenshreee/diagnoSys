@@ -107,6 +107,7 @@ def get_reviews(drug_name):
     datadir = os.path.join(pathdir, "preprocessing/reviews.json")
     with open(datadir, "r") as file:
         reviews = json.load(file)
+    drug_name = drug_name.lower()
     if drug_name not in reviews:
         return "", "", "", "", "", "", "", ""
 
