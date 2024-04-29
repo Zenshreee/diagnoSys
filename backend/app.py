@@ -103,7 +103,7 @@ def get_usage(drug_name):
 
 def get_reviews(drug_name):
     pathdir = os.path.dirname(__file__)
-    datadir = os.path.join(pathdir, "reviews.json")
+    datadir = os.path.join(pathdir, "preprocessing/reviews.json")
     with open(datadir, "r") as file:
         reviews = json.load(file)
     if drug_name not in reviews:
