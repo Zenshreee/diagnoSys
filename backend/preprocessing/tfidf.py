@@ -373,6 +373,10 @@ def query_after_rocchio(tfidf_matrix, query_vec, user_age):
             age_scores[doc_pos] = age_scores[doc_pos] * mean_multiplier
 
     top_10_og_age_scores = [(age_scores[index], index) for index in top_10_scores]
+
+    top_10_og_age_scores = sorted(
+        top_10_og_age_scores, key=lambda x: x[0], reverse=True
+    )
     # top_10_age_scores = np.argsort(age_scores)[::-1][:10]
     rtrn_lst = []
     # print("Top 10 most similar documents:")
