@@ -694,6 +694,7 @@
                                     let tempDiv = document.createElement("div");
                                     tempDiv.innerHTML = cardHTML;
                                     tempDiv.firstChild.style.animationDelay = `${index * 100}ms`;
+                                    tempDiv.firstChild.addEventListener('click', () => handleCardClick(row.drug, row.definition, row.score, row.top_5_ad_events, row.rating, row.median_age, row.usage, row.component1, row.component2, row.component3, row.component_score1, row.component_score2, row.component_score3, reviews));
                                     answerBox.appendChild(tempDiv.firstChild);
                                 }
                             });
@@ -711,31 +712,6 @@
                     });
             }
 
-            async function fetchReviews(drug_name) {
-                if (!drug_name) {
-                    console.error("No drug name provided");
-                    return null;
-                }
-
-                try {
-                    const response = await fetch("/reviews?" + new URLSearchParams({
-                        drug_name: drug_name
-                    }))
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        console.error("Error fetching reviews:", errorData.error);
-                        return null;
-                    }
-
-                    const data = await response.json();
-                    return data.reviews;
-                } catch (error) {
-                    console.error("An error occurred while fetching reviews:", error);
-                    return null;
-                }
-            }
-
-
             function sendFocus() {
                 document.getElementById('filter-text-val').focus()
             }
@@ -746,6 +722,7 @@
                 fetch("/episodes?" + new URLSearchParams({ title: document.getElementById("filter-text-val").value }).toString())
                     .then((response) => response.json())
                     .then((data) => data.forEach((row, index) => {
+                        const reviews = fetchReviews(row.drug.toLowerCase())
                         let cardHTML = answerBoxTemplate(row.drug, row.definition, row.score, row.top_5_ad_events || [], row.rating, row.median_age, row.usage, index);
                         let tempDiv = document.createElement("div");
                         tempDiv.innerHTML = cardHTML;
@@ -792,14 +769,14 @@
                         if (data.length > 0 && hasRelevantResults) {
                             data.forEach((row, index) => {
                                 if (row.score > 0) {
-                                    const reviews = fetchReviews(row.drug.toLowerCase());
-                                    console.log(reviews);
+                                    console.log(reviews)
                                     let cardHTML = answerBoxTemplate(row.drug, row.definition, row.score, row.top_5_ad_events || [], row.rating, row.median_age, row.usage);
                                     let tempDiv = document.createElement("div");
                                     tempDiv.innerHTML = cardHTML;
                                     tempDiv.firstChild.style.animationDelay = `${index * 100}ms`;
                                     tempDiv.firstChild.addEventListener('click', () => handleCardClick(row.drug, row.definition, row.score, row.top_5_ad_events, row.rating, row.median_age, row.usage, row.component1, row.component2, row.component3, row.component_score1, row.component_score2, row.component_score3, reviews));
                                     answerBox.appendChild(tempDiv.firstChild);
+                                    
                                 }
                             });
                             observeCards();

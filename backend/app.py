@@ -254,17 +254,15 @@ def drugs_search():
     return jsonify(combine_name(text_query, age))
 
 
-# @app.route("/reviews")
-# def reviews():
-#     drug_name = request.args.get("drug_name")
-#     if not drug_name:
-#         return jsonify({"error": "No drug name provided"}), 400
+@app.route("/reviews")
+def reviews():
+    drug_name = request.args.get("drug_name")
+    if not drug_name:
+        return jsonify({"error": "No drug name provided"}), 400
 
-#     review_data = get_reviews(drug_name)
-#     if not review_data:
-#         return jsonify({"error": "No reviews found for the specified drug"}), 404
+    review_data = get_reviews(drug_name)
 
-#     return jsonify({"reviews": review_data})
+    return jsonify(review_data)
 
 
 if "DB_NAME" not in os.environ:
