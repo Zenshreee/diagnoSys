@@ -133,6 +133,13 @@ def update_query():
     rel_docs = request.json["rel_docs"]
     non_rel_docs = request.json["non_rel_docs"]
     age = request.json["user_age"]
+    medications_json = request.args.get("medications")
+    if medications_json:
+        medications = json.loads(medications_json)
+    else:
+        medications = []
+
+    query += " " + " ".join(medications)
 
     new_query = rocchio(query, rel_docs, non_rel_docs)
 
