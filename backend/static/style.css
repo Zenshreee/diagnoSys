@@ -358,7 +358,6 @@ body {
     color: #11998e;
 }
 
-/* reset input */
 .form__field {
 
     &:required,
@@ -382,7 +381,6 @@ body {
 
 select {
     appearance: none;
-    /*  safari  */
     -webkit-appearance: none;
     width: 100%;
     font-size: 1.15rem;
@@ -394,22 +392,6 @@ select {
     cursor: pointer;
     height: 60px;
 }
-
-/* .custom-select::before,
-.custom-select::after {
-    --size: 0.3rem;
-    content: "";
-    position: absolute;
-    right: 1rem;
-    pointer-events: none;
-} */
-
-/* .custom-select::before {
-    border-left: var(--size) solid transparent;
-    border-right: var(--size) solid transparent;
-    border-bottom: var(--size) solid black;
-    top: 40%;
-} */
 
 .custom-select::after {
     content: "▼";
@@ -462,9 +444,7 @@ body {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    /* Ensure the content uses the full width of the card */
     padding: 20px;
-    /* Adds padding inside the card */
 }
 
 .drug-info {
@@ -472,7 +452,6 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%
-        /* Space above the rating */
 }
 
 .space {
@@ -497,10 +476,7 @@ body {
 
 .drug-meta {
     flex: 0 0 200px;
-    /* Sets the width of the right column and prevents it from growing */
     padding-left: 20px;
-    /* Adds padding to the left of the right column */
-    /* Aligns the text to the left */
 }
 
 .no-results {
@@ -515,14 +491,11 @@ body {
     color: #c9c8c8;
     list-style-type: disc;
     padding: 0;
-    /* Removes default padding */
     margin: 0;
-    /* Removes default margin */
 }
 
 .drug-usage li {
     padding: 2px 0;
-    /* Adds some spacing between usage items */
 }
 
 .thumbs {
@@ -534,22 +507,17 @@ body {
 .thumb {
     cursor: pointer;
     margin: 0 10px;
-    /* Adds space between thumbs */
     transition: transform 0.3s ease;
     z-index: 5;
-    /* Smooth transformation on click */
 }
 
 .thumb:hover {
     transform: scale(1.1);
-    /* Slightly enlarge thumb on hover */
 }
 
 
 .drug-meta {
     flex-basis: 200px;
-    /* Adjust the width as needed */
-    /* Aligns the text to the right */
 }
 
 .drug-title {
@@ -597,7 +565,6 @@ body {
 .highlighted {
     filter: brightness(1.5);
     background-color: #00ff00;
-    /* Green background */
 }
 
 .drug-adverse-events li {
@@ -628,40 +595,24 @@ body {
 .drug-adverse-events li {
     list-style-type: disc;
     margin-left: 20px;
-    /* Indent list items */
     font-size: 0.9em;
 }
 
 .drug-median-age {
     font-size: 0.9em;
-    /* text-align: left;
-    align-self: left;
-    margin-top: auto */
 }
 
 .drug-rating {
     font-size: 0.9em;
-    /* text-align: right; */
-    /* Centers the rating text */
-    /* align-self: right; */
-    /* Centers the rating div in the card */
-    /* margin-top: auto; */
-    /* Pushes the rating to the bottom */
 }
 
 .drug-adverse-events-title {
     font-size: 1.1em;
-    /* Adjust the font size as needed */
     color: #e0e2e1;
-    /* This is a light grey color; change as needed */
     font-weight: bold;
-    /* Makes the title bold */
     margin-top: 20px;
-    /* Adds space above the title */
     margin-bottom: 5px;
-    /* Adds space below the title */
     font-family: 'Open Sans', sans-serif;
-    /* This is assuming you're using the Open Sans font */
     margin-right: 20px;
 }
 
@@ -822,26 +773,6 @@ body {
     border-radius: 10px;
     transition: border-image-slice 0.3s ease-out, border-image-source 0.3s ease-out;
     padding-top: 10px;
-
-    /* &:before,
-    &:after {
-        left: 0;
-        top: 0;
-        display: block;
-        content: "";
-        pointer-events: none;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-    }
-
-    &:before {
-        box-shadow: inset -2px -2px 4px rgba(255, 255, 255, .7);
-    }
-
-    &:after {
-        box-shadow: inset -2px -2px 4px rgba(255, 255, 255, .7);
-    } */
 }
 
 
@@ -1655,12 +1586,11 @@ section.active .modal-box {
     .modal-sym {
         margin-left: 120px;
         font-size: 1.3em;
-        /* Adds margin to the right of the second container */
+        
     }
 
     .modal-split-middle {
         font-size: 1.3em;
-        /* Adds margin to the right of the second container */
     }
 
     .modal-bottom {
@@ -1735,16 +1665,20 @@ section.active .modal-box {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    height: 440px;
     gap: 25px;
+    overflow: auto;
+    overflow-y: auto;
 }
 
 .modal-bottom-container-right {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    height: 440px;
     gap: 25px;
+    overflow: auto;
+    overflow-y: auto;
 }
 
 .modal-bottom-container-middle {
@@ -1753,6 +1687,7 @@ section.active .modal-box {
     width: 50%;
     height: 100%;
     align-items: center;
+    padding-left: 40px;
 }
 
 .modal-bottom-header {
@@ -1833,4 +1768,59 @@ section.active .modal-box {
     display: flex;
     flex-direction: column;
 
+}
+
+.modal-sim {
+    color: #38ef7d;
+    font-size: 1.4em;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-section {
+    display: flex;
+    width: 33%;
+}
+
+.main-top {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.info-icon {
+    margin-top: 30px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
+
+}
+
+.top-logo {
+    width: 66%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.info-icon svg:hover {
+    animation: colorChange 0.5s forwards;
+    cursor: pointer;
+}
+
+@keyframes colorChange {
+    0% {
+        fill: #11998e;
+        transform: scale(1);
+        /* Red */
+    }
+
+    100% {
+        fill: #38ef7d;
+        transform: scale(1.2);
+        /* Green */
+    }
 }

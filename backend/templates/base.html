@@ -108,6 +108,9 @@
                         <div class="modal-adverseInfo">
                 
                         </div>
+                        <div class="modal-sim">
+                            
+                        </div>
                     </div>
                 
                 </div>
@@ -155,7 +158,25 @@
     <canvas id="stars" width="300" height="300"></canvas>
     <div class="full-body-container">
         <div class="top-text">
-            <img style="border-radius: 200px;" src="{{ url_for('static', filename='images/diagnosys.png') }}" />
+            <div class="main-top">
+                <div class="top-logo">
+                    <img style="border-radius: 200px;" src="{{ url_for('static', filename='images/diagnosys.png') }}" />
+                </div>
+                <div class="info-section">
+                    <div class="info-icon">
+                        <svg onclick="handleInfoClick()" fill="#11998e" width="64px" height="64px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                            <g id="SVGRepo_iconCarrier">
+                                <path
+                                    d="M960 0c530.193 0 960 429.807 960 960s-429.807 960-960 960S0 1490.193 0 960 429.807 0 960 0Zm0 101.053c-474.384 0-858.947 384.563-858.947 858.947S485.616 1818.947 960 1818.947 1818.947 1434.384 1818.947 960 1434.384 101.053 960 101.053Zm-42.074 626.795c-85.075 39.632-157.432 107.975-229.844 207.898-10.327 14.249-10.744 22.907-.135 30.565 7.458 5.384 11.792 3.662 22.656-7.928 1.453-1.562 1.453-1.562 2.94-3.174 9.391-10.17 16.956-18.8 33.115-37.565 53.392-62.005 79.472-87.526 120.003-110.867 35.075-20.198 65.9 9.485 60.03 47.471-1.647 10.664-4.483 18.534-11.791 35.432-2.907 6.722-4.133 9.646-5.496 13.23-13.173 34.63-24.269 63.518-47.519 123.85l-1.112 2.886c-7.03 18.242-7.03 18.242-14.053 36.48-30.45 79.138-48.927 127.666-67.991 178.988l-1.118 3.008a10180.575 10180.575 0 0 0-10.189 27.469c-21.844 59.238-34.337 97.729-43.838 138.668-1.484 6.37-1.484 6.37-2.988 12.845-5.353 23.158-8.218 38.081-9.82 53.42-2.77 26.522-.543 48.24 7.792 66.493 9.432 20.655 29.697 35.43 52.819 38.786 38.518 5.592 75.683 5.194 107.515-2.048 17.914-4.073 35.638-9.405 53.03-15.942 50.352-18.932 98.861-48.472 145.846-87.52 41.11-34.26 80.008-76 120.788-127.872 3.555-4.492 3.555-4.492 7.098-8.976 12.318-15.707 18.352-25.908 20.605-36.683 2.45-11.698-7.439-23.554-15.343-19.587-3.907 1.96-7.993 6.018-14.22 13.872-4.454 5.715-6.875 8.77-9.298 11.514-9.671 10.95-19.883 22.157-30.947 33.998-18.241 19.513-36.775 38.608-63.656 65.789-13.69 13.844-30.908 25.947-49.42 35.046-29.63 14.559-56.358-3.792-53.148-36.635 2.118-21.681 7.37-44.096 15.224-65.767 17.156-47.367 31.183-85.659 62.216-170.048 13.459-36.6 19.27-52.41 26.528-72.201 21.518-58.652 38.696-105.868 55.04-151.425 20.19-56.275 31.596-98.224 36.877-141.543 3.987-32.673-5.103-63.922-25.834-85.405-22.986-23.816-55.68-34.787-96.399-34.305-45.053.535-97.607 15.256-145.963 37.783Zm308.381-388.422c-80.963-31.5-178.114 22.616-194.382 108.33-11.795 62.124 11.412 115.76 58.78 138.225 93.898 44.531 206.587-26.823 206.592-130.826.005-57.855-24.705-97.718-70.99-115.729Z"
+                                    fill-rule="evenodd" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
             <div class="main-content">
                 <div class="main-left">
                     <div class="medications-sidebar">
@@ -311,27 +332,9 @@
 
         <script>
 
-            // const handleCardClick = (element) => {
-            //     const drugId = element.getAttribute('data-drug-id');
-            //     const drugDetails = drugsData.find(drug => drug.id === drugId);
-            //     const section = document.querySelector("section"),
-            //         overlay = document.querySelector(".overlay"),
-            //         closeBtn = document.querySelector(".close-btn");
-
-            //     section.classList.add("active");
-            //     overlay.addEventListener("click", () =>
-            //         section.classList.remove("active")
-            //     );
-            //     closeBtn.addEventListener("click", () =>
-            //         section.classList.remove("active")
-            //     );
-            //     console.log(drugDetails.drug);
-            // }
-
             function createStars(rating) {
                 let starsHtml = '';
                 for (let i = 0; i < 5; i++) {
-                    // Calculate width percentage for the filled part
                     let width = Math.max(0, Math.min(100, (rating - i * 2) * 50));
                     starsHtml += `<div class="star">
                         <svg class="star-empty" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -354,6 +357,59 @@
                 return starsHtml;
             }
 
+            function handleInfoClick() {
+                const section = document.querySelector("section"),
+                    overlay = document.querySelector(".overlay"),
+                    closeBtn = document.querySelector(".close-btn");
+
+                const title = `<p>Welcome to diagnosSys, where patient safety comes first.</p> To use our system, please read the directions and disclaimer below:`
+
+                const directions = `<p>Enter Your Symptoms: In the text box labeled 'Enter your symptoms', type in the symptoms you're currently experiencing.</p>
+                <p>Input Your Medications: Below, you will find a search bar under 'Enter your medications'. Please type the name(s) of any medications you are taking. As you type, suggestions may appear to assist you in completing the entry.</p>
+                <p>Apply Filters: To refine your search results, use the 'Filters' section. Select your sex and age from the dropdown menus to provide our system with additional context, which can help in identifying the most likely cause of your symptoms.</p>
+                <p>Search or Update Query: Once you have entered your information, click 'SEARCH' to proceed. If you would like to refine your results, click the thumbs-up or down buttons to indicate relevant and non-relevant drugs, and use the 'UPDATE QUERY' to receive a new set of results.</p>
+                <p>Drug Information: The results provide information cards with the top adverse events, common usages, star-reviews of the drugs, median age, and the thumbs up or down ability to provide feedback on the results. Additionally, clicking on the card opens up a larger card containing more information about why the result was returned as well as specific reviews.</p>`;
+
+                const disclaimer = `<p>Disclaimer: The information provided by our website is for informational purposes only and is not intended as a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. Never disregard professional medical advice or delay in seeking it because of something you have read on this website. While we strive to provide accurate and up-to-date information, we do not guarantee the accuracy, completeness, effectiveness, or timeliness of the information provided. Reliance on any information provided by this website is solely at your own risk.</p>`;
+
+                const students = ["Joe Ugarte", "Shreehari Srinivasan", "Zayana Khan", "Ashwin Char", "Chris Price"]
+                const studentsHTML = students.map(event => `<li>${event}</li>`).join('');
+
+                document.querySelector('.modal-title-words').textContent = "DiagnoSys";
+                document.querySelector('.overlay').classList.add('active');
+                document.querySelector('.modal-box').classList.add('active');
+                document.querySelector('.modal-sym-words').textContent = "";
+                document.querySelector('.stars-container').innerHTML = "";
+                document.querySelector('.modal-symInfo').innerHTML = "";
+                document.querySelector('.modal-header-positive').textContent = "";
+                document.querySelector('.modal-header-adverse').textContent = "Project Members";
+                document.querySelector('.modal-adverseInfo').innerHTML = studentsHTML;
+                document.querySelector('.component1').innerHTML = title;
+                document.querySelector('.component2').textContent = "";
+                document.querySelector('.component3').innerHTML = ""
+                document.querySelector('.modal-sim').textContent = ""
+                document.querySelector('.component-percent1').textContent = "";
+                document.querySelector('.component-percent2').textContent = "";
+                document.querySelector('.component-percent3').textContent = "";
+                document.querySelector('.positive-review1').innerHTML = directions;
+                document.querySelector('.negative-review1').innerHTML = disclaimer;
+                document.querySelector('.positive-review2').textContent = "";
+                document.querySelector('.stars-pos2').innerHTML = "";
+                document.querySelector('.stars-pos1').innerHTML = "";
+                document.querySelector('.stars-neg1').innerHTML = "";
+                document.querySelector('.negative-review2').textContent = "";
+                document.querySelector('.stars-neg2').innerHTML = "";
+
+                section.classList.add("active");
+                overlay.addEventListener("click", () =>
+                    section.classList.remove("active")
+                );
+                closeBtn.addEventListener("click", () =>
+                    section.classList.remove("active")
+                );
+
+            }
+
             function handleCardClick(drug, description, score, top_5_ad_events, rating, median_age, usage, component1, component2, component3, component_score1, component_score2, component_score3, posrev1, posrat1, posrev2, posrat2, negrev1, negrat1, negrev2, negrat2) {
                 const section = document.querySelector("section"),
                     overlay = document.querySelector(".overlay"),
@@ -369,9 +425,7 @@
 
 
 
-                // Here you can modify the modal's contents based on the drug data received and show the modal
-                document.querySelector('.modal-title-words').textContent = drug; // example for drug name
-                // document.querySelector('.modal-description').textContent = description;
+                document.querySelector('.modal-title-words').textContent = drug;
                 document.querySelector('.overlay').classList.add('active');
                 document.querySelector('.modal-box').classList.add('active');
                 document.querySelector('.modal-sym-words').textContent = "Indication";
@@ -383,6 +437,7 @@
                 document.querySelector('.component1').textContent = component1;
                 document.querySelector('.component2').textContent = component2;
                 document.querySelector('.component3').textContent = component3
+                document.querySelector('.modal-sim').textContent = score + "%"
                 document.querySelector('.component-percent1').textContent = component_score1 + "%";
                 document.querySelector('.component-percent2').textContent = component_score2 + "%";
                 document.querySelector('.component-percent3').textContent = component_score3 + "%";
@@ -390,20 +445,36 @@
                     document.querySelector('.positive-review1').textContent = posrev1;
                     document.querySelector('.stars-pos1').innerHTML = starsPos1;
                 }
+                else {
+                    document.querySelector('.positive-review1').textContent = "No reviews available";
+                    document.querySelector('.stars-pos1').innerHTML = "";
+                }
                 
                 if (posrev2 != "") {
                     document.querySelector('.positive-review2').textContent = posrev2;
                     document.querySelector('.stars-pos2').innerHTML = starsPos2;
+                }
+                else {
+                    document.querySelector('.positive-review2').textContent = "";
+                    document.querySelector('.stars-pos2').innerHTML = "";
                 }
 
                 if(negrev1 != "" && negrev1 != posrev1) {
                     document.querySelector('.negative-review1').textContent = negrev1;
                     document.querySelector('.stars-neg1').innerHTML = starsNeg1;
                 }
+                else {
+                    document.querySelector('.negative-review1').textContent = "";
+                    document.querySelector('.stars-neg1').innerHTML = "";
+                }
                 
                 if(negrev2 != "" && negrev2 != posrev2) {
                     document.querySelector('.negative-review2').textContent = negrev2;
                     document.querySelector('.stars-neg2').innerHTML = starsNeg2;
+                }
+                else {
+                    document.querySelector('.negative-review2').textContent = "";
+                    document.querySelector('.stars-neg2').innerHTML = "";
                 }
 
                 section.classList.add("active");
@@ -547,24 +618,19 @@
             }
             function toggleThumb(event, clickedThumb) {
                 event.stopPropagation();
-                // Find parent card element
                 const card = clickedThumb.closest('.drug-card');
 
-                // Determine whether the thumb is up or down
                 const isThumbsUp = clickedThumb.classList.contains('thumbs-up');
 
-                // Select thumbs within the same card
                 const thumbsUp = card.querySelector('.thumbs-up');
                 const thumbsDown = card.querySelector('.thumbs-down');
 
-                // Toggle clicked thumb
                 if (clickedThumb.src.includes('white')) {
                     clickedThumb.src = clickedThumb.src.replace('white', 'green');
                 } else {
                     clickedThumb.src = clickedThumb.src.replace('green', 'white');
                 }
 
-                // Reset the other thumb
                 const otherThumb = isThumbsUp ? thumbsDown : thumbsUp;
                 if (otherThumb.src.includes('green')) {
                     otherThumb.src = otherThumb.src.replace('green', 'white');
@@ -578,12 +644,9 @@
 
 
             function toggleSingleThumb(imgElement) {
-                // Check the current src of the image
                 if (imgElement.src.includes('white')) {
-                    // If it's the white one, switch to green
                     imgElement.src = imgElement.src.replace('_white', '_green');
                 } else {
-                    // If it's green, switch back to white
                     imgElement.src = imgElement.src.replace('_green', '_white');
                 }
             }
@@ -627,7 +690,6 @@
                 let usageHtml = usage.map(item => `<li>${item}</li>`).join('');
                 let starsHtml = '';
                 for (let i = 0; i < 5; i++) {
-                    // Calculate width percentage for the filled part
                     let width = Math.max(0, Math.min(100, (rating - i * 2) * 50));
                     starsHtml += `<div class="star">
                         <svg class="star-empty" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -689,17 +751,14 @@
 
 
             function sendUpdateQuery() {
-                // Collect all green thumbs up and thumbs down drugs
                 const greenThumbsUpDrugs = getDrugsWithGreenThumbsUp();
                 const greenThumbsDownDrugs = getDrugsWithGreenThumbsDown();
                 const answerBox = document.getElementById("answer-box");
-                answerBox.innerHTML = ""; // Clear existing cards
+                answerBox.innerHTML = "";
                 const medications = getMedications();
-                // Get the query from the input field
                 const queryText = document.getElementById("filter-text-val").value;
                 document.querySelector('.search-button-update').style.display = 'none';
 
-                // Prepare the data to send
                 const dataToSend = {
                     query: queryText,
                     rel_docs: greenThumbsUpDrugs,
@@ -707,11 +766,8 @@
                     user_age: getSelectedAge(),
                     medications: JSON.stringify(medications),
                 };
+                const endpoint = '/update-query';
 
-                // Endpoint URL
-                const endpoint = '/update-query';  // Update with the actual endpoint URL
-
-                // Send the data using fetch
                 fetch(endpoint, {
                     method: 'POST',
                     headers: {
@@ -721,9 +777,6 @@
                 })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data);
-
-                        // Check if data is empty or all scores are zero
                         const hasRelevantResults = data.some(row => row.score > 0);
 
                         if (data.length > 0 && hasRelevantResults) {
@@ -733,13 +786,12 @@
                                     let tempDiv = document.createElement("div");
                                     tempDiv.innerHTML = cardHTML;
                                     tempDiv.firstChild.style.animationDelay = `${index * 100}ms`;
-                                    tempDiv.firstChild.addEventListener('click', () => handleCardClick(row.drug, row.definition, row.score, row.top_5_ad_events, row.rating, row.median_age, row.usage, row.component1, row.component2, row.component3, row.component_score1, row.component_score2, row.component_score3, reviews));
+                                    tempDiv.firstChild.addEventListener('click', () => handleCardClick(row.drug, row.definition, row.score, row.top_5_ad_events, row.rating, row.median_age, row.usage, row.component1, row.component2, row.component3, row.component_score1, row.component_score2, row.component_score3, row.positive_review_1, row.positive_rating_1, row.positive_review_2, row.positive_rating_2, row.negative_review_1, row.negative_rating_1, row.negative_review_2, row.negative_rating_2));
                                     answerBox.appendChild(tempDiv.firstChild);
                                 }
                             });
                             observeCards();
                         } else {
-                            // Display no results message
                             answerBox.innerHTML = "<p class='no-results'>No results found.</p>";
                         }
 
@@ -788,7 +840,7 @@
 
             function filterTextDrug() {
                 const answerBox = document.getElementById("answer-box");
-                answerBox.innerHTML = ""; // Clear existing cards
+                answerBox.innerHTML = ""; 
 
                 const searchText = document.getElementById("filter-text-val").value;
                 const age = getSelectedAge();
@@ -803,7 +855,6 @@
                 }).toString())
                     .then(response => response.json())
                     .then(data => {
-                        // Check if data is empty or all scores are zero
                         const hasRelevantResults = data.some(row => row.score > 0);
 
                         if (data.length > 0 && hasRelevantResults) {
@@ -820,7 +871,6 @@
                             });
                             observeCards();
                         } else {
-                            // Display no results message
                             answerBox.innerHTML = "<p class='no-results'>No results found.</p>";
                         }
                     })
