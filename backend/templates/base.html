@@ -109,6 +109,16 @@
                             Placeholder
                         </div>
                     </div>
+                    <div class="modal-review">
+                        <div class="positive-review1">
+
+                        </div>
+                    </div>
+                    <div class="modal-review">
+                        <div class="positive-review2">
+                    
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-bottom-container-middle">
                     <div class="modal-interp">
@@ -127,9 +137,14 @@
                     
                 </div>
                 <div class="modal-bottom-container-right">
-                    <div class="modal-bottom-header">
-                        <div class="modal-header-negative">
-                            Placeholder
+                    <div class="modal-review">
+                        <div class="negative-review1">
+                    
+                        </div>
+                    </div>
+                    <div class="modal-review">
+                        <div class="negative-review2">
+                    
                         </div>
                     </div>
                 </div>
@@ -316,7 +331,7 @@
             //     console.log(drugDetails.drug);
             // }
 
-            function handleCardClick(drug, description, score, top_5_ad_events, rating, median_age, usage, component1, component2, component3, component_score1, component_score2, component_score3) {
+            function handleCardClick(drug, description, score, top_5_ad_events, rating, median_age, usage, component1, component2, component3, component_score1, component_score2, component_score3, reviews) {
                 const section = document.querySelector("section"),
                     overlay = document.querySelector(".overlay"),
                     closeBtn = document.querySelector(".close-btn");
@@ -355,8 +370,7 @@
                 document.querySelector('.modal-sym-words').textContent = "Indication";
                 document.querySelector('.stars-container').innerHTML = starsHtml;
                 document.querySelector('.modal-symInfo').innerHTML = usageHtml;
-                document.querySelector('.modal-header-positive').textContent = "Positive Reviews";
-                document.querySelector('.modal-header-negative').textContent = "Negative Reviews";
+                document.querySelector('.modal-header-positive').textContent = "Reviews";
                 document.querySelector('.modal-header-adverse').textContent = "Adverse Reactions";
                 document.querySelector('.modal-adverseInfo').innerHTML = adverseEventsHtml;
                 document.querySelector('.component1').textContent = component1;
@@ -365,6 +379,10 @@
                 document.querySelector('.component-percent1').textContent = component_score1 + "%";
                 document.querySelector('.component-percent2').textContent = component_score2 + "%";
                 document.querySelector('.component-percent3').textContent = component_score3 + "%";
+                document.querySelector('.postive-review1').textContent = reviews.positive.review1;
+                document.querySelector('.postive-review1').textContent = reviews.positive.review2;
+                document.querySelector('.negative-review1').textContent = reviews.negative.review1;
+                document.querySelector('.negative-review1').textContent = reviews.negative.review2;
                 
 
 
@@ -701,6 +719,29 @@
                     });
             }
 
+            async function fetchReviews(drug_name) {
+                if (!drug_name) {
+                    console.error("No drug name provided");
+                    return null;
+                }
+
+                try {
+                    const response = await fetch("/reviews?" + new URLSearchParams({
+                        drug_name: drug_name
+                    }))
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error("Error fetching reviews:", errorData.error);
+                        return null;
+                    }
+
+                    const data = await response.json();
+                    return data.reviews;
+                } catch (error) {
+                    console.error("An error occurred while fetching reviews:", error);
+                    return null;
+                }
+            }
 
 
             function sendFocus() {
@@ -759,11 +800,13 @@
                         if (data.length > 0 && hasRelevantResults) {
                             data.forEach((row, index) => {
                                 if (row.score > 0) {
+                                    const reviews = fetchReviews(row.drug.toLowerCase());
+                                    console.log(reviews);
                                     let cardHTML = answerBoxTemplate(row.drug, row.definition, row.score, row.top_5_ad_events || [], row.rating, row.median_age, row.usage);
                                     let tempDiv = document.createElement("div");
                                     tempDiv.innerHTML = cardHTML;
                                     tempDiv.firstChild.style.animationDelay = `${index * 100}ms`;
-                                    tempDiv.firstChild.addEventListener('click', () => handleCardClick(row.drug, row.definition, row.score, row.top_5_ad_events, row.rating, row.median_age, row.usage, row.component1, row.component2, row.component3, row.component_score1, row.component_score2, row.component_score3));
+                                    tempDiv.firstChild.addEventListener('click', () => handleCardClick(row.drug, row.definition, row.score, row.top_5_ad_events, row.rating, row.median_age, row.usage, row.component1, row.component2, row.component3, row.component_score1, row.component_score2, row.component_score3, reviews));
                                     answerBox.appendChild(tempDiv.firstChild);
                                 }
                             });

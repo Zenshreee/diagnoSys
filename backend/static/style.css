@@ -1722,7 +1722,6 @@ section.active .modal-box {
     flex-direction: column;
     width: 100%;
     height: 100%;
-    align-items: flex-end;
 }
 
 .modal-bottom-container-middle {
