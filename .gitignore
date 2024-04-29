@@ -18,4 +18,5 @@ build/
 *.egg-info/
 helpers/*
 
-backend/data/*
+backend/data/*.zip
+backend/data/*.json
