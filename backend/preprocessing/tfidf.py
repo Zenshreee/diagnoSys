@@ -199,13 +199,21 @@ def query_with_age(tfidf_matrix, query, user_age):
             age_scores[doc_pos] = age_scores[doc_pos] * mean_multiplier
 
     top_10_og_age_scores = [(age_scores[index], index) for index in top_10_scores]
+
+    top_10_og_age_scores = sorted(
+        top_10_og_age_scores, key=lambda x: x[0], reverse=True
+    )
     # top_10_age_scores = np.argsort(age_scores)[::-1][:10]
     rtrn_lst = []
     # print("Top 10 most similar documents:")
     for score, index in top_10_og_age_scores:
         document_name = index_to_doc[str(index)]
-        rtrn_lst.append((document_name, score))
-        # print(f"{document_name}: {score}")
+        adding = (document_name, score)
+        if document_name.lower() in query.lower():
+            adding = (document_name, score * 2)
+        rtrn_lst.append(adding)
+    rtrn_lst = sorted(rtrn_lst, key=lambda x: x[1], reverse=True)
+    # print(f"{document_name}: {score}")
     # # top 3 components
     # top_components = np.argsort(input_vector.flatten())[::-1][:3]
     # component_names = []
@@ -231,9 +239,12 @@ def query_with_age(tfidf_matrix, query, user_age):
         for comp in top_components:
             component_names.append(components[str(comp)])
             component_score.append(contributions[comp])
+        total = sum(component_score)
 
+        if total == 0:
+            total = 1
         component_scores_100 = [
-            round((score / sum(component_score)) * 100, 2) for score in component_score
+            round((score / total) * 100, 2) for score in component_score
         ]
         top_components_per_drug.append(
             (document_name, component_names, component_scores_100)
@@ -249,11 +260,12 @@ def query_with_age(tfidf_matrix, query, user_age):
     #     round((score / sum(component_scores)) * 100, 2) for score in component_scores
     # ]
     total_score = sum([score for _, score in rtrn_lst])
+    if total_score == 0:
+        total_score = 1
     return_list = []
     for i in range(len(rtrn_lst)):
         drug = rtrn_lst[i][0]
-        score = rtrn_lst[i][1]
-        score = round((score / total_score) * 100, 2)
+        score = round((rtrn_lst[i][1] / total_score) * 100, 2)
         top_components = top_components_per_drug[i]
         component_1 = top_components[1][0]
         component_2 = top_components[1][1]
@@ -387,9 +399,12 @@ def query_after_rocchio(tfidf_matrix, query_vec, user_age):
         for comp in top_components:
             component_names.append(components[str(comp)])
             component_score.append(input_vector.flatten()[comp])
+        totals = sum(component_score)
+        if totals == 0:
+            totals = 1
 
         component_scores_100 = [
-            round((score / sum(component_score)) * 100, 2) for score in component_score
+            round((score / totals) * 100, 2) for score in component_score
         ]
         top_components_per_drug.append(
             (document_name, component_names, component_scores_100)
@@ -405,6 +420,8 @@ def query_after_rocchio(tfidf_matrix, query_vec, user_age):
     #     round((score / sum(component_scores)) * 100, 2) for score in component_scores
     # ]
     total_score = sum([score for _, score in rtrn_lst])
+    if total_score == 0:
+        total_score = 1
     return_list = []
     for i in range(len(rtrn_lst)):
         drug = rtrn_lst[i][0]

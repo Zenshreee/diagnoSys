@@ -15,7 +15,7 @@ os.environ["ROOT_PATH"] = os.path.abspath(os.path.join("..", os.curdir))
 # Don't worry about the deployment credentials, those are fixed
 # You can use a different DB name if you want to
 LOCAL_MYSQL_USER = "root"
-LOCAL_MYSQL_USER_PASSWORD = ""
+LOCAL_MYSQL_USER_PASSWORD = "hfes2003"
 LOCAL_MYSQL_PORT = 3306
 LOCAL_MYSQL_DATABASE = "kardashiandb"
 
@@ -108,16 +108,28 @@ def get_reviews(drug_name):
     with open(datadir, "r") as file:
         reviews = json.load(file)
     if drug_name not in reviews:
-        return []
-    res = []
+        return "", "", "", "", "", "", "", ""
 
-    for sentiment in ["positive", "negative"]:
-        if sentiment in reviews[drug_name]:
-            for key, review in reviews[drug_name][sentiment].items():
-                if review is not None:
-                    res.append([key, review])
+    positive_review_1 = reviews[drug_name]["positive"]["review1"]
+    positive_rating_1 = reviews[drug_name]["positive"]["rating1"]
+    positive_review_2 = reviews[drug_name]["positive"]["review2"]
+    positive_rating_2 = reviews[drug_name]["positive"]["rating2"]
 
-    return res
+    negative_review_1 = reviews[drug_name]["negative"]["review1"]
+    negative_rating_1 = reviews[drug_name]["negative"]["rating1"]
+    negative_review_2 = reviews[drug_name]["negative"]["review2"]
+    negative_rating_2 = reviews[drug_name]["negative"]["rating2"]
+
+    return (
+        positive_review_1,
+        positive_rating_1,
+        positive_review_2,
+        positive_rating_2,
+        negative_review_1,
+        negative_rating_1,
+        negative_review_2,
+        negative_rating_2,
+    )
 
 
 @app.route("/autocomplete")
@@ -155,6 +167,7 @@ def update_query():
             component_score_2 = tup[5]
             component_3 = tup[6]
             component_score_3 = tup[7]
+            reviews = get_reviews(drug)
             rtrn_lst.append(
                 {
                     "drug": drug,
@@ -170,6 +183,14 @@ def update_query():
                     "component_score2": component_score_2,
                     "component3": component_3,
                     "component_score3": component_score_3,
+                    "positive_review_1": reviews[0],
+                    "positive_rating_1": reviews[1],
+                    "positive_review_2": reviews[2],
+                    "positive_rating_2": reviews[3],
+                    "negative_review_1": reviews[4],
+                    "negative_rating_1": reviews[5],
+                    "negative_review_2": reviews[6],
+                    "negative_rating_2": reviews[7],
                 }
             )
         return rtrn_lst
@@ -202,6 +223,7 @@ def drugs_search():
             component_score_2 = tup[5]
             component_3 = tup[6]
             component_score_3 = tup[7]
+            reviews = get_reviews(drug)
             rtrn_lst.append(
                 {
                     "drug": drug,
@@ -217,6 +239,14 @@ def drugs_search():
                     "component_score2": component_score_2,
                     "component3": component_3,
                     "component_score3": component_score_3,
+                    "positive_review_1": reviews[0],
+                    "positive_rating_1": reviews[1],
+                    "positive_review_2": reviews[2],
+                    "positive_rating_2": reviews[3],
+                    "negative_review_1": reviews[4],
+                    "negative_rating_1": reviews[5],
+                    "negative_review_2": reviews[6],
+                    "negative_rating_2": reviews[7],
                 }
             )
         return rtrn_lst
@@ -224,17 +254,17 @@ def drugs_search():
     return jsonify(combine_name(text_query, age))
 
 
-@app.route("/reviews")
-def reviews():
-    drug_name = request.args.get("drug_name")
-    if not drug_name:
-        return jsonify({"error": "No drug name provided"}), 400
+# @app.route("/reviews")
+# def reviews():
+#     drug_name = request.args.get("drug_name")
+#     if not drug_name:
+#         return jsonify({"error": "No drug name provided"}), 400
 
-    review_data = get_reviews(drug_name)
-    if not review_data:
-        return jsonify({"error": "No reviews found for the specified drug"}), 404
+#     review_data = get_reviews(drug_name)
+#     if not review_data:
+#         return jsonify({"error": "No reviews found for the specified drug"}), 404
 
-    return jsonify({"reviews": review_data})
+#     return jsonify({"reviews": review_data})
 
 
 if "DB_NAME" not in os.environ:
