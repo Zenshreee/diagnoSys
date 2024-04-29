@@ -101,23 +101,23 @@ def get_usage(drug_name):
         res.append([i])
     return res
 
+
 def get_reviews(drug_name):
     pathdir = os.path.dirname(__file__)
-    datadir = os.path.join(pathdir, "reviews.json")
+    datadir = os.path.join(pathdir, "preprocessing/reviews.json")
     with open(datadir, "r") as file:
         reviews = json.load(file)
     if drug_name not in reviews:
-        return []  
+        return []
     res = []
-    
-    for sentiment in ['positive', 'negative']:
+
+    for sentiment in ["positive", "negative"]:
         if sentiment in reviews[drug_name]:
             for key, review in reviews[drug_name][sentiment].items():
                 if review is not None:
                     res.append([key, review])
-    
-    return res
 
+    return res
 
 
 @app.route("/autocomplete")
@@ -137,26 +137,32 @@ def update_query():
     new_query = rocchio(query, rel_docs, non_rel_docs)
 
     def combine_name(query, age):
-        top_10, components, component_scores = query_after_rocchio(
-            tfidf_matrix, query, age
-        )
+        top_10 = query_after_rocchio(tfidf_matrix, query, age)
         rtrn_lst = []
         for tup in top_10:
+            drug = tup[0]
+            score = tup[1]
+            component_1 = tup[2]
+            component_score_1 = tup[3]
+            component_2 = tup[4]
+            component_score_2 = tup[5]
+            component_3 = tup[6]
+            component_score_3 = tup[7]
             rtrn_lst.append(
                 {
-                    "drug": tup[0],
-                    "definition": get_def(tup[0]),
-                    "score": tup[1],
-                    "top_5_ad_events": get_top_5_ad_events(tup[0]),
-                    "rating": get_rating(tup[0]),
-                    "median_age": get_median_age(tup[0]),
-                    "usage": get_usage(tup[0]),
-                    "component1": components[0],
-                    "component_score1": component_scores[0],
-                    "component2": components[1],
-                    "component_score2": component_scores[1],
-                    "component3": components[2],
-                    "component_score3": component_scores[2],
+                    "drug": drug,
+                    "definition": get_def(drug),
+                    "score": score,
+                    "top_5_ad_events": get_top_5_ad_events(drug),
+                    "rating": get_rating(drug),
+                    "median_age": get_median_age(drug),
+                    "usage": get_usage(drug),
+                    "component1": component_1,
+                    "component_score1": component_score_1,
+                    "component2": component_2,
+                    "component_score2": component_score_2,
+                    "component3": component_3,
+                    "component_score3": component_score_3,
                 }
             )
         return rtrn_lst
@@ -178,29 +184,38 @@ def drugs_search():
     text_query += " " + " ".join(medications)
 
     def combine_name(query, age):
-        top_10, components, component_scores = query_with_age(tfidf_matrix, query, age)
+        top_10 = query_with_age(tfidf_matrix, query, age)
         rtrn_lst = []
         for tup in top_10:
+            drug = tup[0]
+            score = tup[1]
+            component_1 = tup[2]
+            component_score_1 = tup[3]
+            component_2 = tup[4]
+            component_score_2 = tup[5]
+            component_3 = tup[6]
+            component_score_3 = tup[7]
             rtrn_lst.append(
                 {
-                    "drug": tup[0],
-                    "definition": get_def(tup[0]),
-                    "score": tup[1],
-                    "top_5_ad_events": get_top_5_ad_events(tup[0]),
-                    "rating": get_rating(tup[0]),
-                    "median_age": get_median_age(tup[0]),
-                    "usage": get_usage(tup[0]),
-                    "component1": components[0],
-                    "component_score1": component_scores[0],
-                    "component2": components[1],
-                    "component_score2": component_scores[1],
-                    "component3": components[2],
-                    "component_score3": component_scores[2],
+                    "drug": drug,
+                    "definition": get_def(drug),
+                    "score": score,
+                    "top_5_ad_events": get_top_5_ad_events(drug),
+                    "rating": get_rating(drug),
+                    "median_age": get_median_age(drug),
+                    "usage": get_usage(drug),
+                    "component1": component_1,
+                    "component_score1": component_score_1,
+                    "component2": component_2,
+                    "component_score2": component_score_2,
+                    "component3": component_3,
+                    "component_score3": component_score_3,
                 }
             )
         return rtrn_lst
 
     return jsonify(combine_name(text_query, age))
+
 
 @app.route("/reviews")
 def reviews():

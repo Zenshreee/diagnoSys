@@ -206,23 +206,79 @@ def query_with_age(tfidf_matrix, query, user_age):
         document_name = index_to_doc[str(index)]
         rtrn_lst.append((document_name, score))
         # print(f"{document_name}: {score}")
-    # top 3 components
-    top_components = np.argsort(input_vector.flatten())[::-1][:3]
-    component_names = []
-    component_scores = []
-    for comp in top_components:
-        component_names.append(components[str(comp)])
-        component_scores.append(input_vector.flatten()[comp])
+    # # top 3 components
+    # top_components = np.argsort(input_vector.flatten())[::-1][:3]
+    # component_names = []
+    # component_scores = []
+    # for comp in top_components:
+    #     component_names.append(components[str(comp)])
+    #     component_scores.append(input_vector.flatten()[comp])
 
-    component_scores_100 = [
-        round((score / sum(component_scores)) * 100, 2) for score in component_scores
-    ]
+    query_components = input_vector.flatten()  # Component scores for the query
+    top_indices = np.argsort(cosine_similarities)[::-1][:10]
+
+    top_components_per_drug = []
+    for index in top_indices:
+        document_name = index_to_doc[str(index)]
+        document_components = tfidf_matrix[index, :]
+        # Component contribution to the similarity score (dot product)
+        contributions = document_components * query_components
+        top_components = np.argsort(contributions)[::-1][
+            :3
+        ]  # Top 3 contributing components
+        component_names = []
+        component_score = []
+        for comp in top_components:
+            component_names.append(components[str(comp)])
+            component_score.append(contributions[comp])
+
+        component_scores_100 = [
+            round((score / sum(component_score)) * 100, 2) for score in component_score
+        ]
+        top_components_per_drug.append(
+            (document_name, component_names, component_scores_100)
+        )
+
+    # # Component contribution to the similarity score (dot product)
+    # contributions = document_components * query_components
+    # top_components = np.argsort(contributions)[::-1][
+    #     :3
+    # ]  # Top 3 contributing components
+
+    # component_scores_100 = [
+    #     round((score / sum(component_scores)) * 100, 2) for score in component_scores
+    # ]
+    total_score = sum([score for _, score in rtrn_lst])
+    return_list = []
+    for i in range(len(rtrn_lst)):
+        drug = rtrn_lst[i][0]
+        score = rtrn_lst[i][1]
+        score = round((score / total_score) * 100, 2)
+        top_components = top_components_per_drug[i]
+        component_1 = top_components[1][0]
+        component_2 = top_components[1][1]
+        component_3 = top_components[1][2]
+        component_score_1 = top_components[2][0]
+        component_score_2 = top_components[2][1]
+        component_score_3 = top_components[2][2]
+        return_list.append(
+            (
+                drug,
+                score,
+                component_1,
+                component_score_1,
+                component_2,
+                component_score_2,
+                component_3,
+                component_score_3,
+            )
+        )
 
     # calaculate percentage similarity so that all the scores add up to 100
-    total_score = sum([score for _, score in rtrn_lst])
-    rtrn_lst = [(doc, round((score / total_score) * 100), 2) for doc, score in rtrn_lst]
+    # total_score = sum([score for _, score in rtrn_lst])
+    # rtrn_lst = [(doc, round((score / total_score) * 100), 2) for doc, score in rtrn_lst]
 
-    return rtrn_lst, component_names, component_scores_100
+    return return_list
 
 
 # with open("average_ratings.json", "r") as file:
@@ -314,22 +370,67 @@ def query_after_rocchio(tfidf_matrix, query_vec, user_age):
         # print(f"{document_name}: {score}")
 
     # top 3 svd components
-    top_components = np.argsort(input_vector.flatten())[::-1][:3]
-    component_names = []
-    component_scores = []
-    for comp in top_components:
-        component_names.append(components[str(comp)])
-        component_scores.append(input_vector.flatten()[comp])
+    query_components = input_vector.flatten()  # Component scores for the query
+    top_indices = np.argsort(cosine_similarities)[::-1][:10]
 
-    component_scores_100 = [
-        round((score / sum(component_scores)) * 100, 2) for score in component_scores
-    ]
+    top_components_per_drug = []
+    for index in top_indices:
+        document_name = index_to_doc[str(index)]
+        document_components = tfidf_matrix[index, :]
+        # Component contribution to the similarity score (dot product)
+        contributions = document_components * query_components
+        top_components = np.argsort(contributions)[::-1][
+            :3
+        ]  # Top 3 contributing components
+        component_names = []
+        component_score = []
+        for comp in top_components:
+            component_names.append(components[str(comp)])
+            component_score.append(input_vector.flatten()[comp])
 
-    # calculate percentage similarity so that all the scores add up to 100
+        component_scores_100 = [
+            round((score / sum(component_score)) * 100, 2) for score in component_score
+        ]
+        top_components_per_drug.append(
+            (document_name, component_names, component_scores_100)
+        )
+
+    # # Component contribution to the similarity score (dot product)
+    # contributions = document_components * query_components
+    # top_components = np.argsort(contributions)[::-1][
+    #     :3
+    # ]  # Top 3 contributing components
+
+    # component_scores_100 = [
+    #     round((score / sum(component_scores)) * 100, 2) for score in component_scores
+    # ]
     total_score = sum([score for _, score in rtrn_lst])
-    rtrn_lst = [(doc, round((score / total_score) * 100), 2) for doc, score in rtrn_lst]
+    return_list = []
+    for i in range(len(rtrn_lst)):
+        drug = rtrn_lst[i][0]
+        score = rtrn_lst[i][1]
+        score = round((score / total_score) * 100, 2)
+        top_components = top_components_per_drug[i]
+        component_1 = top_components[1][0]
+        component_2 = top_components[1][1]
+        component_3 = top_components[1][2]
+        component_score_1 = top_components[2][0]
+        component_score_2 = top_components[2][1]
+        component_score_3 = top_components[2][2]
+        return_list.append(
+            (
+                drug,
+                score,
+                component_1,
+                component_score_1,
+                component_2,
+                component_score_2,
+                component_3,
+                component_score_3,
+            )
+        )
 
-    return rtrn_lst, component_names, component_scores_100
+    return return_list
 
 
 def query_with_explanation(query, tfidf_matrix, vectorizer, svd, top_k=10):
