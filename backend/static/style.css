@@ -21,6 +21,21 @@ body {
     /* z-index: 1; */
 }
 
+#starsCard {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* padding-left: 40px; */
+    /* height: 100vh; */
+    /* z-index: 1; */
+}
+
+.starsCard {
+    padding-left: 40px;
+}
+
 .full-body-container {
     position: absolute;
     top: 0;
@@ -43,7 +58,10 @@ body {
     gap: 50px;
 }
 
-.medications-sidebar {
+.main-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     width: 25%;
     min-width: 250px;
     height: 100vh;
@@ -51,6 +69,9 @@ body {
     position: sticky;
     top: 5%;
     height: fit-content;
+}
+
+.medications-sidebar {
     display: flex;
     flex-direction: column;
     box-shadow: -15px 0px 2px 8px rgba(0, 0, 0, 0.1);
@@ -207,6 +228,72 @@ body {
     background: none;
 }
 
+.search-button-update {
+    appearance: button;
+    background-color: #11998e;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: din-round, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    line-height: 20px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 9px 12px;
+    text-align: center;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter .2s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 100%;
+    height: 60px;
+}
+
+.search-button-update:after {
+    background-clip: padding-box;
+    background-color: #38ef7d;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    bottom: -4px;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+}
+
+.search-button-update:main,
+.search-button-update:focus {
+    user-select: auto;
+}
+
+.search-button-update:hover:not(:disabled) {
+    filter: brightness(1.1);
+    -webkit-filter: brightness(1.1);
+}
+
+.search-button-update:disabled {
+    cursor: auto;
+}
+
+.search-button-update:active {
+    border-width: 4px 0 0;
+    background: none;
+}
+
 .form__group {
     position: relative;
     padding: 15px 0 0;
@@ -271,7 +358,6 @@ body {
     color: #11998e;
 }
 
-/* reset input */
 .form__field {
 
     &:required,
@@ -295,7 +381,6 @@ body {
 
 select {
     appearance: none;
-    /*  safari  */
     -webkit-appearance: none;
     width: 100%;
     font-size: 1.15rem;
@@ -307,22 +392,6 @@ select {
     cursor: pointer;
     height: 60px;
 }
-
-/* .custom-select::before,
-.custom-select::after {
-    --size: 0.3rem;
-    content: "";
-    position: absolute;
-    right: 1rem;
-    pointer-events: none;
-} */
-
-/* .custom-select::before {
-    border-left: var(--size) solid transparent;
-    border-right: var(--size) solid transparent;
-    border-bottom: var(--size) solid black;
-    top: 40%;
-} */
 
 .custom-select::after {
     content: "▼";
@@ -368,15 +437,14 @@ body {
     opacity: 0;
     transform: translateY(20px);
     animation-fill-mode: forwards;
+    cursor: pointer;
 }
 
 .drug-content {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    /* Ensure the content uses the full width of the card */
     padding: 20px;
-    /* Adds padding inside the card */
 }
 
 .drug-info {
@@ -384,15 +452,31 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%
-        /* Space above the rating */
+}
+
+.space {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.drug-sim {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.drug-sim-score {
+    flex: 1;
+    color: #8de0b6;
+    font-size: 1.0em;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .drug-meta {
     flex: 0 0 200px;
-    /* Sets the width of the right column and prevents it from growing */
     padding-left: 20px;
-    /* Adds padding to the left of the right column */
-    /* Aligns the text to the left */
 }
 
 .no-results {
@@ -407,14 +491,11 @@ body {
     color: #c9c8c8;
     list-style-type: disc;
     padding: 0;
-    /* Removes default padding */
     margin: 0;
-    /* Removes default margin */
 }
 
 .drug-usage li {
     padding: 2px 0;
-    /* Adds some spacing between usage items */
 }
 
 .thumbs {
@@ -426,21 +507,17 @@ body {
 .thumb {
     cursor: pointer;
     margin: 0 10px;
-    /* Adds space between thumbs */
     transition: transform 0.3s ease;
-    /* Smooth transformation on click */
+    z-index: 5;
 }
 
 .thumb:hover {
     transform: scale(1.1);
-    /* Slightly enlarge thumb on hover */
 }
 
 
 .drug-meta {
     flex-basis: 200px;
-    /* Adjust the width as needed */
-    /* Aligns the text to the right */
 }
 
 .drug-title {
@@ -488,7 +565,6 @@ body {
 .highlighted {
     filter: brightness(1.5);
     background-color: #00ff00;
-    /* Green background */
 }
 
 .drug-adverse-events li {
@@ -519,40 +595,24 @@ body {
 .drug-adverse-events li {
     list-style-type: disc;
     margin-left: 20px;
-    /* Indent list items */
     font-size: 0.9em;
 }
 
 .drug-median-age {
     font-size: 0.9em;
-    /* text-align: left;
-    align-self: left;
-    margin-top: auto */
 }
 
 .drug-rating {
     font-size: 0.9em;
-    /* text-align: right; */
-    /* Centers the rating text */
-    /* align-self: right; */
-    /* Centers the rating div in the card */
-    /* margin-top: auto; */
-    /* Pushes the rating to the bottom */
 }
 
 .drug-adverse-events-title {
     font-size: 1.1em;
-    /* Adjust the font size as needed */
     color: #e0e2e1;
-    /* This is a light grey color; change as needed */
     font-weight: bold;
-    /* Makes the title bold */
     margin-top: 20px;
-    /* Adds space above the title */
     margin-bottom: 5px;
-    /* Adds space below the title */
     font-family: 'Open Sans', sans-serif;
-    /* This is assuming you're using the Open Sans font */
     margin-right: 20px;
 }
 
@@ -595,6 +655,8 @@ body {
 }
 
 .star-filled {
+    width: 24px;
+    height: 24px;
     position: absolute;
     top: 0;
     left: 0;
@@ -711,26 +773,6 @@ body {
     border-radius: 10px;
     transition: border-image-slice 0.3s ease-out, border-image-source 0.3s ease-out;
     padding-top: 10px;
-
-    /* &:before,
-    &:after {
-        left: 0;
-        top: 0;
-        display: block;
-        content: "";
-        pointer-events: none;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-    }
-
-    &:before {
-        box-shadow: inset -2px -2px 4px rgba(255, 255, 255, .7);
-    }
-
-    &:after {
-        box-shadow: inset -2px -2px 4px rgba(255, 255, 255, .7);
-    } */
 }
 
 
@@ -875,7 +917,29 @@ body {
     z-index: 3;
 }
 
+#optionsAge-view-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+}
+
 #selected-value {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 16px;
+    line-height: 1;
+}
+
+#selectedAge-value {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -917,11 +981,13 @@ body {
     text-align: right;
 }
 
-#options-view-button:checked+#select-button #chevrons i {
-    color: #fff;
+.options {
+    position: absolute;
+    left: 0;
+    width: 250px;
 }
 
-.options {
+.optionsAge {
     position: absolute;
     left: 0;
     width: 250px;
@@ -937,7 +1003,22 @@ body {
     border-radius: 4px;
 }
 
+#optionsAge {
+    position: absolute;
+    top: 42px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    background-color: #222222;
+    border-radius: 4px;
+}
+
 #options-view-button:checked~#options {
+    border: 1px solid #e2eded;
+    border-color: #eaf1f1 #e4eded #dbe7e7 #e4eded;
+}
+
+#optionsAge-view-button:checked~#optionsAge {
     border: 1px solid #e2eded;
     border-color: #eaf1f1 #e4eded #dbe7e7 #e4eded;
 }
@@ -957,6 +1038,11 @@ body {
 }
 
 #options-view-button:checked~#options .option i {
+    display: block;
+    padding: 12px 0;
+}
+
+#optionsAge-view-button:checked~#optionsAge .option i {
     display: block;
     padding: 12px 0;
 }
@@ -987,6 +1073,11 @@ body {
 }
 
 #options-view-button:checked~#options .label {
+    display: block;
+    padding: 12px 14px;
+}
+
+#optionsAge-view-button:checked~#optionsAge .label {
     display: block;
     padding: 12px 14px;
 }
@@ -1142,7 +1233,22 @@ input[type="radio"] {
     display: none;
 }
 
+#optionAge-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 40px;
+    transition: 0.3s ease all;
+    z-index: 1;
+    display: none;
+}
+
 #options-view-button:checked~#options #option-bg {
+    display: block;
+}
+
+#optionsAge-view-button:checked~#optionsAge #optionAge-bg {
     display: block;
 }
 
@@ -1188,7 +1294,7 @@ input[type="radio"] {
     z-index: -1;
 }
 
-#options-view-button:not(:checked)~#options .optionAge input[type="radio"]:checked~.opt-val {
+#optionsAge-view-button:not(:checked)~#optionsAge .optionAge input[type="radio"]:checked~.opt-val {
     top: -30px;
 }
 
@@ -1306,50 +1412,415 @@ input[type="radio"] {
     color: #fff;
 }
 
-.optionAge:nth-child(1):hover~#option-bg {
+.optionAge:nth-child(1):hover~#optionAge-bg {
     top: 0;
     background-color: #11998e;
     border-radius: 4px 4px 0 0;
 }
 
-.optionAge:nth-child(2):hover~#option-bg {
+.optionAge:nth-child(2):hover~#optionAge-bg {
     top: 40px;
     background-color: #00a491;
 }
 
-.optionAge:nth-child(3):hover~#option-bg {
+.optionAge:nth-child(3):hover~#optionAge-bg {
     top: 80px;
     background-color: #00af93;
 }
 
-.optionAge:nth-child(4):hover~#option-bg {
+.optionAge:nth-child(4):hover~#optionAge-bg {
     top: 120px;
     background-color: #00ba94;
 }
 
-.optionAge:nth-child(5):hover~#option-bg {
+.optionAge:nth-child(5):hover~#optionAge-bg {
     top: 160px;
     background-color: #00c593;
 }
 
-.optionAge:nth-child(6):hover~#option-bg {
+.optionAge:nth-child(6):hover~#optionAge-bg {
     top: 200px;
     background-color: #00d091;
     border-radius: 0 0 4px 4px;
 }
 
-.optionAge:nth-child(7):hover~#option-bg {
+.optionAge:nth-child(7):hover~#optionAge-bg {
     top: 240px;
     background-color: #00db8c;
 }
 
-.optionAge:nth-child(8):hover~#option-bg {
+.optionAge:nth-child(8):hover~#optionAge-bg {
     top: 280px;
     background-color: #1de586;
 }
 
-.optionAge:nth-child(9):hover~#option-bg {
+.optionAge:nth-child(9):hover~#optionAge-bg {
     top: 320px;
     background-color: #38ef7d;
     border-radius: 0 0 4px 4px;
+}
+
+
+
+
+
+
+
+
+
+
+section {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+}
+
+button.show-modal {
+    font-size: 18px;
+    font-weight: 400;
+    color: #fff;
+    padding: 14px 22px;
+    border: none;
+    background: #4070f4;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button.show-modal:hover {
+    background-color: #265df2;
+}
+
+button.show-modal,
+.modal-box {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+section.active {
+    z-index: 10;
+}
+
+section.active .show-modal {
+    display: none;
+    z-index: 10;
+}
+
+.overlay {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+}
+
+section.active .overlay {
+    pointer-events: auto;
+    z-index: 10;
+}
+
+.modal-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 75px;
+    width: 80%;
+    height: 80%;
+    min-width: 380px;
+    padding: 30px 20px;
+    border-radius: 24px;
+    border: 1px solid #11998e;
+    background-image: linear-gradient(to top left, #1b2a2f 50%, rgb(34, 35, 36) 50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0px 12px 0px 11px rgba(0, 0, 0, 0.1);
+}
+
+section.active .modal-box {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+    z-index: 10;
+}
+
+.modal-box i {
+    font-size: 70px;
+    color: #4070f4;
+}
+
+.modal-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.modal-header {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.modal-title {
+    padding: 20px 40px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    font-size: 2.0em;
+    font-weight: 500;
+    color: #fff;
+}
+
+.modal-sym {
+    font-size: 0.8em;
+    color: #c9c8c8;
+    margin-left: 10px;
+}
+
+@media (min-width: 1250px) {
+
+    .modal-sym {
+        margin-left: 120px;
+        font-size: 1.3em;
+        
+    }
+
+    .modal-split-middle {
+        font-size: 1.3em;
+    }
+
+    .modal-bottom {
+        font-size: 1.3em;
+    }
+}
+
+.modal-description {
+    font-size: 0.9em;
+    width: 75%;
+    font-weight: 400;
+    color: #c9c8c8;
+    padding-left: 40px;
+}
+
+.modal-box .buttons {
+    margin-top: 25px;
+}
+
+.modal-box button {
+    font-size: 14px;
+    padding: 6px 12px;
+    margin: 0 10px;
+    flex: 1;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.close-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.close-btn:hover svg {
+    animation: grow 0.3s forwards;
+}
+
+@keyframes grow {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+.modal-symInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-symInfo li {
+    font-size: 0.7em;
+    color: #bababa;
+}
+
+.modal-bottom {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    gap: 30px;
+}
+
+.modal-bottom-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 440px;
+    gap: 25px;
+    overflow: auto;
+    overflow-y: auto;
+}
+
+.modal-bottom-container-right {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 440px;
+    gap: 25px;
+    overflow: auto;
+    overflow-y: auto;
+}
+
+.modal-bottom-container-middle {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    align-items: center;
+    padding-left: 40px;
+}
+
+.modal-bottom-header {
+    font-size: 0.7em;
+    color: #bababa;
+    font-weight: 500;
+}
+
+.modal-adverseInfo li {
+    font-size: 0.6em;
+    color: #bababa;
+}
+
+.modal-split-middle {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.modal-interp {
+    font-size: 1.0em;
+    color: #fff;
+    height: 100%;
+}
+
+.component1 {
+    margin-top: 10px;
+    color: white;
+    font-size: 0.4em;
+}
+
+.component2 {
+    color: white;
+    font-size: 0.4em;
+}
+
+.component3 {
+    color: white;
+    font-size: 0.4em;
+}
+
+.component-box {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.component-percent1 {
+    color: #38ef7d;
+    font-size: 0.5em;
+}
+
+.component-percent2 {
+    color: #38ef7d;
+    font-size: 0.5em;
+}
+
+.component-percent3 {
+    color: #38ef7d;
+    font-size: 0.5em;
+}
+
+.modal-title-box {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.modal-medicine {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+}
+
+.modal-review {
+    color: #fff;
+    font-size: 0.5em;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.modal-sim {
+    color: #38ef7d;
+    font-size: 1.4em;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-section {
+    display: flex;
+    width: 33%;
+}
+
+.main-top {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.info-icon {
+    margin-top: 30px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
+
+}
+
+.top-logo {
+    width: 66%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.info-icon svg:hover {
+    animation: colorChange 0.5s forwards;
+    cursor: pointer;
+}
+
+@keyframes colorChange {
+    0% {
+        fill: #11998e;
+        transform: scale(1);
+        /* Red */
+    }
+
+    100% {
+        fill: #38ef7d;
+        transform: scale(1.2);
+        /* Green */
+    }
 }
