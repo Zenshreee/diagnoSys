@@ -113,6 +113,9 @@ with open(docspath, "r") as file:
 
 tfidf_matrix = np.load(os.path.join(os.path.dirname(abspath), "tfidf_matrix_svd.npy"))
 
+old_tfidf_matrix = np.load(
+    os.path.join(os.path.dirname(abspath), "tfidf_matrix.npy"), allow_pickle=True
+)
 
 # tfidf_matrix = sp.sparse.load_npz(matrix_filepath)
 # print(np.array_equal(tfidf_matrix, laoded))
@@ -127,9 +130,17 @@ def query(tfidf_matrix, query):
     with open(index_to_json_path, "r") as file:
         index_to_doc = json.load(file)
     input_vector = vectorizer.transform([query])
+    input_vector_old = input_vector
     input_vector = svd.transform(input_vector)
     cosine_similarities = cosine_similarity(input_vector, tfidf_matrix)
     cosine_similarities = cosine_similarities.flatten()
+
+    cosine_similarities_old = cosine_similarity(input_vector_old, old_tfidf_matrix)
+    cosine_similarities_old = cosine_similarities_old.flatten()
+
+    interpolated_similarities = (
+        0.5 * cosine_similarities + 0.5 * cosine_similarities_old
+    )
 
     for i, score in enumerate(cosine_similarities):
         document_name = index_to_doc[str(i)]
@@ -151,7 +162,7 @@ def query(tfidf_matrix, query):
 # print(f"Time taken to query: {end - start}")
 
 
-def query_with_age(tfidf_matrix, query, user_age):
+def query_with_age(tfidf_matrix, query, user_age, svd_weight=0.3, cos_weight=0.7):
     with open(components_path, "r") as file:
         components = json.load(file)
     with open(drug_median_var_ages_path, "r") as file:
@@ -161,10 +172,19 @@ def query_with_age(tfidf_matrix, query, user_age):
     vectorizer = pickle.load(open(vectorizer_path, "rb"))
     svd = pickle.load(open(svd_path, "rb"))
     input_vector = vectorizer.transform([query])
+    input_vector_old = input_vector
     input_vector = svd.transform(input_vector)
     cosine_similarities = cosine_similarity(input_vector, tfidf_matrix)
     cosine_similarities = cosine_similarities.flatten()
 
+    cosine_similarities_old = cosine_similarity(input_vector_old, old_tfidf_matrix)
+    cosine_similarities_old = cosine_similarities_old.flatten()
+
+    interpolated_similarities = (
+        svd_weight * cosine_similarities + cos_weight * cosine_similarities_old
+    )
+
+    cosine_similarities = interpolated_similarities
     # for i, score in enumerate(cosine_similarities):
     #     document_name = list(documents.keys())[i]
     #     print(f"Cosine similarity with '{document_name}': {score}")
@@ -186,9 +206,7 @@ def query_with_age(tfidf_matrix, query, user_age):
         if document_name in ages:
             median_age = ages[document_name][0]
             std_dev = ages[document_name][1]
-            multiplier = 1 + (
-                (1 / ((abs(median_age - user_age) + 1) ** 2))
-            )  # 1+((1/(abs(median_age - user_age)+1)) * (1/(std_dev + 1)))
+            multiplier = 1 + ((1 / ((abs(median_age - user_age) + 1) ** 2)))
             accumualtor.append(multiplier)
 
     mean_multiplier = np.mean(accumualtor)
@@ -209,8 +227,8 @@ def query_with_age(tfidf_matrix, query, user_age):
     for score, index in top_10_og_age_scores:
         document_name = index_to_doc[str(index)]
         adding = (document_name, score)
-        if document_name.lower() in query.lower():
-            adding = (document_name, score * 2)
+        # if document_name.lower() in query.lower():
+        #     adding = (document_name, score * 2)
         rtrn_lst.append(adding)
     rtrn_lst = sorted(rtrn_lst, key=lambda x: x[1], reverse=True)
     # print(f"{document_name}: {score}")
@@ -329,7 +347,9 @@ def print_top_terms_for_components(vectorizer, svd_model, n_top_terms=10):
 # print_top_terms_for_components(vectorizer, svd, n_top_terms=10)
 
 
-def query_after_rocchio(tfidf_matrix, query_vec, user_age):
+def query_after_rocchio(
+    tfidf_matrix, query_vec, user_age, svd_weight=0.3, cos_weight=0.7
+):
     user_age = float(user_age)
     with open(components_path, "r") as file:
         components = json.load(file)
@@ -343,6 +363,16 @@ def query_after_rocchio(tfidf_matrix, query_vec, user_age):
     input_vector = svd.transform(query_vec)
     cosine_similarities = cosine_similarity(input_vector, tfidf_matrix)
     cosine_similarities = cosine_similarities.flatten()
+
+    cosine_similarities_old = cosine_similarity(query_vec, old_tfidf_matrix)
+    cosine_similarities_old = cosine_similarities_old.flatten()
+
+    interpolated_similarities = (
+        svd_weight * cosine_similarities + cos_weight * cosine_similarities_old
+    )
+
+    cosine_similarities = interpolated_similarities
+
     age_scores = cosine_similarities.copy()
     for i, score in enumerate(cosine_similarities):
         document_name = index_to_doc[str(i)]

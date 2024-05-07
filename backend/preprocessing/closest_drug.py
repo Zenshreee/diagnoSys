@@ -3,10 +3,12 @@ import os
 
 
 def load_drugs():
-    base_dir = os.path.dirname(__file__)  # gets the directory where the current script is located
-    json_path = os.path.join(base_dir, 'brand_to_generic.json')
-    with open(json_path, 'r') as file:
-    # with open("brand_to_generic.json", "r") as file:
+    base_dir = os.path.dirname(
+        __file__
+    )  # gets the directory where the current script is located
+    json_path = os.path.join(base_dir, "index_to_doc.json")
+    with open(json_path, "r") as file:
+        # with open("brand_to_generic.json", "r") as file:
         return json.load(file)
 
 
@@ -93,6 +95,8 @@ def edit_distance_search(query):
 
 def get_5_closest_drugs(query):
     drugs = load_drugs()
+    reversed_drug = {v: k for k, v in drugs.items()}
+    drugs = reversed_drug
     results = []
 
     for drug_name in drugs.keys():
