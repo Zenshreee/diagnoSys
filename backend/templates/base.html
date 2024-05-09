@@ -106,13 +106,13 @@
                             </div>
                         </div>
                         <div class="modal-adverseInfo">
-                
+
                         </div>
                         <div class="modal-sim">
-                            
+
                         </div>
                     </div>
-                
+
                 </div>
                 <div class="modal-bottom-container">
                     <div class="modal-bottom-header">
@@ -151,7 +151,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </section>
@@ -176,7 +176,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="main-content">
                 <div class="main-left">
                     <div class="medications-sidebar">
@@ -364,7 +364,7 @@
 
                 const title = `<p>Welcome to diagnosSys, where patient safety comes first.</p> To use our system, please read the directions and disclaimer below:`
 
-                const directions = `<p>Enter Your Symptoms: In the text box labeled 'Enter your symptoms', type in the symptoms you're currently experiencing.</p>
+                const directions = `<p>Purpose: This application is designed to help users identify which of their current or similar medications might be contributing to the symptoms they are experiencing. It is important to note that this application does not provide medical advice on treatment options.</p><p>Enter Your Symptoms: In the text box labeled 'Enter your symptoms', type in the symptoms you're currently experiencing.</p>
                 <p>Input Your Medications: Below, you will find a search bar under 'Enter your medications'. Please type the name(s) of any medications you are taking. As you type, suggestions may appear to assist you in completing the entry.</p>
                 <p>Apply Filters: To refine your search results, use the 'Filters' section. Select your sex and age from the dropdown menus to provide our system with additional context, which can help in identifying the most likely cause of your symptoms.</p>
                 <p>Search or Update Query: Once you have entered your information, click 'SEARCH' to proceed. If you would like to refine your results, click the thumbs-up or down buttons to indicate relevant and non-relevant drugs, and use the 'UPDATE QUERY' to receive a new set of results.</p>
@@ -441,7 +441,7 @@
                 document.querySelector('.component-percent1').textContent = component_score1 + "%";
                 document.querySelector('.component-percent2').textContent = component_score2 + "%";
                 document.querySelector('.component-percent3').textContent = component_score3 + "%";
-                if(posrev1 != "") {
+                if (posrev1 != "") {
                     document.querySelector('.positive-review1').textContent = posrev1;
                     document.querySelector('.stars-pos1').innerHTML = starsPos1;
                 }
@@ -449,7 +449,7 @@
                     document.querySelector('.positive-review1').textContent = "No reviews available";
                     document.querySelector('.stars-pos1').innerHTML = "";
                 }
-                
+
                 if (posrev2 != "") {
                     document.querySelector('.positive-review2').textContent = posrev2;
                     document.querySelector('.stars-pos2').innerHTML = starsPos2;
@@ -459,7 +459,7 @@
                     document.querySelector('.stars-pos2').innerHTML = "";
                 }
 
-                if(negrev1 != "" && negrev1 != posrev1) {
+                if (negrev1 != "" && negrev1 != posrev1) {
                     document.querySelector('.negative-review1').textContent = negrev1;
                     document.querySelector('.stars-neg1').innerHTML = starsNeg1;
                 }
@@ -467,8 +467,8 @@
                     document.querySelector('.negative-review1').textContent = "";
                     document.querySelector('.stars-neg1').innerHTML = "";
                 }
-                
-                if(negrev2 != "" && negrev2 != posrev2) {
+
+                if (negrev2 != "" && negrev2 != posrev2) {
                     document.querySelector('.negative-review2').textContent = negrev2;
                     document.querySelector('.stars-neg2').innerHTML = starsNeg2;
                 }
@@ -840,7 +840,7 @@
 
             function filterTextDrug() {
                 const answerBox = document.getElementById("answer-box");
-                answerBox.innerHTML = ""; 
+                answerBox.innerHTML = "";
 
                 const searchText = document.getElementById("filter-text-val").value;
                 const age = getSelectedAge();
@@ -866,7 +866,7 @@
                                     tempDiv.firstChild.style.animationDelay = `${index * 100}ms`;
                                     tempDiv.firstChild.addEventListener('click', () => handleCardClick(row.drug, row.definition, row.score, row.top_5_ad_events, row.rating, row.median_age, row.usage, row.component1, row.component2, row.component3, row.component_score1, row.component_score2, row.component_score3, row.positive_review_1, row.positive_rating_1, row.positive_review_2, row.positive_rating_2, row.negative_review_1, row.negative_rating_1, row.negative_review_2, row.negative_rating_2));
                                     answerBox.appendChild(tempDiv.firstChild);
-                                    
+
                                 }
                             });
                             observeCards();
