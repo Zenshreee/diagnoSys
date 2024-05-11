@@ -749,15 +749,39 @@
                     </div>`;
             }
 
+            function getDrugsNoThumbs() {
+                const cards = document.querySelectorAll('.drug-card');
+                let drugsNoThumbs = [];
+
+                cards.forEach(card => {
+                    const thumbsUp = card.querySelector('.thumbs-up');
+                    const thumbsDown = card.querySelector('.thumbs-down');
+                    if (!thumbsUp.src.includes('green') && !thumbsDown.src.includes('green')) {
+                        const drugTitle = card.querySelector('.drug-title').textContent;
+                        drugsNoThumbs.push(drugTitle);
+                    }
+                });
+
+                console.log("Drugs with No Thumbs:", drugsNoThumbs);
+                return drugsNoThumbs;
+            }
 
             function sendUpdateQuery() {
-                const greenThumbsUpDrugs = getDrugsWithGreenThumbsUp();
-                const greenThumbsDownDrugs = getDrugsWithGreenThumbsDown();
+                var greenThumbsUpDrugs = getDrugsWithGreenThumbsUp();
+                var greenThumbsDownDrugs = getDrugsWithGreenThumbsDown();
                 const answerBox = document.getElementById("answer-box");
                 answerBox.innerHTML = "";
                 const medications = getMedications();
                 const queryText = document.getElementById("filter-text-val").value;
                 document.querySelector('.search-button-update').style.display = 'none';
+
+                if (greenThumbsDownDrugs.length === 0 && greenThumbsUpDrugs.length > 0) {
+                    greenThumbsDownDrugs = getDrugsNoThumbs();
+                }
+                else if (greenThumbsDownDrugs.length > 0 && greenThumbsUpDrugs.length === 0) {
+                    greenThumbsUpDrugs = getDrugsNoThumbs();
+                }
+
 
                 const dataToSend = {
                     query: queryText,

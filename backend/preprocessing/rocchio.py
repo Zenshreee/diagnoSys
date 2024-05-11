@@ -20,11 +20,11 @@ def rocchio(query, relevant_docs, non_relevant_docs, alpha=1, beta=0.75, gamma=0
     doc_to_index = {v: k for k, v in index_to_doc.items()}
     vectorizer = pickle.load(open(vectorizer_path, "rb"))
     query_vec = vectorizer.transform([query]).toarray()
-    if len(relevant_docs) == 0:
-        return query_vec
+    # if len(relevant_docs) == 0:
+    #     return query_vec
 
-    if len(non_relevant_docs) == 0:
-        return query_vec
+    # if len(non_relevant_docs) == 0:
+    #     return query_vec
     relevant_doc_matrix = None
 
     for brand_name in relevant_docs:
@@ -44,11 +44,15 @@ def rocchio(query, relevant_docs, non_relevant_docs, alpha=1, beta=0.75, gamma=0
             non_relevant_doc_matrix = doc_vec
         else:
             non_relevant_doc_matrix = np.vstack([non_relevant_doc_matrix, doc_vec])
+    if non_relevant_doc_matrix is None:
+        non_relevant_mean = np.zeros_like(query_vec)
+    else:
+        non_relevant_mean = np.mean(non_relevant_doc_matrix, axis=0)
 
-    new_query_vec = (
-        alpha * query_vec
-        + beta * np.mean(relevant_doc_matrix, axis=0)
-        - gamma * np.mean(non_relevant_doc_matrix, axis=0)
-    )
+    if relevant_doc_matrix is None:
+        relevant_mean = np.zeros_like(query_vec)
+    else:
+        relevant_mean = np.mean(relevant_doc_matrix, axis=0)
+    new_query_vec = alpha * query_vec + beta * relevant_mean - gamma * non_relevant_mean
 
     return new_query_vec
