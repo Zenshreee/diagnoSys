@@ -33,16 +33,12 @@ def query_merriam_webster(word):
 
 
 def process_documents():
-    """
-    Fetch definitions for each word in `reactionmeddrapt` entries.
-    """
     definitions = {}
 
     files = os.listdir("../data")
 
     json_files = [f for f in files if f.endswith(".json")]
 
-    # get definitions.json (../resorces/)
     with open("../resources/definitions.json", "r") as file:
         json_def = json.load(file)
 
@@ -63,7 +59,7 @@ def process_documents():
                     if word not in json_def:
                         if (
                             word not in definitions
-                        ):  # Avoid repeating API calls for the same word
+                        ):
                             defin = query_merriam_webster(word)
                             if defin:
                                 definitions[word] = defin
@@ -77,12 +73,8 @@ def process_documents():
 
 
 def process_drugs():
-    """
-    Fetch definitions for each word in `reactionmeddrapt` entries.
-    """
     definitions = {}
 
-    # get definitions.json (../resorces/)
     with open("definitions.json", "r") as file:
         def_json = json.load(file)
 
@@ -96,7 +88,7 @@ def process_drugs():
             for word in words:
                 if (
                     word not in definitions
-                ):  # Avoid repeating API calls for the same word
+                ):  
                     defin = query_merriam_webster(word)
                     if defin:
                         definitions[word] = defin
@@ -120,16 +112,10 @@ def process_drugs():
     return definitions
 
 
-# save to json file
 def save_to_json(data, filename):
 
     with open(filename, "w") as file:
         json.dump(data, file, indent=4)
-
-
-"""
-Add entry to jso
-"""
 
 
 def add_entry_to_json(data: dict, filename: str) -> None:

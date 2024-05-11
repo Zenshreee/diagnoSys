@@ -1,14 +1,12 @@
 import json
 import pandas
 
-# tsv to df
 
 print("making df")
 df = pandas.read_csv("../data/combined_drug_reviews.tsv", sep="\t")
 df = df.dropna(subset=["review"])
 print("finishing df")
 
-# Assuming 'df' is already loaded with your data
 results = {}
 
 for drug in df['drugName'].unique():
@@ -43,11 +41,9 @@ for drug in df['drugName'].unique():
     }
 
 
-# Convert the dictionary to JSON
 print("making json")
 json_output = json.dumps(results, indent=4)
 
-# print(json_output)
 
 with open("reviews.json", "w") as file:
     json.dump(json_output, file, indent=4)

@@ -4,9 +4,6 @@ import time
 
 
 def process_documents():
-    """
-    Fetch definitions for each word in `reactionmeddrapt` entries.
-    """
     MAX = 1000
     MIN = 100
     drug_documents = {}
@@ -15,11 +12,9 @@ def process_documents():
     counter = 0
     json_files = [f for f in files if f.endswith(".json")]
 
-    # get documents.json (../resorces/)
     with open("drug_documents.json", "r") as file:
         json_doc = json.load(file)
 
-    # get definitions.json (../resorces/)
     with open("definitions.json", "r") as file:
         json_def = json.load(file)
 
@@ -40,7 +35,6 @@ def process_documents():
             except:
                 print(f"Error processing {documents}")
                 continue
-        # print(f"Processing {documents}")
         count = 1
         for result in data["results"]:
             if count % 1000 == 0:
@@ -101,11 +95,6 @@ def process_documents():
 def save_to_json(data, filename):
     with open(filename, "w") as file:
         json.dump(data, file, indent=4)
-
-
-"""
-Add entry to json
-"""
 
 
 def add_entry_to_json(data: dict, filename: str) -> None:

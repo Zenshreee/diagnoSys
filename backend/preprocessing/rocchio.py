@@ -14,17 +14,12 @@ tfidf_matrix = np.load(os.path.join(os.path.dirname(abspath), "tfidf_matrix.npy"
 
 def rocchio(query, relevant_docs, non_relevant_docs, alpha=1, beta=0.75, gamma=0.15):
 
-    # generate doc_to_index
     with open(index_to_json_path) as file:
         index_to_doc = json.load(file)
     doc_to_index = {v: k for k, v in index_to_doc.items()}
     vectorizer = pickle.load(open(vectorizer_path, "rb"))
     query_vec = vectorizer.transform([query]).toarray()
-    # if len(relevant_docs) == 0:
-    #     return query_vec
 
-    # if len(non_relevant_docs) == 0:
-    #     return query_vec
     relevant_doc_matrix = None
 
     for brand_name in relevant_docs:

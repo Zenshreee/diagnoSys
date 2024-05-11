@@ -10,7 +10,6 @@ def count_events():
 
     json_files = [f for f in files if f.endswith(".json")]
 
-    # get documents.json (../resorces/)
     with open("ad_counts.json", "r") as file:
         ad_count = json.load(file)
 

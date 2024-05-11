@@ -5,32 +5,13 @@ import os
 def load_drugs():
     base_dir = os.path.dirname(
         __file__
-    )  # gets the directory where the current script is located
+    )
     json_path = os.path.join(base_dir, "index_to_doc.json")
     with open(json_path, "r") as file:
-        # with open("brand_to_generic.json", "r") as file:
         return json.load(file)
 
 
 def edit_matrix(query, message, ins_cost_func, del_cost_func, sub_cost_func):
-    """Calculates the edit matrix
-
-    Arguments
-    =========
-
-    query: query string,
-
-    message: message string,
-
-    ins_cost_func: function that returns the cost of inserting a letter,
-
-    del_cost_func: function that returns the cost of deleting a letter,
-
-    sub_cost_func: function that returns the cost of substituting a letter,
-
-    Returns:
-        edit matrix {(i,j): int}
-    """
 
     m = len(query) + 1
     n = len(message) + 1
@@ -49,14 +30,6 @@ def edit_matrix(query, message, ins_cost_func, del_cost_func, sub_cost_func):
             )
     return chart
 
-
-# def edit_distance(query, drug_name):
-#   query = query.lower()
-#   drug_name = drug_name.lower()
-
-#   matrix = edit_matrix(query, drug_name, 1, 1, 2)
-
-#   return matrix[(len(query), len(drug_name))]
 
 
 def edit_distance(query, drug_name, ins_cost=1, del_cost=1, sub_cost=2):
@@ -89,9 +62,6 @@ def edit_distance_search(query):
     return results[0]
 
 
-# testing
-# closest_match = edit_distance_search("FIBERCOR")
-
 
 def get_5_closest_drugs(query):
     drugs = load_drugs()
@@ -105,8 +75,3 @@ def get_5_closest_drugs(query):
 
     results.sort(key=lambda x: x[0])
     return [medication.capitalize() for (score, medication) in results[:5]]
-
-
-# testing
-# closest_matches = get_5_closest_drugs("TYLENOL")
-# print(closest_matches)

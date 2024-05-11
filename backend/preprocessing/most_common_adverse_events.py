@@ -44,9 +44,6 @@ def get_most_common_ad_events():
                             ad_events[brandname][reaction_phrase] = 1
                         else:
                             ad_events[brandname][reaction_phrase] += 1
-        # if count % 1000 == 0:
-        #     with open("most_common_ad_events.json", "w") as file:
-        #         json.dump(ad_events, file, indent=4)
 
     counts = {}
     for brand in ad_events:
